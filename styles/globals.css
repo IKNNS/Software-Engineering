@@ -1,3 +1,4 @@
+import linearGradient
 html,
 body {
   padding: 0;
@@ -22,5 +23,6 @@ a {
   body {
     color: white;
     background: black;
+    /* background: linear-gradient(180deg, green, yellow); */
   }
 }

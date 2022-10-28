@@ -8,10 +8,17 @@ import HomeIcon from '@mui/icons-material/Home';
 import HistoryIcon from '@mui/icons-material/History';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useRouter } from 'next/router'
 
 export default function FixedBottomNavigation() {
-  const [value, setValue] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>(null);
+  const router = useRouter()
+  console.log('current path', router.pathname)
+  const [value, setValue] = React.useState(router.pathname);
+  
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
   return (
     <Box sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
@@ -19,14 +26,31 @@ export default function FixedBottomNavigation() {
         <BottomNavigation
           showLabels
           value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
+          onChange={handleChange}
         >
-          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-          <BottomNavigationAction label="Notification" icon={<NotificationsNoneIcon />} />
-          <BottomNavigationAction label="History" icon={<HistoryIcon />} />
-          <BottomNavigationAction label="Account" icon={<AccountCircleIcon />} />
+          <BottomNavigationAction
+          label="Home" 
+          value="/home"
+          icon={<HomeIcon />} 
+          href = "/home"
+          />
+          <BottomNavigationAction
+          label="Notification"
+          value="/"
+          icon={<NotificationsNoneIcon />} 
+          href = "/"
+          />
+          <BottomNavigationAction 
+          label="History"
+          value="/history"
+          icon={<HistoryIcon />} 
+          href = "/history"
+          />
+          <BottomNavigationAction 
+          label="Account" 
+          value="/account"
+          icon={<AccountCircleIcon />} 
+          href = "/account"/>
         </BottomNavigation>
       </Paper>
     </Box>

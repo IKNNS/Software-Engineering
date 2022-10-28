@@ -5,7 +5,6 @@ import LabelBottomNavigation from '../components/navbar'
 import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  console.log("Navbar Test")
   return <>
   <Component {...pageProps} />
   <div>
