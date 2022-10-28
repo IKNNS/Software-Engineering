@@ -1,37 +1,34 @@
 import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-// import FolderIcon from '@mui/icons-material/Folder';
-// import RestoreIcon from '@mui/icons-material/Restore';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+import HomeIcon from '@mui/icons-material/Home';
+import HistoryIcon from '@mui/icons-material/History';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-export default function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('recents');
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
-
+export default function FixedBottomNavigation() {
+  const [value, setValue] = React.useState(0);
+  const ref = React.useRef<HTMLDivElement>(null);
   return (
-    <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
-      <BottomNavigationAction
-        label="Recents"
-        value="recents"
-        // icon={<RestoreIcon />}
-      />
-      <BottomNavigationAction
-        label="Favorites"
-        value="favorites"
-        // icon={<FavoriteIcon />}
-      />
-      <BottomNavigationAction
-        label="Nearby"
-        value="nearby"
-        // icon={<LocationOnIcon />}
-      />
-      <BottomNavigationAction label="Folder" value="folder"/>  
-      {/* icon={<FolderIcon />} /> */}
-    </BottomNavigation>
+    <Box sx={{ pb: 7 }} ref={ref}>
+      <CssBaseline />
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+          <BottomNavigationAction label="Notification" icon={<NotificationsNoneIcon />} />
+          <BottomNavigationAction label="History" icon={<HistoryIcon />} />
+          <BottomNavigationAction label="Account" icon={<AccountCircleIcon />} />
+        </BottomNavigation>
+      </Paper>
+    </Box>
   );
 }
