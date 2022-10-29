@@ -1,20 +1,52 @@
-import React from 'react'
+import {
+  Autocomplete,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Container } from "@mui/system";
+import { type } from "os";
+import React from "react";
 
 export default function register1() {
+  const types = ["kdsdjas", "djkasdja", "dkoapdso"];
   return (
-    <div>
-    <div>
-  <h2>HTML Forms</h2>
-  <form action="/action_page.php">
-    <label htmlFor="fname">First name:</label><br />
-    <input type="text" id="fname" name="fname" defaultValue="John" /><br />
-    <label htmlFor="lname">Last name:</label><br />
-    <input type="text" id="lname" name="lname" defaultValue="Doe" /><br /><br />
-    <input type="submit" defaultValue="Submit" />
-  </form> 
-  <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
-</div>
+    <Container>
+      <Stack alignItems="center">
+        <Typography variant="h3">
+          สลัด
+        </Typography>
 
-    </div>
-  )
+        <img
+          style={{ textAlign: "center" }}
+          src="https://img2.thaipng.com/20180730/qt/kisspng-greek-salad-israeli-salad-spinach-salad-fattoush-v-crispy-strips-5b5ed58c3a41d1.1533177415329417082386.jpg"
+        />
+        <Button variant="contained">เพิ่ม</Button>
+
+        <Stack spacing={2}>
+          <Typography variant="h5" >
+            ประเภทอาหาร:
+          </Typography>
+
+          <Autocomplete
+            multiple
+            limitTags={2}
+            id="multiple-limit-tags"
+            options={types}
+            getOptionLabel={(option) => option}
+            defaultValue={[types[0]]}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="limitTags"
+                placeholder="Favorites"
+              />
+            )}
+            sx={{ width: "500px" }}
+          />
+        </Stack>
+      </Stack>
+    </Container>
+  );
 }
