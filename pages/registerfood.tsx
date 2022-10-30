@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  Grid,
   ImageListItem,
   Stack,
   TextField,
@@ -32,10 +33,10 @@ export default function registerfood() {
   ]);
   return (
     <Container>
-      <Stack alignItems="center">
-        <Stack spacing={3}>
-          <Typography variant="h3">คุณเหมาะกับอาหารแบบไหน?</Typography>
-          <Typography variant="h5">ประเภทอาหารที่ทานได้</Typography>
+      <Stack alignItems="center">   
+        <Stack sx={{ m: 3 }} spacing={3}>
+          <Typography variant="h5">คุณเหมาะกับอาหารแบบไหน?</Typography>
+          <Typography variant="h6">ประเภทอาหารที่ทาน</Typography>
           <Autocomplete
             multiple
             limitTags={5}
@@ -44,15 +45,11 @@ export default function registerfood() {
             getOptionLabel={(option) => option}
             defaultValue={[types[0]]}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="ประเภทอาหารที่ทานได้"
-                placeholder=""
-              />
+              <TextField {...params} label="ประเภทอาหารที่ทาน" placeholder="" />
             )}
-            sx={{ width: "80%" }}
+            sx={{ width: "100%" }}
           />
-          <Typography variant="h5">โรคประจำตัว</Typography>
+          <Typography variant="h6">โรคประจำตัว</Typography>
           <Autocomplete
             multiple
             limitTags={5}
@@ -63,9 +60,9 @@ export default function registerfood() {
             renderInput={(params) => (
               <TextField {...params} label="โรคประจำตัว" placeholder="" />
             )}
-            sx={{ width: "80%" }}
+            sx={{ width: "100%" }}
           />
-          <Typography variant="h5">อาหารที่แพ้</Typography>
+          <Typography variant="h6">วัตถุดิบที่แพ้</Typography>
           <Autocomplete
             multiple
             limitTags={5}
@@ -74,11 +71,11 @@ export default function registerfood() {
             getOptionLabel={(option) => option}
             defaultValue={[foodAllergys[0]]}
             renderInput={(params) => (
-              <TextField {...params} label="อาหารที่แพ้" placeholder="" />
+              <TextField {...params} label="วัตถุดิบที่แพ้" placeholder="" />
             )}
-            sx={{ width: "80%" }}
+            sx={{ width: "100%" }}
           />
-          <Typography variant="h5">อาหารที่หลีกเลี่ยง</Typography>
+          <Typography variant="h6">วัตถุดิบที่หลีกเลี่ยง</Typography>
           <Autocomplete
             multiple
             limitTags={5}
@@ -89,15 +86,16 @@ export default function registerfood() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="อาหารที่หลีกเลี่ยง"
+                label="วัตถุดิบที่หลีกเลี่ยง"
                 placeholder=""
               />
             )}
-            sx={{ width: "80%" }}
+            sx={{ width: "100%" }}
           />
-
-          <Button variant="contained">เพิ่ม</Button>
-        </Stack>
+         <Button variant="contained">เพิ่ม</Button>
+        </Stack> 
+            
+         
       </Stack>
     </Container>
   );
