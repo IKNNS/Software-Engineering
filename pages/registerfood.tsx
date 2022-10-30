@@ -9,37 +9,91 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { type } from "os";
-import React from "react";
+import React, { useState } from "react";
 
 export default function registerfood() {
+  const [congenitalDisease, setCongenitalDisease] = useState([
+    "โรคเบาหวาน",
+    "โรคไต",
+    "โรคเก๊า",
+  ]);
+  const [types, setTypes] = useState(["มัง", "เจ", "คลีน"]);
+  const [foodAllergys, setFoodAllergys] = useState([
+    "กุ้ง",
+    "เนื้อ",
+    "ไก่",
+    "นม",
+  ]);
+  const [dislikedFoods, setDislikedFoods] = useState([
+    "ข้าวผัด",
+    "ข้าวมันไก่",
+    "ไก่ทอด",
+    "สลัด",
+  ]);
   return (
     <Container>
       <Stack alignItems="center">
         <Stack spacing={3}>
           <Typography variant="h3">คุณเหมาะกับอาหารแบบไหน?</Typography>
           <Typography variant="h5">ประเภทอาหารที่ทานได้</Typography>
-          <TextField
-            id="outlined-basic"
-            label="ประเภทอาหารที่ทานได้"
-            variant="outlined"
+          <Autocomplete
+            multiple
+            limitTags={5}
+            id="multiple-limit-tags"
+            options={types}
+            getOptionLabel={(option) => option}
+            defaultValue={[types[0]]}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="ประเภทอาหารที่ทานได้"
+                placeholder=""
+              />
+            )}
+            sx={{ width: "600px" }}
           />
           <Typography variant="h5">โรคประจำตัว</Typography>
-          <TextField
-            id="outlined-basic"
-            label="โรคประจำตัว"
-            variant="outlined"
+          <Autocomplete
+            multiple
+            limitTags={5}
+            id="multiple-limit-tags"
+            options={congenitalDisease}
+            getOptionLabel={(option) => option}
+            defaultValue={[congenitalDisease[0]]}
+            renderInput={(params) => (
+              <TextField {...params} label="โรคประจำตัว" placeholder="" />
+            )}
+            sx={{ width: "600px" }}
           />
           <Typography variant="h5">อาหารที่แพ้</Typography>
-          <TextField
-            id="outlined-basic"
-            label="อาหารที่แพ้"
-            variant="outlined"
+          <Autocomplete
+            multiple
+            limitTags={5}
+            id="multiple-limit-tags"
+            options={foodAllergys}
+            getOptionLabel={(option) => option}
+            defaultValue={[foodAllergys[0]]}
+            renderInput={(params) => (
+              <TextField {...params} label="อาหารที่แพ้" placeholder="" />
+            )}
+            sx={{ width: "600px" }}
           />
           <Typography variant="h5">อาหารที่หลีกเลี่ยง</Typography>
-          <TextField
-            id="outlined-basic"
-            label="อาหารที่หลีกเลี่ยงหรือไม่ชอบทาน"
-            variant="outlined"
+          <Autocomplete
+            multiple
+            limitTags={5}
+            id="multiple-limit-tags"
+            options={dislikedFoods}
+            getOptionLabel={(option) => option}
+            defaultValue={[dislikedFoods[0]]}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="อาหารที่หลีกเลี่ยง"
+                placeholder=""
+              />
+            )}
+            sx={{ width: "600px" }}
           />
 
           <Button variant="contained">เพิ่ม</Button>
