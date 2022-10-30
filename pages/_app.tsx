@@ -4,9 +4,17 @@ import 'components/navbar'
 import LabelBottomNavigation from '../components/navbar'
 import { useRouter } from 'next/router'
 
+const pathname = [
+  '/home',
+  '/',
+  '/history',
+  '/account'
+]
+
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  if (router.pathname == '/home' || router.pathname == '/notification' || router.pathname == '/history' || router.pathname == '/account') {
+
+  if (pathname.includes(router.pathname)) {
     return (
       <div>
         <Component {...pageProps}/>
