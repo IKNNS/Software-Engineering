@@ -31,7 +31,7 @@ export default function registerfood() {
     "สลัด",
   ]);
   return (
-    <div>
+    <Container>
       <Stack alignItems="center">
         <Stack spacing={3}>
           <Typography variant="h3">คุณเหมาะกับอาหารแบบไหน?</Typography>
@@ -99,6 +99,6 @@ export default function registerfood() {
           <Button variant="contained">เพิ่ม</Button>
         </Stack>
       </Stack>
-    </div>
+    </Container>
   );
 }
