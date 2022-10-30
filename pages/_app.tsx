@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (router.pathname == '/home' || router.pathname == '/notification' || router.pathname == '/history' || router.pathname == '/account') {
     return (
       <div>
-        <Component {...pageProps} />
+        <Component {...pageProps}/>
         <LabelBottomNavigation />
       </div>
     )
