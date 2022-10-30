@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  if (router.pathname == '/home' || router.pathname == '/' || router.pathname == '/history' || router.pathname == '/account') {
+  if (router.pathname == '/home' || router.pathname == '/notification' || router.pathname == '/history' || router.pathname == '/account') {
     return (
       <div>
         <Component {...pageProps} />
