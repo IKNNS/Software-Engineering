@@ -50,7 +50,7 @@ export default function registerfood() {
                 placeholder=""
               />
             )}
-            sx={{ width: "600px" }}
+            sx={{ width: "80%" }}
           />
           <Typography variant="h5">โรคประจำตัว</Typography>
           <Autocomplete
@@ -63,7 +63,7 @@ export default function registerfood() {
             renderInput={(params) => (
               <TextField {...params} label="โรคประจำตัว" placeholder="" />
             )}
-            sx={{ width: "600px" }}
+            sx={{ width: "80%" }}
           />
           <Typography variant="h5">อาหารที่แพ้</Typography>
           <Autocomplete
@@ -76,7 +76,7 @@ export default function registerfood() {
             renderInput={(params) => (
               <TextField {...params} label="อาหารที่แพ้" placeholder="" />
             )}
-            sx={{ width: "600px" }}
+            sx={{ width: "80%" }}
           />
           <Typography variant="h5">อาหารที่หลีกเลี่ยง</Typography>
           <Autocomplete
@@ -93,7 +93,7 @@ export default function registerfood() {
                 placeholder=""
               />
             )}
-            sx={{ width: "600px" }}
+            sx={{ width: "80%" }}
           />
 
           <Button variant="contained">เพิ่ม</Button>
