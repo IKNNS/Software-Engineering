@@ -2,14 +2,20 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import 'components/navbar'
 import LabelBottomNavigation from '../components/navbar'
-import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+  if (router.pathname == '/home' || router.pathname == '/' || router.pathname == '/history' || router.pathname == '/account') {
+    return (
+      <div>
+        <Component {...pageProps} />
+        <LabelBottomNavigation />
+      </div>
+    )
+  }
   return <>
   <Component {...pageProps} />
-  <div>
-    <LabelBottomNavigation/>
-  </div>
   </>
 }
 
