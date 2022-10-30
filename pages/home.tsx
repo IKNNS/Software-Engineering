@@ -25,9 +25,9 @@ export default function BasicStack() {
     return (
         <div className={styles.container}>
             <div>
-                <Typography variant="h4" gutterBottom>
+                <h1 className={styles.title}>
                     Suggestion
-                </Typography>
+                </h1>
             </div>
             <Box sx={{ width: 'auto' }}>
                 <Stack spacing={2}
@@ -73,7 +73,6 @@ export default function BasicStack() {
         </div>
     );
 }
-<<<<<<< HEAD:pages/Home.tsx
 const foodData = [
     {
         src: SaladPic,
@@ -119,5 +118,3 @@ const foodData = [
     },
 
 ]
-=======
->>>>>>> de95a99fd3eda9f1f078d1cf78de354ee9f440f6:pages/home.tsx
