@@ -73,6 +73,7 @@ export default function BasicStack() {
         </div>
     );
 }
+<<<<<<< HEAD:pages/Home.tsx
 const foodData = [
     {
         src: SaladPic,
@@ -118,3 +119,5 @@ const foodData = [
     },
 
 ]
+=======
+>>>>>>> de95a99fd3eda9f1f078d1cf78de354ee9f440f6:pages/home.tsx
