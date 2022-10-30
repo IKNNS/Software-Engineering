@@ -1,0 +1,27 @@
+.round {
+    border-radius: 50%;
+    object-position: center top;
+    margin: 2px;
+  }
+  .topleft {
+    width: 40px;
+    height: 40px;
+    object-position: left top;
+    margin: 2px;
+  }
+  .topright {
+    width: 40px;
+    height: 40px;
+    object-position: right top;
+    margin: 2px;
+  }
+  .spacekill{
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+  }
+  .buttoncolor{
+    background: inherit;
+    border: 0px solid black;
+    box-sizing:border-box;
+  }
