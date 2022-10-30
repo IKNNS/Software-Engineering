@@ -40,9 +40,10 @@
 }
 
 .title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  line-height: 1.5;
+  font-size: 3rem;
 }
 
 .title,
@@ -71,6 +72,22 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+}
+
+.listContainer {
+  display: flex;
+  align-items: center;
+  width: 350px;
+}
+
+.listContainer .Right {
+  margin-left: 20px;
+}
+
+.listContainer .Left {
+  margin-left: 10px;
+  width: 35%;
+  height: 35%;
 }
 
 .card {
