@@ -36,9 +36,9 @@ export default function FixedBottomNavigation() {
           />
           <BottomNavigationAction
           label="Notification"
-          value="/"
+          value="/notification"
           icon={<NotificationsNoneIcon />} 
-          href = "/"
+          href = "/notification"
           />
           <BottomNavigationAction 
           label="History"
