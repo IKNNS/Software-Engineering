@@ -73,6 +73,22 @@
   max-width: 800px;
 }
 
+.listContainer {
+  display: flex;
+  align-items: center;
+  width: 350px;
+}
+
+.listContainer .Right {
+  margin-left: 20px;
+}
+
+.listContainer .Left {
+  margin-left: 10px;
+  width: 35%;
+  height: 35%;
+}
+
 .card {
   margin: 1rem;
   padding: 1.5rem;

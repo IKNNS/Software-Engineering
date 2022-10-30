@@ -13,6 +13,7 @@ const pathname = [
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
+
   if (pathname.includes(router.pathname)) {
     return (
       <div>
