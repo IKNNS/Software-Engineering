@@ -37,22 +37,14 @@ function sourcecheck(input) {
 const handleDelete = () => {
     console.info('You clicked the delete icon.');
 }
-const Userinfo=[{
-    ID:"No One",
-    name:"John Doe",
-    w:"50",
-    hi:"170",
-    gender:"male",
-    age:"25",
-}]
 const Home: NextPage = () => {
     let name, w, hi, gender, age;
     return (
         <div className={styles2.cutspace}>
             <p className={styles2.blank}></p>
             <div>
-                <IconButton href="https://www.google.com/"  className={position.topleft}> <SettingsIcon sx={{ fontSize: 40 }} /></IconButton>
-                <IconButton href="https://www.google.com/"  className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
+                <IconButton href="https://www.google.com/" className={position.topleft}> <SettingsIcon sx={{ fontSize: 40 }} /></IconButton>
+                <IconButton href="https://www.google.com/" className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
             </div>
             <div className={styles2.center}>
                 <div className={styles2.center}>
@@ -92,16 +84,12 @@ const Home: NextPage = () => {
                         </div>
                         <Autocomplete
                             multiple
-                            id="tags-filled"
+                            id="tags-readOnly"
                             options={top100Films.map((option) => option.title)}
-                            /*defaultValue={[top100Films[13].title]}*/
-                            freeSolo
+                            defaultValue={[top100Films[12].title, top100Films[13].title]}
+                            readOnly
                             renderInput={(params) => (
-                                <TextField {...params} label="readOnly" placeholder="Favorites" />
-                            )}
-                            renderInput={(params) => (
-                                <TextField {...params}
-                                />
+                                <TextField {...params}/>
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -111,16 +99,12 @@ const Home: NextPage = () => {
                         </div>
                         <Autocomplete
                             multiple
-                            id="tags-filled"
+                            id="tags-readOnly"
                             options={top100Films.map((option) => option.title)}
-                            /*defaultValue={[top100Films[13].title]}*/
-                            freeSolo
+                            defaultValue={[top100Films[12].title, top100Films[13].title]}
+                            readOnly
                             renderInput={(params) => (
-                                <TextField {...params} label="readOnly" placeholder="Favorites" />
-                            )}
-                            renderInput={(params) => (
-                                <TextField {...params}
-                                />
+                                <TextField {...params}/>
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -130,16 +114,12 @@ const Home: NextPage = () => {
                         </div>
                         <Autocomplete
                             multiple
-                            id="tags-filled"
+                            id="tags-readOnly"
                             options={top100Films.map((option) => option.title)}
-                            /*defaultValue={[top100Films[13].title]}*/
-                            freeSolo
+                            defaultValue={[top100Films[12].title, top100Films[13].title]}
+                            readOnly
                             renderInput={(params) => (
-                                <TextField {...params} label="readOnly" placeholder="Favorites" />
-                            )}
-                            renderInput={(params) => (
-                                <TextField {...params}
-                                />
+                                <TextField {...params}/>
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -149,16 +129,12 @@ const Home: NextPage = () => {
                         </div>
                         <Autocomplete
                             multiple
-                            id="tags-filled"
+                            id="tags-readOnly"
                             options={top100Films.map((option) => option.title)}
-                            /*defaultValue={[top100Films[13].title]}*/
-                            freeSolo
+                            defaultValue={[top100Films[12].title, top100Films[13].title]}
+                            readOnly
                             renderInput={(params) => (
-                                <TextField {...params} label="readOnly" placeholder="Favorites" />
-                            )}
-                            renderInput={(params) => (
-                                <TextField {...params}
-                                />
+                                <TextField {...params}/>
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -296,3 +272,11 @@ const top100Films = [
     { title: '3 Idiots', year: 2009 },
     { title: 'Monty Python and the Holy Grail', year: 1975 },
 ];
+const Userinfo = [{
+    ID: "No One",
+    name: "John Doe",
+    w: "50",
+    hi: "170",
+    gender: "male",
+    age: "25",
+}];
