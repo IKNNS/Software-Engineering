@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import styles from '../styles/Home.module.css'
 import Typography from '@mui/material/Typography';
 import Image from 'next/image'
-import SaladPic from './img/Salad_platter.jpg'
+import SaladPic from '/img/Salad_platter.jpg'
 import Button from '@mui/material/Button';
 
 
@@ -33,9 +33,10 @@ export default function BasicStack() {
                 <Stack spacing={2}
                     alignItems="center"
                     direction="column"
-                    justifyContent="flex-start">
+                    justifyContent="flex-start"
+                    >
                     {foodData.map((food) => (
-                        <Item>
+                        <Item key = {food.name}>
                             <div className={styles.listContainer} >
                                 <div className={styles.Left}>
                                     <Image src={food.src} />
