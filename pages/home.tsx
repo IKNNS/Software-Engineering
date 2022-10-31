@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import styles from '../styles/Home.module.css'
 import Typography from '@mui/material/Typography';
 import Image from 'next/image'
-import SaladPic from '/img/Salad_platter.jpg'
+import SaladPic from './img/Salad_platter.jpg'
 import Button from '@mui/material/Button';
 
 
