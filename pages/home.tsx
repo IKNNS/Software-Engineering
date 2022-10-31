@@ -34,9 +34,9 @@ export default function BasicStack() {
                     alignItems="center"
                     direction="column"
                     justifyContent="flex-start"
-                    >
+                >
                     {foodData.map((food) => (
-                        <Item key = {food.name}>
+                        <Item key={food.name}>
                             <div className={styles.listContainer} >
                                 <div className={styles.Left}>
                                     <Image src={food.src} />

@@ -48,9 +48,9 @@ export default function FixedBottomNavigation() {
           />
           <BottomNavigationAction 
           label="Account" 
-          value="/account"
+          value="/userinfo"
           icon={<AccountCircleIcon />} 
-          href = "/account"/>
+          href = "/userinfo"/>
         </BottomNavigation>
       </Paper>
     </Box>

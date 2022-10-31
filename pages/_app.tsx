@@ -8,7 +8,7 @@ const pathname = [
   '/home',
   '/notification',
   '/history',
-  '/account'
+  '/userinfo'
 ]
 
 function MyApp({ Component, pageProps }: AppProps) {
