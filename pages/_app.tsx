@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 const pathname = [
   '/home',
-  '/',
+  '/notification',
   '/history',
   '/account'
 ]
