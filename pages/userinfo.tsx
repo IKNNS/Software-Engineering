@@ -15,6 +15,8 @@ import profilePic from '../img/62649345_1245721135605302_8922629952818380800_n.j
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { blue } from '@mui/material/colors';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 function showtext(text) {
     return (text!=null? text : 'NULL');
@@ -26,6 +28,10 @@ function entertrigger(event){
 function sourcecheck(input){
     return (typeof(input)=="string"? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
 }
+const handleDelete = () => {
+      console.info('You clicked the delete icon.');
+}
+
 const Home: NextPage = () => {
     var source,door,gear;
     let name,w,hi,gender,age;
@@ -71,47 +77,26 @@ const Home: NextPage = () => {
                 </div>
                 <div className={styles2.box2}>
                 <div>
-                    <div className={tag.container} id="tag-container">
-                        <span className={tag.dashfolio}>tag1</span>
-                        <span className={tag.dashfolio}>tag2</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                    </div>
+                    <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
                 </div>
                 </div>
                 <div>
                 โรคประจำตัว:
                 </div>
                 <div className={styles2.box2}>
-                    <div className={tag.container} id="tag-container">
-                        <span className={tag.dashfolio}>tag1</span>
-                        <span className={tag.dashfolio}>tag2</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                    </div>
+                    <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
                 </div>
                 <div>
                 อาหารที่แพ้:
                 </div>
                 <div className={styles2.box2}>
-                    <div className={tag.container} id="tag-container">
-                        <span className={tag.dashfolio}>tag1</span>
-                        <span className={tag.dashfolio}>tag2</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                    </div>
+                    <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
                 </div>
                 <div>
                 สิ่งที่หลีกเลี่ยง:
                 </div>
                 <div className={styles2.box2}>
-                <div className={tag.container} id="tag-container">
-                        <span className={tag.dashfolio}>tag1</span>
-                        <span className={tag.dashfolio}>tag2</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                        <span className={tag.dashfolio}>tag3</span>
-                    </div>
+                <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
                 </div>
             </div>
         </div>
