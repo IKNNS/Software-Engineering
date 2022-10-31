@@ -16,19 +16,17 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { blue } from '@mui/material/colors';
 
-function showtext(text) {
+function showtext(text:String) {
     return (text!=null? text : 'NULL');
-  }
-function entertrigger(event){
-    if (event.key === "Enter") {
-      }
 }
-function sourcecheck(input){
-    return (typeof(input)=="string"? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
-}
+
 const Home: NextPage = () => {
-    var source,door,gear;
-    let name,w,hi,gender,age;
+    const name : String = '';
+    const w : String = '';
+    const hi : String = '';
+    const age : String = '';
+    const gender : String = '';
+    // let name,w,hi,gender,age;
     return (
         <div className={styles2.cutspace}>
             <p className={styles2.blank}></p>
