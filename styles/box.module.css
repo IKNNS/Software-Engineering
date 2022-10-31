@@ -1,6 +1,6 @@
 .box{
     background: #fafafa;
-    margin: 2px;
+    margin: 5px;
     padding: 1.5rem;
     text-align: left;
     color: inherit;
@@ -49,7 +49,7 @@
   margin: 5px;
 }
 .whitespace{
-  margin: 153px;
+  margin: 150px;
   width: 0px;
   height: 1px;
   border: 0px solid black;

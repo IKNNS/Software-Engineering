@@ -4,12 +4,18 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
 import { color } from '@mui/system';
-import { colors } from '@mui/material';
+import { Box, colors } from '@mui/material';
 import styles2 from '../styles/box.module.css'
 import Script from 'next/script';
 import tag from '../styles/tag.module.css'
 import pic from '../styles/pic.module.css'
 import position from '../styles/position.module.css'
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+import profilePic from '../img/62649345_1245721135605302_8922629952818380800_n.jpg'
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { blue } from '@mui/material/colors';
+
 function showtext(text) {
     return (text!=null? text : 'NULL');
   }
@@ -18,19 +24,18 @@ function entertrigger(event){
       }
 }
 function sourcecheck(input){
-    return (typeof(input)=="string"? input : "https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg");
+    return (typeof(input)=="string"? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
 }
 const Home: NextPage = () => {
     var source,door,gear;
     let name,w,hi,gender,age;
-    gear="https://cdn-icons-png.flaticon.com/512/126/126472.png";
-    door="https://www.iconpacks.net/icons/2/free-exit-icon-2860-thumb.png"
     return (
-        <div>
-            <label><button className={pic.buttoncolor}><img className={pic.spacekill}src={sourcecheck(gear)} alt="gear" width="30" height="30" /></button><label className={styles2.whitespace}></label><button className={pic.buttoncolor}><img className={pic.spacekill} src={sourcecheck(door)} alt="door" width="30" height="30" /></button></label>
+        <div className={styles2.cutspace}>
+            <p className={styles2.blank}></p>
+            <label><SettingsIcon sx={{ fontSize: 40, color: blue[800]}} href="https://www.google.com/"/><label className={styles2.whitespace}/><LogoutIcon sx={{ fontSize: 40, color: blue[800]}}/></label>
         <div className={styles2.center}>
             <div className={styles2.center}>
-                <img className={pic.round}src={sourcecheck(source)} alt="profile" width="150" height="150" />
+                <Image src={profilePic} className={pic.round} width={150} height={150}/>
                 <h1 className={styles2.cutspace}>{showtext(name)}</h1>
             </div>
         <div  className={styles2.box}>
@@ -70,7 +75,6 @@ const Home: NextPage = () => {
                         <span className={tag.dashfolio}>tag1</span>
                         <span className={tag.dashfolio}>tag2</span>
                         <span className={tag.dashfolio}>tag3</span>
-                        <button className={tag.add}>+</button>
                     </div>
                 </div>
                 </div>
@@ -82,7 +86,6 @@ const Home: NextPage = () => {
                         <span className={tag.dashfolio}>tag1</span>
                         <span className={tag.dashfolio}>tag2</span>
                         <span className={tag.dashfolio}>tag3</span>
-                        <button className={tag.add}>+</button>
                     </div>
                 </div>
                 <div>
@@ -93,7 +96,6 @@ const Home: NextPage = () => {
                         <span className={tag.dashfolio}>tag1</span>
                         <span className={tag.dashfolio}>tag2</span>
                         <span className={tag.dashfolio}>tag3</span>
-                        <button className={tag.add}>+</button>
                     </div>
                 </div>
                 <div>
@@ -109,7 +111,6 @@ const Home: NextPage = () => {
                         <span className={tag.dashfolio}>tag3</span>
                         <span className={tag.dashfolio}>tag3</span>
                         <span className={tag.dashfolio}>tag3</span>
-                        <button className={tag.add}>+</button>
                     </div>
                 </div>
             </div>
