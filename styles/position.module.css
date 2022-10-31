@@ -1,6 +1,8 @@
 .topleft{
-    position: top left;
+    margin-left: 0%;
+    margin-right: 35%;
 }
 .topright{
-    position: top right;
+    margin-right: 0%;
+    margin-left: 35%;
 }
