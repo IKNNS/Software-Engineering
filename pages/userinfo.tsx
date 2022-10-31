@@ -12,96 +12,287 @@ import pic from '../styles/pic.module.css'
 import position from '../styles/position.module.css'
 import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
 import profilePic from '../img/62649345_1245721135605302_8922629952818380800_n.jpg'
+import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { blue } from '@mui/material/colors';
+import { lightBlue } from '@mui/material/colors';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import { Container } from "@mui/system";
+import { type } from "os";
+import React, { useState } from "react";
+import { getNamedRouteRegex } from 'next/dist/shared/lib/router/utils/route-regex';
 function showtext(text) {
-    return (text!=null? text : 'NULL');
-  }
-function entertrigger(event){
-    if (event.key === "Enter") {
-      }
+    return (text != null ? text : 'NULL');
 }
-function sourcecheck(input){
-    return (typeof(input)=="string"? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
+function entertrigger(event) {
+    if (event.key === "Enter") {
+    }
+}
+function sourcecheck(input) {
+    return (typeof (input) == "string" ? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
 }
 const handleDelete = () => {
-      console.info('You clicked the delete icon.');
+    console.info('You clicked the delete icon.');
 }
-
+const Userinfo=[{
+    ID:"No One",
+    name:"John Doe",
+    w:"50",
+    hi:"170",
+    gender:"male",
+    age:"25",
+}]
 const Home: NextPage = () => {
-    var source,door,gear;
-    let name,w,hi,gender,age;
+    let name, w, hi, gender, age;
     return (
         <div className={styles2.cutspace}>
             <p className={styles2.blank}></p>
-            <label><SettingsIcon sx={{ fontSize: 40, color: blue[800]}} href="https://www.google.com/"/><label className={styles2.whitespace}/><LogoutIcon sx={{ fontSize: 40, color: blue[800]}}/></label>
-        <div className={styles2.center}>
-            <div className={styles2.center}>
-                <Image src={profilePic} className={pic.round} width={150} height={150}/>
-                <h1 className={styles2.cutspace}>{showtext(name)}</h1>
-            </div>
-        <div  className={styles2.box}>
             <div>
-            ข้อมูลส่วนตัว
-                <div>
-                ชื่อผู้ใช้งาน:
+                <IconButton href="https://www.google.com/"  className={position.topleft}> <SettingsIcon sx={{ fontSize: 40 }} /></IconButton>
+                <IconButton href="https://www.google.com/"  className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
+            </div>
+            <div className={styles2.center}>
+                <div className={styles2.center}>
+                    <Image src={profilePic} className={pic.round} width={150} height={150} />
+                    <h1 className={styles2.cutspace}>{showtext(Userinfo[0].ID)}</h1>
                 </div>
-                <div className={styles2.box2}>
-                    {showtext(name)}
-                </div>
-                <p className={styles2.blank}></p>
-                <p className={styles2.blank}></p>
-                <div>
-                อายุ:
-                <label className={styles2.code}>{showtext(age)}</label>
-                เพศ:
-                <label className={styles2.code}>{showtext(gender)}</label>
-                </div>
-                <p className={styles2.blank}></p>
-                <p className={styles2.blank}></p>
-                <p className={styles2.blank}></p>
-                <p className={styles2.blank}></p>
-                <div>
-                น้ำหนัก:
-                <label className={styles2.code}>{showtext(w)}</label>
-                ส่วนสูง:
-                <label className={styles2.code}>{showtext(hi)}</label>
-                </div>
-                <p className={styles2.blank}></p>
-                <div>
-                รูปแบบการกิน:
-                </div>
-                <div className={styles2.box2}>
-                <div>
-                    <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
-                </div>
-                </div>
-                <div>
-                โรคประจำตัว:
-                </div>
-                <div className={styles2.box2}>
-                    <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
-                </div>
-                <div>
-                อาหารที่แพ้:
-                </div>
-                <div className={styles2.box2}>
-                    <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
-                </div>
-                <div>
-                สิ่งที่หลีกเลี่ยง:
-                </div>
-                <div className={styles2.box2}>
-                <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
+                <div className={styles2.box}>
+                    <div>
+                        ข้อมูลส่วนตัว
+                        <div>
+                            ชื่อผู้ใช้งาน:
+                        </div>
+                        <div className={styles2.box2}>
+                            {showtext(Userinfo[0].name)}
+                        </div>
+                        <p className={styles2.blank}></p>
+                        <p className={styles2.blank}></p>
+                        <div>
+                            อายุ:
+                            <label className={styles2.code}>{showtext(Userinfo[0].age)}</label>
+                            เพศ:
+                            <label className={styles2.code}>{showtext(Userinfo[0].gender)}</label>
+                        </div>
+                        <p className={styles2.blank}></p>
+                        <p className={styles2.blank}></p>
+                        <p className={styles2.blank}></p>
+                        <p className={styles2.blank}></p>
+                        <div>
+                            น้ำหนัก:
+                            <label className={styles2.code}>{showtext(Userinfo[0].w)}</label>
+                            ส่วนสูง:
+                            <label className={styles2.code}>{showtext(Userinfo[0].hi)}</label>
+                        </div>
+                        <p className={styles2.blank}></p>
+                        <div>
+                            รูปแบบการกิน:
+                        </div>
+                        <Autocomplete
+                            multiple
+                            id="tags-filled"
+                            options={top100Films.map((option) => option.title)}
+                            /*defaultValue={[top100Films[13].title]}*/
+                            freeSolo
+                            renderInput={(params) => (
+                                <TextField {...params} label="readOnly" placeholder="Favorites" />
+                            )}
+                            renderInput={(params) => (
+                                <TextField {...params}
+                                />
+                            )}
+                            disabled={true}
+                            className={styles2.box3}
+                        />
+                        <div>
+                            โรคประจำตัว:
+                        </div>
+                        <Autocomplete
+                            multiple
+                            id="tags-filled"
+                            options={top100Films.map((option) => option.title)}
+                            /*defaultValue={[top100Films[13].title]}*/
+                            freeSolo
+                            renderInput={(params) => (
+                                <TextField {...params} label="readOnly" placeholder="Favorites" />
+                            )}
+                            renderInput={(params) => (
+                                <TextField {...params}
+                                />
+                            )}
+                            disabled={true}
+                            className={styles2.box3}
+                        />
+                        <div>
+                            อาหารที่แพ้:
+                        </div>
+                        <Autocomplete
+                            multiple
+                            id="tags-filled"
+                            options={top100Films.map((option) => option.title)}
+                            /*defaultValue={[top100Films[13].title]}*/
+                            freeSolo
+                            renderInput={(params) => (
+                                <TextField {...params} label="readOnly" placeholder="Favorites" />
+                            )}
+                            renderInput={(params) => (
+                                <TextField {...params}
+                                />
+                            )}
+                            disabled={true}
+                            className={styles2.box3}
+                        />
+                        <div>
+                            สิ่งที่หลีกเลี่ยง:
+                        </div>
+                        <Autocomplete
+                            multiple
+                            id="tags-filled"
+                            options={top100Films.map((option) => option.title)}
+                            /*defaultValue={[top100Films[13].title]}*/
+                            freeSolo
+                            renderInput={(params) => (
+                                <TextField {...params} label="readOnly" placeholder="Favorites" />
+                            )}
+                            renderInput={(params) => (
+                                <TextField {...params}
+                                />
+                            )}
+                            disabled={true}
+                            className={styles2.box3}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
     )
 }
 export default Home
+const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },
+    { title: 'The Godfather: Part II', year: 1974 },
+    { title: 'The Dark Knight', year: 2008 },
+    { title: '12 Angry Men', year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: 'Pulp Fiction', year: 1994 },
+    {
+        title: 'The Lord of the Rings: The Return of the King',
+        year: 2003,
+    },
+    { title: 'The Good, the Bad and the Ugly', year: 1966 },
+    { title: 'Fight Club', year: 1999 },
+    {
+        title: 'The Lord of the Rings: The Fellowship of the Ring',
+        year: 2001,
+    },
+    {
+        title: 'Star Wars: Episode V - The Empire Strikes Back',
+        year: 1980,
+    },
+    { title: 'Forrest Gump', year: 1994 },
+    { title: 'Inception', year: 2010 },
+    {
+        title: 'The Lord of the Rings: The Two Towers',
+        year: 2002,
+    },
+    { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
+    { title: 'Goodfellas', year: 1990 },
+    { title: 'The Matrix', year: 1999 },
+    { title: 'Seven Samurai', year: 1954 },
+    {
+        title: 'Star Wars: Episode IV - A New Hope',
+        year: 1977,
+    },
+    { title: 'City of God', year: 2002 },
+    { title: 'Se7en', year: 1995 },
+    { title: 'The Silence of the Lambs', year: 1991 },
+    { title: "It's a Wonderful Life", year: 1946 },
+    { title: 'Life Is Beautiful', year: 1997 },
+    { title: 'The Usual Suspects', year: 1995 },
+    { title: 'Léon: The Professional', year: 1994 },
+    { title: 'Spirited Away', year: 2001 },
+    { title: 'Saving Private Ryan', year: 1998 },
+    { title: 'Once Upon a Time in the West', year: 1968 },
+    { title: 'American History X', year: 1998 },
+    { title: 'Interstellar', year: 2014 },
+    { title: 'Casablanca', year: 1942 },
+    { title: 'City Lights', year: 1931 },
+    { title: 'Psycho', year: 1960 },
+    { title: 'The Green Mile', year: 1999 },
+    { title: 'The Intouchables', year: 2011 },
+    { title: 'Modern Times', year: 1936 },
+    { title: 'Raiders of the Lost Ark', year: 1981 },
+    { title: 'Rear Window', year: 1954 },
+    { title: 'The Pianist', year: 2002 },
+    { title: 'The Departed', year: 2006 },
+    { title: 'Terminator 2: Judgment Day', year: 1991 },
+    { title: 'Back to the Future', year: 1985 },
+    { title: 'Whiplash', year: 2014 },
+    { title: 'Gladiator', year: 2000 },
+    { title: 'Memento', year: 2000 },
+    { title: 'The Prestige', year: 2006 },
+    { title: 'The Lion King', year: 1994 },
+    { title: 'Apocalypse Now', year: 1979 },
+    { title: 'Alien', year: 1979 },
+    { title: 'Sunset Boulevard', year: 1950 },
+    {
+        title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
+        year: 1964,
+    },
+    { title: 'The Great Dictator', year: 1940 },
+    { title: 'Cinema Paradiso', year: 1988 },
+    { title: 'The Lives of Others', year: 2006 },
+    { title: 'Grave of the Fireflies', year: 1988 },
+    { title: 'Paths of Glory', year: 1957 },
+    { title: 'Django Unchained', year: 2012 },
+    { title: 'The Shining', year: 1980 },
+    { title: 'WALL·E', year: 2008 },
+    { title: 'American Beauty', year: 1999 },
+    { title: 'The Dark Knight Rises', year: 2012 },
+    { title: 'Princess Mononoke', year: 1997 },
+    { title: 'Aliens', year: 1986 },
+    { title: 'Oldboy', year: 2003 },
+    { title: 'Once Upon a Time in America', year: 1984 },
+    { title: 'Witness for the Prosecution', year: 1957 },
+    { title: 'Das Boot', year: 1981 },
+    { title: 'Citizen Kane', year: 1941 },
+    { title: 'North by Northwest', year: 1959 },
+    { title: 'Vertigo', year: 1958 },
+    {
+        title: 'Star Wars: Episode VI - Return of the Jedi',
+        year: 1983,
+    },
+    { title: 'Reservoir Dogs', year: 1992 },
+    { title: 'Braveheart', year: 1995 },
+    { title: 'M', year: 1931 },
+    { title: 'Requiem for a Dream', year: 2000 },
+    { title: 'Amélie', year: 2001 },
+    { title: 'A Clockwork Orange', year: 1971 },
+    { title: 'Like Stars on Earth', year: 2007 },
+    { title: 'Taxi Driver', year: 1976 },
+    { title: 'Lawrence of Arabia', year: 1962 },
+    { title: 'Double Indemnity', year: 1944 },
+    {
+        title: 'Eternal Sunshine of the Spotless Mind',
+        year: 2004,
+    },
+    { title: 'Amadeus', year: 1984 },
+    { title: 'To Kill a Mockingbird', year: 1962 },
+    { title: 'Toy Story 3', year: 2010 },
+    { title: 'Logan', year: 2017 },
+    { title: 'Full Metal Jacket', year: 1987 },
+    { title: 'Dangal', year: 2016 },
+    { title: 'The Sting', year: 1973 },
+    { title: '2001: A Space Odyssey', year: 1968 },
+    { title: "Singin' in the Rain", year: 1952 },
+    { title: 'Toy Story', year: 1995 },
+    { title: 'Bicycle Thieves', year: 1948 },
+    { title: 'The Kid', year: 1921 },
+    { title: 'Inglourious Basterds', year: 2009 },
+    { title: 'Snatch', year: 2000 },
+    { title: '3 Idiots', year: 2009 },
+    { title: 'Monty Python and the Holy Grail', year: 1975 },
+];
