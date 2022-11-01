@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import { ChangeEventHandler, useState } from 'react';
 
-const Home: NextPage = () => {
+const Login: NextPage = () => {
 
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -64,4 +64,4 @@ const Home: NextPage = () => {
 
 
 
-export default Home
+export default Login

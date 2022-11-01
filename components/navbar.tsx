@@ -13,7 +13,6 @@ import { useRouter } from 'next/router'
 export default function FixedBottomNavigation() {
   const ref = React.useRef<HTMLDivElement>(null);
   const router = useRouter()
-  console.log('current path', router.pathname)
   const [value, setValue] = React.useState(router.pathname);
   
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {

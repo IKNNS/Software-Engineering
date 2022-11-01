@@ -38,17 +38,17 @@ const handleDelete = () => {
     console.info('You clicked the delete icon.');
 }
 const Home: NextPage = () => {
-    let name, w, hi, gender, age;
+    let name, w, hi, gender, age: any;
     return (
         <div className={styles2.cutspace}>
             <p className={styles2.blank}></p>
             <div>
                 <IconButton href="https://www.google.com/" className={position.topleft}> <SettingsIcon sx={{ fontSize: 40 }} /></IconButton>
-                <IconButton href="https://www.google.com/" className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
+                <IconButton href="/login" className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
             </div>
             <div className={styles2.center}>
                 <div className={styles2.center}>
-                    <Image src={profilePic} className={pic.round} width={150} height={150} />
+                    <Image src={profilePic} className={pic.round} width={150} height={150} alt='image'/>
                     <h1 className={styles2.cutspace}>{showtext(Userinfo[0].ID)}</h1>
                 </div>
                 <div className={styles2.box}>
