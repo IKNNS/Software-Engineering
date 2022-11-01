@@ -24,14 +24,14 @@ import { Container } from "@mui/system";
 import { type } from "os";
 import React, { useState } from "react";
 import { getNamedRouteRegex } from 'next/dist/shared/lib/router/utils/route-regex';
-function showtext(text) {
+function showtext(text: string | null) {
     return (text != null ? text : 'NULL');
 }
-function entertrigger(event) {
+function entertrigger(event: any) {
     if (event.key === "Enter") {
     }
 }
-function sourcecheck(input) {
+function sourcecheck(input: any) {
     return (typeof (input) == "string" ? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
 }
 const handleDelete = () => {
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -134,7 +134,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
