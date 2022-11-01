@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             <p className={styles2.blank}></p>
             <div>
                 <IconButton href="https://www.google.com/" className={position.topleft}> <SettingsIcon sx={{ fontSize: 40 }} /></IconButton>
-                <IconButton href="https://www.google.com/" className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
+                <IconButton href="/login" className={position.topright}><LogoutIcon sx={{ fontSize: 40 }} /></IconButton>
             </div>
             <div className={styles2.center}>
                 <div className={styles2.center}>
