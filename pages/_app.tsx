@@ -17,13 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (pathname.includes(router.pathname)) {
     return (
       <div>
-        <Component {...pageProps}/>
+        <Component {...pageProps} />
         <LabelBottomNavigation />
       </div>
     )
   }
   return <>
-  <Component {...pageProps} />
+    <Component {...pageProps} />
   </>
 }
 

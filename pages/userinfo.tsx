@@ -24,21 +24,21 @@ import { Container } from "@mui/system";
 import { type } from "os";
 import React, { useState } from "react";
 import { getNamedRouteRegex } from 'next/dist/shared/lib/router/utils/route-regex';
-function showtext(text: any) {
+function showtext(text: string | null) {
     return (text != null ? text : 'NULL');
 }
-function entertrigger(event : any) {
+function entertrigger(event: any) {
     if (event.key === "Enter") {
     }
 }
-function sourcecheck(input : any) {
+function sourcecheck(input: any) {
     return (typeof (input) == "string" ? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
 }
 const handleDelete = () => {
     console.info('You clicked the delete icon.');
 }
 const Home: NextPage = () => {
-    let name, w, hi, gender, age : any;
+    let name, w, hi, gender, age: any;
     return (
         <div className={styles2.cutspace}>
             <p className={styles2.blank}></p>
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
             </div>
             <div className={styles2.center}>
                 <div className={styles2.center}>
-                    <Image src={profilePic} className={pic.round} width={150} height={150} />
+                    <Image src={profilePic} className={pic.round} width={150} height={150} alt='image'/>
                     <h1 className={styles2.cutspace}>{showtext(Userinfo[0].ID)}</h1>
                 </div>
                 <div className={styles2.box}>
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
@@ -134,7 +134,7 @@ const Home: NextPage = () => {
                             defaultValue={[top100Films[12].title, top100Films[13].title]}
                             readOnly
                             renderInput={(params) => (
-                                <TextField {...params}/>
+                                <TextField {...params} />
                             )}
                             disabled={true}
                             className={styles2.box3}
