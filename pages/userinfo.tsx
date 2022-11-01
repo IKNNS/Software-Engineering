@@ -24,21 +24,21 @@ import { Container } from "@mui/system";
 import { type } from "os";
 import React, { useState } from "react";
 import { getNamedRouteRegex } from 'next/dist/shared/lib/router/utils/route-regex';
-function showtext(text) {
+function showtext(text: any) {
     return (text != null ? text : 'NULL');
 }
-function entertrigger(event) {
+function entertrigger(event : any) {
     if (event.key === "Enter") {
     }
 }
-function sourcecheck(input) {
+function sourcecheck(input : any) {
     return (typeof (input) == "string" ? input : "/62649345_1245721135605302_8922629952818380800_n.jpg");
 }
 const handleDelete = () => {
     console.info('You clicked the delete icon.');
 }
 const Home: NextPage = () => {
-    let name, w, hi, gender, age;
+    let name, w, hi, gender, age : any;
     return (
         <div className={styles2.cutspace}>
             <p className={styles2.blank}></p>
