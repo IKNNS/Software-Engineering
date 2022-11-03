@@ -3,7 +3,6 @@ import Image from 'next/image'
 import styles2 from '../styles/box.module.css'
 import pic from '../styles/pic.module.css'
 import position from '../styles/position.module.css'
-import profilePic from '../img/62649345_1245721135605302_8922629952818380800_n.jpg'
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -44,7 +43,7 @@ const Account: NextPage = () => {
             </div>
             <div className={styles2.center}>
                 <div className={styles2.center}>
-                    <Image src={profilePic} className={pic.round} width={150} height={150} alt='image' />
+                    <Image src={'/fuang.jpg'} className={pic.round} width={150} height={150} alt='image' />
                     <h1 className={styles2.cutspace}>{showtext(Userinfo.ID)}</h1>
                 </div>
                 <div className={styles2.box}>
@@ -81,8 +80,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options= {[UserFood.typeOfFood]}
-                            defaultValue={[UserFood.typeOfFood]}
+                            options= {[UserFood.typeOfFood.map((foodType) => foodType)]}
+                            defaultValue={[UserFood.typeOfFood.map((foodType) => foodType)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
@@ -96,8 +95,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options={[UserFood.disease]}
-                            defaultValue={[UserFood.disease]}
+                            options={[UserFood.disease.map(disease => disease)]}
+                            defaultValue={[UserFood.disease.map(disease => disease)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
@@ -111,8 +110,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options={[UserFood.allergy]}
-                            defaultValue={[UserFood.allergy]}
+                            options={[UserFood.allergy.map((allergy) => allergy)]}
+                            defaultValue={[UserFood.allergy.map((allergy) => allergy)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
@@ -126,8 +125,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options={[UserFood.avoid]}
-                            defaultValue={[UserFood.avoid]}
+                            options={[UserFood.avoid.map((avoid) => avoid)]}
+                            defaultValue={[UserFood.avoid.map((avoid) => avoid)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />

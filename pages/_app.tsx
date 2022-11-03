@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import 'components/navbar'
 import LabelBottomNavigation from '../components/navbar'
 import { useRouter } from 'next/router'
+import React from 'react'
 
 const pathname = [
   '/home',
