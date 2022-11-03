@@ -81,8 +81,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options= {[UserFood.typeOfFood]}
-                            defaultValue={[UserFood.typeOfFood]}
+                            options= {[UserFood.typeOfFood.map((foodType) => foodType)]}
+                            defaultValue={[UserFood.typeOfFood.map((foodType) => foodType)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
@@ -96,8 +96,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options={[UserFood.disease]}
-                            defaultValue={[UserFood.disease]}
+                            options={[UserFood.disease.map(disease => disease)]}
+                            defaultValue={[UserFood.disease.map(disease => disease)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
@@ -111,8 +111,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options={[UserFood.allergy]}
-                            defaultValue={[UserFood.allergy]}
+                            options={[UserFood.allergy.map((allergy) => allergy)]}
+                            defaultValue={[UserFood.allergy.map((allergy) => allergy)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
@@ -126,8 +126,8 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options={[UserFood.avoid]}
-                            defaultValue={[UserFood.avoid]}
+                            options={[UserFood.avoid.map((avoid) => avoid)]}
+                            defaultValue={[UserFood.avoid.map((avoid) => avoid)]}
                             readOnly
                             renderInput={(params) => (
                                 <TextField {...params} />
