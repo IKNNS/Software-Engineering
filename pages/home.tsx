@@ -36,7 +36,7 @@ export default function BasicStack() {
                     justifyContent="flex-start"
                 >
                     {foodData.map((food) => (
-                        <Item key={food.name}>
+                        <Item key={food.name} sx={{ width: '100%' }}>
                             <div className={styles.listContainer} >
                                 <div className={styles.Left}>
                                     <Image src={food.src} />
