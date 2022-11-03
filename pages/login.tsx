@@ -66,7 +66,7 @@ const Login: NextPage = () => {
         router.push('/home')
         return <Loading />
     }
-
+    
     return (
 
         <div className={` w-sceen h-screen flex flex-col bg-bg justify-center items-center`}>
