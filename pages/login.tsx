@@ -1,3 +1,4 @@
+import React from 'react';
 import type { NextPage } from 'next'
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
@@ -48,14 +49,14 @@ const Login: NextPage = () => {
             console.log("Error");
         else
             signInWithAccount();
-            console.log("OK");
+        console.log("OK");
 
     }
 
     const goToRegis = () => {
         router.push('/regis')
     }
-    
+
     if (loading) {
         return <div>loading...</div>
     }
@@ -66,7 +67,7 @@ const Login: NextPage = () => {
     }
 
     return (
-
+        
         <div className={` px-8 pt-10 pb-20 w-sceen h-screen flex flex-col bg-primary justify-between items-center`}>
             <div className='text-black font-bold text-3xl '>ลงชื่อเข้าใช้</div>
             <form className=' w-full flex flex-col justify-center items-center' onSubmit={(e) => { e.preventDefault(); onSubmit() }}>

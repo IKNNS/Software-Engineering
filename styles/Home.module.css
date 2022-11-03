@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .main {
@@ -78,11 +78,7 @@
   display: flex;
   align-items: center;
   margin-left: 10;
-  width: 350px;
-}
-
-.listContainer .Right {
-  margin-left: 20px;
+  margin-right: 10;
 }
 
 .listContainer .Left {
@@ -90,7 +86,19 @@
   width: 35%;
   height: 35%;
 }
-
+.listContainer .Center {
+  margin-left: 20px;
+  width: 100%;
+}
+.listContainer .Right {
+  margin-left: 20px;
+  width: 35%;
+  height: 35%;
+}
+.listContainer .Img {
+  width: 100px;
+  height: 100px;
+}
 .card {
   margin: 1rem;
   padding: 1.5rem;

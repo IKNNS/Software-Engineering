@@ -3,7 +3,6 @@ import Image from 'next/image'
 import styles2 from '../styles/box.module.css'
 import pic from '../styles/pic.module.css'
 import position from '../styles/position.module.css'
-import profilePic from '../img/62649345_1245721135605302_8922629952818380800_n.jpg'
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -44,7 +43,7 @@ const Account: NextPage = () => {
             </div>
             <div className={styles2.center}>
                 <div className={styles2.center}>
-                    <Image src={profilePic} className={pic.round} width={150} height={150} alt='image' />
+                    <Image src={'/fuang.jpg'} className={pic.round} width={150} height={150} alt='image' />
                     <h1 className={styles2.cutspace}>{showtext(Userinfo.ID)}</h1>
                 </div>
                 <div className={styles2.box}>

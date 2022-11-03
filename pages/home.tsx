@@ -9,7 +9,6 @@ import { styled } from '@mui/material/styles';
 import styles from '../styles/Home.module.css'
 import Typography from '@mui/material/Typography';
 import Image from 'next/image'
-import SaladPic from '/img/Salad_platter.jpg'
 import Button from '@mui/material/Button';
 
 
@@ -33,28 +32,32 @@ export default function BasicStack() {
                 <Stack spacing={2}
                     alignItems="center"
                     direction="column"
-                    justifyContent="flex-start"
+                    justifyContent="flex-end"
                 >
                     {foodData.map((food) => (
-                        <Item key={food.name}>
+                        <Item key={food.name} sx={{ width: '100%' }}>
                             <div className={styles.listContainer} >
                                 <div className={styles.Left}>
-                                    <Image src={food.src} />
+                                    <Image src={food.src} width={100} height={100} />
                                 </div>
-                                <div className={styles.Right}>
+                                <div className={styles.Center}>
                                     <Typography className={styles.foodName}
+                                        textAlign="start"
                                         variant="body1"
                                         component="p"
                                         alignItems={'left'}
                                         gutterBottom>{food.name}
                                     </Typography>
                                     <Typography className={styles.foodEnergy}
+                                        textAlign="start"
                                         variant="body2"
                                         component="p"
                                         alignItems={'left'}
                                         gutterBottom>{"energy : " + food.energy + " kcal"}
                                     </Typography>
-                                    <Button variant="contained">Details</Button>
+                                </div>
+                                <div className={styles.Right}>
+                                    <Button variant="contained">แดกแล้ว</Button>
                                 </div>
                             </div>
                         </Item>
@@ -76,42 +79,42 @@ export default function BasicStack() {
 }
 const foodData = [
     {
-        src: SaladPic,
+        src: '/Salad_platter.jpg',
         name: "Salad",
         energy: "80",
         type: ["appetizer", "vegetarian", "vegan"],
         ingredient: ["lettuce", "tomato", "cucumber", "onion", "carrot", "chicken", "egg", "cheese", "dressing"],
     },
     {
-        src: SaladPic,
+        src: '/Salad_platter.jpg',
         name: "Spaghetti Carbonara",
         energy: "680",
         type: ["main course", "chese", "pasta"],
         ingredient: ["pasta", "bacon", "egg", "cheese", "cream"],
     },
     {
-        src: SaladPic,
+        src: '/Salad_platter.jpg',
         name: "Banana",
         energy: "100",
         type: ["dessert", "fruit"],
         ingredient: ["banana"],
     },
     {
-        src: SaladPic,
+        src: '/Salad_platter.jpg',
         name: "Pancake",
         energy: "300",
         type: ["dessert", "breakfast"],
         ingredient: ["flour", "egg", "milk", "butter", "sugar"],
     },
     {
-        src: SaladPic,
+        src: '/Salad_platter.jpg',
         name: "Meat Steak",
         energy: "500",
         type: ["main course", "meat"],
         ingredient: ["beef", "salt", "pepper", "oil"],
     },
     {
-        src: SaladPic,
+        src: '/Salad_platter.jpg',
         name: "Chicken Steak",
         energy: "400",
         type: ["main course", "meat"],
