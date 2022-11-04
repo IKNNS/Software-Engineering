@@ -1,3 +1,4 @@
+import React from 'react';
 import type { NextPage } from 'next'
 import Button from '@mui/material/Button';
 import { FormControl, InputLabel, OutlinedInput, TextField } from '@mui/material';
@@ -13,7 +14,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Image from 'next/image';
 import FilledInput from '@mui/material/FilledInput';
 
-
 const Login: NextPage = () => {
 
     initFirebase();
@@ -21,7 +21,7 @@ const Login: NextPage = () => {
     const auth = getAuth();
     const [user, loading] = useAuthState(auth);
     const router = useRouter();
-
+    
     const [emailaddress, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [err, setError] = useState({ email: false, password: false });
@@ -67,8 +67,16 @@ const Login: NextPage = () => {
         return <Loading />
     }
 
-    return (
+    if (loading) {
+        return <div>loading...</div>
+    }
 
+    if (user) {
+        router.push('/home')
+        return <div>{user.displayName}</div>
+    }
+
+    return (
         <div className={` w-sceen h-screen flex flex-col bg-bg justify-center items-center`}>
             <form className=' md:w-[350px] md:h-auto h-full w-full flex flex-col md:justify-center justify-between items-center md:bg-white bg-transparent p-5 rounded-md shadow-md text-base' onSubmit={(e) => { e.preventDefault(); signInWithAccount() }}>
                 <div className='text-black font-medium text-2xl w-full text-center mb-10'>ลงชื่อเข้าใช้</div>
