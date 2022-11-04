@@ -9,6 +9,9 @@ module.exports = {
         primary: "#ffffff",
         bg: '#D1E8F4'
       },
+      fontFamily: {
+        'kanit':'kanit'
+      }
     },
   },
   plugins: [],
