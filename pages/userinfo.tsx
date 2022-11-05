@@ -11,24 +11,27 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import { initFirebase } from '../firebase/FirebaseApp';
 import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
+import { useAuth } from '@firebase/Hook'
 
 
 function showtext(text: string | null) {
     return (text != null ? text : 'NULL');
 }
 
+const auth = getAuth();
+
 const Account: NextPage = () => {
     let name, w, hi, gender, age: any;
     initFirebase();
-    const auth = getAuth();
     const router = useRouter();
-    const [user, loading] = useAuthState(auth);
+    const [user, loading] = useAuth(auth);
 
-    if (loading) {
-        return <div>loading...</div>
-    }
+    // if (loading) {
+    //     return <div>loading...</div>
+    // }
+    
     if (!user) {
         router.push('/login')
         return <div>Please sign in to continue</div>
