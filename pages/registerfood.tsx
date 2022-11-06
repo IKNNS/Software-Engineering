@@ -89,8 +89,10 @@ export default function Registerfood() {
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleReset}>Reset</Button>
+              {/* <Button onClick={handleReset}>Reset</Button> */}
+              <Button variant="contained">เพิ่มข้อมูล</Button>
             </Box>
+            
           </React.Fragment>
         ) : (
           <React.Fragment>
