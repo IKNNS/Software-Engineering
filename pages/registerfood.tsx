@@ -1,235 +1,126 @@
-import {
-  Autocomplete,
-  Box,
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Radio,
-  RadioGroup,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Registerfood1 from "./registerfood/registerfood1";
+import Registerfood2 from "./registerfood/registerfood2";
+import Registerfood3 from "./registerfood/registerfood3";
 import { Container } from "@mui/system";
-import React, { useState } from "react";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-interface IImage {
-  id: number;
-  img: string;
-  isSelected: boolean;
-}
+
+const steps = ["ประวัติส่วนตัว", "ประวัติการกินอาหาร", "อาหารที่ชอบ"];
+
 export default function Registerfood() {
-  const [congenitalDisease] = useState(["โรคเบาหวาน", "โรคไต", "โรคเก๊า"]);
-  const [types, setTypes] = useState(["มัง", "เจ", "คลีน"]);
-  const [foodAllergys, setFoodAllergys] = useState([
-    "กุ้ง",
-    "เนื้อ",
-    "ไก่",
-    "นม",
-  ]);
-  const [dislikedFoods, setDislikedFoods] = useState([
-    "ข้าวผัด",
-    "ข้าวมันไก่",
-    "ไก่ทอด",
-    "สลัด",
-  ]);
-  const [images, setImages] = useState<IImage[]>([
-    {
-      id: 1,
-      img: "https://d3ldzx7fxfvsfy.cloudfront.net/kraft8x/17/1654757113314_883x1501.jpg",
-      isSelected: false,
-    },
-    {
-      id: 2,
-      img: "https://food.fnr.sndimg.com/content/dam/images/food/products/2022/3/11/rx_goldbelly-clinton-street-diner-zeus-burger.jpg.rend.hgtvcom.406.305.suffix/1647019464547.jpeg",
-      isSelected: false,
-    },
-    {
-      id: 3,
-      img: "https://goldbelly.imgix.net/uploads/card/image/926/TopChefMealKits-Homepage-Feature-Banner-Template-1.gif?ixlib=react-9.0.2&auto=format&ar=2%3A1",
-      isSelected: false,
-    },
-    {
-      id: 4,
-      img: "https://a.cdn-hotels.com/gdcs/production109/d913/52127df7-ccff-4762-8255-01b3ba749fca.jpg",
-      isSelected: false,
-    },
-    {
-      id: 5,
-      img: "https://colonydiner.com/wp-content/uploads/2021/03/French.jpg",
-      isSelected: false,
-    },
-    {
-      id: 6,
-      img: "https://food.fnr.sndimg.com/content/dam/images/food/products/2022/3/11/rx_goldbelly-clinton-street-diner-zeus-burger.jpg.rend.hgtvcom.406.305.suffix/1647019464547.jpeg",
-      isSelected: false,
-    },
-    {
-      id: 7,
-      img: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg",
-      isSelected: false,
-    },
-    {
-      id: 8,
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0PWUpMlEaC9SYA1VuUwOzbF0bCi2wpRnpLg&usqp=CAU",
-      isSelected: false,
-    },
-    {
-      id: 9,
-      img: "https://cdn.cpdonline.co.uk/wp-content/uploads/2019/04/28164206/The-14-Food-Allergens.jpg",
-      isSelected: false,
-    },
-  ]);
-  function handleOnClick(image: IImage): void {
-    const updateImages = images.map((item) => {
-      if (item.id === image.id) {
-        return { ...item, isSelected: !item.isSelected };
-      }
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [skipped, setSkipped] = React.useState(new Set<number>());
 
-      return item;
+  const isStepOptional = (step: number) => {
+    return step === 1;
+  };
+
+  const isStepSkipped = (step: number) => {
+    return skipped.has(step);
+  };
+
+  const handleNext = () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleSkip = () => {
+    if (!isStepOptional(activeStep)) {
+      // You probably want to guard against something like this,
+      // it should never occur unless someone's actively trying to break something.
+      throw new Error("You can't skip a step that isn't optional.");
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped((prevSkipped) => {
+      const newSkipped = new Set(prevSkipped.values());
+      newSkipped.add(activeStep);
+      return newSkipped;
     });
+  };
 
-    setImages(updateImages);
-  }
+  const handleReset = () => {
+    setActiveStep(0);
+  };
 
   return (
-    <Container>
-      <Stack alignItems="center">
-        <Stack sx={{ m: 3, width: "100%" }} spacing={3}>
-          <Typography variant="h4">Step1 ประวัติส่วนตัว</Typography>
-          <Typography variant="h6">น้ำหนัก</Typography>
-          <TextField
-            required
-            id="outlined-required"
-            label="น้ำหนัก"
-            defaultValue=""
-          />
-          <Typography variant="h6">ส่วนสูง</Typography>
-          <TextField
-            required
-            id="outlined-required"
-            label="ส่วนสูง"
-            defaultValue=""
-          />
-          <FormControl>
-            <Typography variant="h6">เพศ</Typography>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-            >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="หญิง"
-              />
-              <FormControlLabel value="male" control={<Radio />} label="ชาย" />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="อื่นๆ"
-              />
-            </RadioGroup>
-          </FormControl>
-          <Typography variant="h4">Step2 ประวัติการกิน</Typography>
-          {/* <Typography variant="h5">คุณเหมาะกับอาหารแบบไหน?</Typography> */}
-          <Typography variant="h6">ประเภทอาหารที่ทาน</Typography>
-          <Autocomplete
-            multiple
-            limitTags={5}
-            id="multiple-limit-tags"
-            options={types}
-            getOptionLabel={(option) => option}
-            defaultValue={[types[0]]}
-            renderInput={(params) => (
-              <TextField {...params} label="ประเภทอาหารที่ทาน" placeholder="" />
-            )}
-            sx={{ width: "100%" }}
-          />
-          <Typography variant="h6">โรคประจำตัว</Typography>
-          <Autocomplete
-            multiple
-            limitTags={5}
-            id="multiple-limit-tags"
-            options={congenitalDisease}
-            getOptionLabel={(option) => option}
-            defaultValue={[congenitalDisease[0]]}
-            renderInput={(params) => (
-              <TextField {...params} label="โรคประจำตัว" placeholder="" />
-            )}
-            sx={{ width: "100%" }}
-          />
-          <Typography variant="h6">วัตถุดิบที่แพ้</Typography>
-          <Autocomplete
-            multiple
-            limitTags={5}
-            id="multiple-limit-tags"
-            options={foodAllergys}
-            getOptionLabel={(option) => option}
-            defaultValue={[foodAllergys[0]]}
-            renderInput={(params) => (
-              <TextField {...params} label="วัตถุดิบที่แพ้" placeholder="" />
-            )}
-            sx={{ width: "100%" }}
-          />
-          <Typography variant="h6">วัตถุดิบที่หลีกเลี่ยง</Typography>
-          <Autocomplete
-            multiple
-            limitTags={5}
-            id="multiple-limit-tags"
-            options={dislikedFoods}
-            getOptionLabel={(option) => option}
-            defaultValue={[dislikedFoods[0]]}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="วัตถุดิบที่หลีกเลี่ยง"
-                placeholder=""
-              />
-            )}
-            sx={{ width: "100%" }}
-          />
-          <Typography variant="h4">Step3 อาหารที่ชอบ</Typography>
-          <ImageList cols={3}>
-            {images.map((item) => (
-              <ImageListItem key={item.id}>
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  // alt={""}
-                  onClick={() => handleOnClick(item)}
-                  loading="lazy"
-                />
-                <ImageListItemBar
-                  sx={{
-                    background:
-                      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-                      "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-                  }}
-                  // title={item.title}
-                  position="top"
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: "white" }}
-                      aria-label={`star ${item.img}`}
-                    >
-                      {item.isSelected && <CheckCircleIcon />}
-                    </IconButton>
-                  }
-                  actionPosition="left"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-          <Button variant="contained">เพิ่ม</Button>
-        </Stack>
-      </Stack>
+    <Container sx={{ marginTop: "4rem" }}>
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps: { completed?: boolean } = {};
+            const labelProps: {
+              optional?: React.ReactNode;
+            } = {};
+            // if (isStepOptional(index)) {
+            //   labelProps.optional = (
+            //     <Typography variant="caption">Optional</Typography>
+            //   );
+            // }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        {activeStep === steps.length ? (
+          <React.Fragment>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              กรอกครบแล้ว เย่!!
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Box sx={{ flex: "1 1 auto" }} />
+              <Button onClick={handleReset}>Reset</Button>
+            </Box>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
+
+            {activeStep === 0 && <Registerfood1 />}
+            {activeStep === 1 && <Registerfood2 />}
+            {activeStep === 2 && <Registerfood3 />}
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+              <Box sx={{ flex: "1 1 auto" }} />
+              {isStepOptional(activeStep) && (
+                <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                  Skip
+                </Button>
+              )}
+              <Button onClick={handleNext}>
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </Box>
+          </React.Fragment>
+        )}
+      </Box>
     </Container>
   );
 }
