@@ -9,30 +9,41 @@ import Registerfood1 from "./registerfood/registerfood1";
 import Registerfood2 from "./registerfood/registerfood2";
 import Registerfood3 from "./registerfood/registerfood3";
 import { Container } from "@mui/system";
+import { useState } from "react";
+import { error } from "console";
 
 const steps = ["ประวัติส่วนตัว", "ประวัติการกินอาหาร", "อาหารที่ชอบ"];
 
 export default function Registerfood() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
+  //registerfood1
+  const [weight, setWeight] = useState<number | string>("");
+  const [height, setHeight] = useState<number | string>("");
+
+  const [isError, setIsError] = useState({ weight: false, height: false });
+  const [activeStep, setActiveStep] = useState(0);
 
   const isStepOptional = (step: number) => {
     return step === 1;
   };
 
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
+    if (weight === "" || (height === "" && activeStep === 0)) {
+      if (weight === "") {
+        setIsError((err) => ({ ...err, weight: true }));
+      } else {
+        setIsError((err) => ({ ...err, weight: false }));
+      }
+      if (height === "") {
+        setIsError((err) => ({ ...err, height: true }));
+      } else {
+        setIsError((err) => ({ ...err, height: false }));
+      }
+      return;
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+
+    // setSkipped(newSkipped);
   };
 
   const handleBack = () => {
@@ -47,11 +58,11 @@ export default function Registerfood() {
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
+    // setSkipped((prevSkipped) => {
+    //   const newSkipped = new Set(prevSkipped.values());
+    //   newSkipped.add(activeStep);
+    //   return newSkipped;
+    // });
   };
 
   const handleReset = () => {
@@ -67,14 +78,7 @@ export default function Registerfood() {
             const labelProps: {
               optional?: React.ReactNode;
             } = {};
-            // if (isStepOptional(index)) {
-            //   labelProps.optional = (
-            //     <Typography variant="caption">Optional</Typography>
-            //   );
-            // }
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
+
             return (
               <Step key={label} {...stepProps}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
@@ -84,21 +88,24 @@ export default function Registerfood() {
         </Stepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              กรอกครบแล้ว เย่!!
-            </Typography>
+            <Typography sx={{ mt: 2, mb: 1 }}>กรอกครบแล้ว เย่!!</Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleReset}>Reset</Button>
+              {/* <Button onClick={handleReset}>Reset</Button> */}
               <Button variant="contained">เพิ่มข้อมูล</Button>
             </Box>
-            
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-
-            {activeStep === 0 && <Registerfood1 />}
+            {activeStep === 0 && (
+              <Registerfood1
+                setWeight={setWeight}
+                setHeight={setHeight}
+                weight={weight}
+                height={height}
+                isError={isError}
+              />
+            )}
             {activeStep === 1 && <Registerfood2 />}
             {activeStep === 2 && <Registerfood3 />}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -111,11 +118,6 @@ export default function Registerfood() {
                 Back
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-              {isStepOptional(activeStep) && (
-                <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                  Skip
-                </Button>
-              )}
               <Button onClick={handleNext}>
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
