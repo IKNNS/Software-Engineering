@@ -4,7 +4,8 @@ import {
     TextField,
     FormControl,
     InputLabel,
-    OutlinedInput
+    OutlinedInput,
+    Alert
 } from "@mui/material";
 import React, { ChangeEventHandler, useState } from "react";
 import type { NextPage } from 'next'
@@ -12,12 +13,12 @@ import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
 import { useRouter } from "next/router";
 
 import { getAuth, GoogleAuthProvider, fetchSignInMethodsForEmail, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { useAuth } from '@firebase/Hook';
-import { GetUserAccount, CreateUserAccount } from '@firebase/Hook/data';
+import { GetUserAccount, CreateUserAccount } from 'libs/firebase/userData';
 
 import Google from 'assets/images/google.svg'
 import Loading from "components/common/loading";
 import Image from "next/image";
+import { UserAccount } from "@models/User_Model";
 
 const auth = getAuth();
 
@@ -37,142 +38,170 @@ export default RegisterPage
 const Form: React.FC = () => {
 
     const router = useRouter();
-
-    const [name, setName] = useState<string>('');
-    const [lastname, setLastname] = useState<string>('');
-    const [emailaddress, setEmail] = useState<string>('');
-    const [password, setPassword] = useState({ pass: '', confirm: '' });
-    const [hidden, setHidden] = useState({ pass: true, confirm: true })
-    const [err, setError] = useState({ name: false, lastname: false, email: false, pass: false, confirm: false });
-    const [loading, setLoading] = useState(false)
-
     const provider = new GoogleAuthProvider();
+
+    const [data, setData] = useState<UserAccount>({ uid: '', email: '', firstname: '', lastname: '' });
+    const [password, setPassword] = useState<[string, string]>(['', '']);
+    const [hidden, setHidden] = useState<[boolean, boolean]>([true, true]);
+    const [err, setError] = useState(0);
+    const [onLoading, setOnLoad] = useState(false)
 
     const handleNameInput: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.value;
-        if (value.length == 0)
-            setError({ ...err, name: true })
-        else if (value.match(/[^\u0E00-\u0E7FA-Z]/ig))
-            setError({ ...err, name: true })
-        else
-            setError({ ...err, name: false })
-        setName(value);
+        setData({ ...data, firstname: value });
     }
 
     const handleLastNameInput: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.value;
-        if (value.length == 0)
-            setError({ ...err, lastname: true })
-        else if (value.match(/[^\u0E00-\u0E7FA-Z]/ig))
-            setError({ ...err, lastname: true })
-        else
-            setError({ ...err, lastname: false })
-        setLastname(value);
+        setData({ ...data, lastname: value });
     }
 
     const handleEmailInput: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.value;
-        setError({ ...err, email: false })
-        setEmail(value);
+        setData({ ...data, email: value });
     }
 
-    const handlePasswordInput: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const value = event.target.value;
-        setError({ ...err, pass: false, confirm: value !== password.confirm })
-        setPassword({ ...password, pass: value });
+    const handlePasswordInput = (value: string, index: number) => {
+        setPassword((prev) => {
+            prev[index] = value;
+            return { ...prev };
+        });
     }
 
-    const handlePasswordInput2: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const value = event.target.value;
-        setError({ ...err, confirm: value !== password.pass })
-        setPassword({ ...password, confirm: value });
+    const hiddenPassword = (index: number) => {
+        setHidden((prev) => {
+            prev[index] = !hidden[index]
+            return { ...prev };
+        });
     }
 
     const signInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, provider);
-            const data = await GetUserAccount(result.user.uid);
+            const { uid, displayName, email } = result.user
+            const data = await GetUserAccount(uid);
             if (data.size == 0) {
-                const name = result.user.displayName?.split(' ');
-                await CreateUserAccount(result.user.email!, name![0], name![1], result.user.uid)
+                const [firstname, lastname] = displayName?.split(' ') ?? ['', ''];
+                await CreateUserAccount({ uid, email: email ?? '', firstname, lastname })
             }
             router.push('/home')
         } catch (e) { console.log(e) }
     }
 
+    const checkError = () => {
+        let err = 0;
+        if (errorName(data.firstname))
+            err = 1;
+        else if (errorName(data.lastname))
+            err = 2
+        else if (password[0].length < 8)
+            err = 3
+        else if (password[0] !== password[1])
+            err = 4
+        setError(err);
+        return err;
+    }
+
     const onSubmit = async () => {
 
-        if (password.pass.length < 8) {
-            setError({ ...err, pass: true })
-            return;
-        }
-        if (err.email || err.pass || err.confirm)
-            return;
+        const err = checkError();
+        if (err != 0) return;
 
-        setLoading(true);
+        setOnLoad(true);
         try {
-
-            const accounts = await fetchSignInMethodsForEmail(auth, emailaddress);
-
-            if (accounts.length != 0)
-                return setError({ ...err, email: true });
-
-            const result = await createUserWithEmailAndPassword(auth, emailaddress, password.pass)
-            await CreateUserAccount(emailaddress, name, lastname, result.user.uid)
-            router.push('/home')
-
-        } catch (e) { console.log(e) }
-        setLoading(false);
+            const accounts = await fetchSignInMethodsForEmail(auth, data.email);
+            if (accounts.length > 0) {
+                setError(5);
+                setOnLoad(false);
+            }
+            else {
+                await createUserWithEmailAndPassword(auth, data.email, password[0])
+                await CreateUserAccount(data)
+                router.push('/login')
+            }
+        } catch (e) {
+            console.log(e);
+            setOnLoad(false);
+        }
     }
 
-    if (loading) {
-        return <Loading />
-    }
+    if (onLoading) return <Loading />
 
     return (
         <form className="flex flex-col gap-3 w-full" onSubmit={(e) => { e.preventDefault(); onSubmit(); }}>
+            {err != 0 && <Alert severity="error">{errorText(err)}</Alert>}
             <div className='flex flex-row w-full p-2 bg-white shadow-md rounded-md border border-solid border-slate-200 items-center justify-center hover:cursor-pointer' onClick={signInWithGoogle}>
                 <Image src={Google} width={20} height={20} alt='google-logo' />
                 <div className='ml-3 text-base'>เข้าสู่ระบบด้วย Google</div>
             </div>
             <div className='text-lg w-full text-center font-light'>หรือ</div>
             <Stack direction={'row'} justifyContent='space-between' spacing={1}>
-                <TextField className='bg-white' error={err.name} value={name} onChange={handleNameInput} fullWidth required label={<div className='font-kanit inline-block'  >ชื่อ</div>} variant="outlined" />
-                <TextField className='bg-white' error={err.lastname} value={lastname} onChange={handleLastNameInput} fullWidth required label={<div className='font-kanit inline-block'  >นามสกุล</div>} variant="outlined" />
+                <TextField className='bg-white' error={err == 1} value={data.firstname} onChange={handleNameInput} fullWidth required label={<div className='font-kanit inline-block'  >ชื่อ</div>} variant="outlined" />
+                <TextField className='bg-white' error={err == 2} value={data.lastname} onChange={handleLastNameInput} fullWidth required label={<div className='font-kanit inline-block'  >นามสกุล</div>} variant="outlined" />
             </Stack>
-            <TextField className='bg-white' error={err.email} value={emailaddress} onChange={handleEmailInput} fullWidth required label={<div className='font-kanit inline-block'  >อีเมล</div>} variant="outlined" type={'email'} />
-            <FormControl variant='outlined' required className='w-full' error={err.pass}>
+            <TextField className='bg-white' error={err == 5} value={data.email} onChange={handleEmailInput} fullWidth required label={<div className='font-kanit inline-block'  >อีเมล</div>} variant="outlined" type={'email'} />
+            <FormControl variant='outlined' required className='w-full' error={err == 3}>
                 <InputLabel htmlFor="password-input" className='font-kanit' >รหัสผ่าน</InputLabel>
                 <OutlinedInput
-                    value={password.pass} onChange={handlePasswordInput}
+                    value={password[0]} onChange={(e) => handlePasswordInput(e.target.value, 0)}
                     id='password-input'
                     required
                     className='bg-white'
-                    fullWidth type={!hidden.pass ? 'text' : 'password'}
+                    fullWidth type={!hidden[0] ? 'text' : 'password'}
                     label="รหัสผ่าน"
-                    endAdornment={!hidden.pass ?
-                        <VisibilityOffRounded className='hover:cursor-pointer' onClick={() => setHidden({ ...hidden, pass: !hidden.pass })} /> :
-                        <VisibilityRounded className='hover:cursor-pointer' onClick={() => setHidden({ ...hidden, pass: !hidden.pass })} />}
+                    endAdornment={
+                        <div className='hover:cursor-pointer flex items-center' onClick={(e) => { e.preventDefault(); hiddenPassword(0) }}>
+                            {!hidden[0] ? <VisibilityOffRounded /> : <VisibilityRounded />}
+                        </div>
+                    }
                 />
             </FormControl>
-            <FormControl variant='outlined' required className='w-full' error={err.confirm}>
+            <FormControl variant='outlined' required className='w-full' error={err == 4}>
                 <InputLabel htmlFor="password-input2" className='font-kanit'>ยืนยันรหัสผ่าน</InputLabel>
                 <OutlinedInput
-                    value={password.confirm} onChange={handlePasswordInput2}
+                    value={password[1]} onChange={(e) => handlePasswordInput(e.target.value, 1)}
                     id='password-input2'
                     required
                     className='bg-white'
-                    fullWidth type={!hidden.confirm ? 'text' : 'password'}
+                    fullWidth type={!hidden[1] ? 'text' : 'password'}
                     label="ยืนยันรหัสผ่าน"
-                    endAdornment={!hidden.confirm ?
-                        <VisibilityOffRounded className='hover:cursor-pointer' onClick={() => setHidden({ ...hidden, confirm: !hidden.confirm })} /> :
-                        <VisibilityRounded className='hover:cursor-pointer' onClick={() => setHidden({ ...hidden, confirm: !hidden.confirm })} />}
+                    endAdornment={
+                        <div className='hover:cursor-pointer flex items-center' onClick={(e) => { e.preventDefault(); hiddenPassword(1) }}>
+                            {!hidden[1] ? <VisibilityOffRounded /> : <VisibilityRounded />}
+                        </div>
+                    }
                 />
             </FormControl>
-            <Stack direction={'row'} justifyContent='end' className='mt-5'>
+            <Stack direction={'row'} justifyContent='space-between' className='mt-5'>
                 <div className='py-2 px-5 font-kanit text-base hover:cursor-pointer' onClick={() => { auth.signOut(); router.push('/login') }}>กลับ</div>
-                <Button type="submit" variant='contained' color='info' className='py-2 px-5 font-kanit text-base'>ต่อไป</Button>
+                <Button type="submit" variant='contained' color='info' className='py-2 px-5 font-kanit text-base'>ตกลง</Button>
             </Stack>
         </form>
     )
+}
+
+const errorName = (str: string) => {
+    if (str.length == 0)
+        return true;
+    else if (str.match(/[^\u0E00-\u0E7FA-Z]/ig))
+        return true;
+    else
+        return false;
+}
+
+const errorText = (err: number) => {
+    switch (err) {
+        case 1:
+            return 'โปรดตรวจสอบชื่อของคุณ'//'Firstname must contain only letters. Please try again.'
+        case 2:
+            return 'โปรดตรวจสอบนามสกุลของคุณ'//'Lastname must contain only letters. Please try again.'
+        case 3:
+            return 'รหัสต้องมีมากกว่า 8 ตัวอักษร'//'Password must be more than 8 characters.'
+        case 4:
+            return 'รหัสไม่ตรงกัน'
+        case 5:
+            return 'บัญชีนี้ถูกลงทะเบียนไว้อยู่แล้ว'
+        default:
+            return '';
+    }
 }

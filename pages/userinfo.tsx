@@ -13,7 +13,7 @@ import { initFirebase } from '../firebase/FirebaseApp';
 import { getAuth } from 'firebase/auth';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
-import { useAuth } from '@firebase/Hook'
+import { useAuth } from '@libs/firebase/useAuth'
 
 
 function showtext(text: string | null) {
@@ -31,9 +31,9 @@ const Account: NextPage = () => {
     // if (loading) {
     //     return <div>loading...</div>
     // }
-    
+
     if (!user) {
-        router.push('/login')
+        //router.push('/login')
         return <div>Please sign in to continue</div>
     }
 
@@ -83,7 +83,7 @@ const Account: NextPage = () => {
                         <Autocomplete
                             multiple
                             id="tags-readOnly"
-                            options= {[UserFood.typeOfFood.map((foodType) => foodType)]}
+                            options={[UserFood.typeOfFood.map((foodType) => foodType)]}
                             defaultValue={[UserFood.typeOfFood.map((foodType) => foodType)]}
                             readOnly
                             renderInput={(params) => (

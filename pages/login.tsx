@@ -1,95 +1,100 @@
 import React, { useEffect } from 'react';
 import type { NextPage } from 'next'
 import Button from '@mui/material/Button';
-import { FormControl, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import { Alert, FormControl, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { ChangeEventHandler, useState } from 'react';
 import { useRouter } from 'next/router';
 import Loading from 'components/common/loading'
 import Google from 'assets/images/google.svg'
 import { VisibilityOffRounded, VisibilityRounded } from '@mui/icons-material'
 
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, User, } from 'firebase/auth'
-import { useAuth } from '@firebase/Hook';
-import { GetUserAccount, CreateUserAccount } from '@firebase/Hook/data';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { useAuth } from '@libs/firebase/useAuth';
+import { CreateUserAccount, GetUserAccount } from '@libs/firebase/userData';
 import Image from 'next/image';
 
 const auth = getAuth();
 
 const Login: NextPage = () => {
 
-    const [user, loading] = useAuth(auth);
     const provider = new GoogleAuthProvider();
     const router = useRouter();
+    const [user, loading] = useAuth(auth);
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [err, setError] = useState({ email: false, password: false });
-    const [viewPass, setViewPass] = useState(false)
+    const [hidden, setHidden] = useState(true)
+    const [err, setError] = useState(0);
+
+    useEffect(() => {
+        if (user) {
+            router.push('/home')
+        }
+    }, [user, router])
 
     const signInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, provider);
-            const data = await GetUserAccount(result.user.uid);
+            const { uid, displayName, email } = result.user
+            const data = await GetUserAccount(uid);
             if (data.size == 0) {
-                const name = result.user.displayName?.split(' ');
-                await CreateUserAccount(result.user.email!, name![0], name![1], result.user.uid)
+                const [firstname, lastname] = displayName?.split(' ') ?? ['', ''];
+                await CreateUserAccount({ uid, email: email ?? '', firstname, lastname })
             }
             router.push('/home')
         } catch (e) { console.log(e) }
     }
 
     const signInWithAccount = async () => {
-        if (password.length < 8) {
-            setError({ ...err, password: true })
-            return;
-        }
-        signInWithEmailAndPassword(auth, email, password).then((value) => {
-            console.log(value);
-        }).catch(() => {
-            setError({ email: true, password: true })
+
+        setError(0);
+        if (password.length < 8)
+            return setError(1)
+
+        signInWithEmailAndPassword(auth, email, password).catch(() => {
+            setError(2)
         })
     }
 
     const handleEmailInput: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.value;
-        setError({ email: false, password: false })
         setEmail(value);
     }
 
     const handlePasswordInput: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.value;
-        setError({ email: false, password: false })
         setPassword(value);
     }
 
-    useEffect(() => {
-        
-        if (user) router.push('/home')
-
-    }, [user])
-
     return (
         <div className={` w-sceen h-screen flex flex-col bg-bg justify-center items-center`}>
-            {(user || loading) && <Loading screen />}
-            <form className=' md:w-[350px] md:h-auto h-full w-full flex flex-col md:justify-center justify-between items-center md:bg-white bg-transparent py-5 px-5 rounded-md shadow-md text-base' onSubmit={(e) => { e.preventDefault(); signInWithAccount() }}>
+            {(loading) && <Loading screen />}
+            <form className=' md:w-[350px] md:h-auto h-full w-full
+            flex flex-col md:justify-center justify-between items-center
+            md:bg-white bg-transparent py-5 px-5 rounded-md shadow-md text-base'
+                onSubmit={(e) => { e.preventDefault(); signInWithAccount() }}
+            >
                 <div className='text-black font-medium text-2xl w-full text-center mb-10'>ลงชื่อเข้าใช้</div>
                 <div className='w-full flex flex-col gap-3'>
+                    {err != 0 && <Alert severity="error">{errorText(err)}</Alert>}
                     <TextField
-                        required error={err.email} value={email}
+                        required error={err == 2} value={email}
                         onChange={handleEmailInput} type="email" className=' bg-white'
                         fullWidth label={<div className='font-kanit inline-block'>อีเมล</div>} variant='outlined'
                     />
                     <FormControl variant='outlined' required fullWidth>
-                        <InputLabel htmlFor="password-input" error={err.password} className='font-kanit'>รหัสผ่าน</InputLabel>
+                        <InputLabel htmlFor="password-input" error={err != 0} className='font-kanit'>รหัสผ่าน</InputLabel>
                         <OutlinedInput
                             id='password-input'
-                            required error={err.password} value={password}
+                            required error={err != 0} value={password}
                             onChange={handlePasswordInput} className='bg-white'
-                            fullWidth type={viewPass ? 'text' : 'password'}
+                            fullWidth type={!hidden ? 'text' : 'password'}
                             label="รหัสผ่าน"
-                            endAdornment={viewPass ?
-                                <VisibilityOffRounded className='hover:cursor-pointer' onClick={() => setViewPass(!viewPass)} /> :
-                                <VisibilityRounded className='hover:cursor-pointer' onClick={() => setViewPass(!viewPass)} />}
+                            endAdornment={
+                                <div className='hover:cursor-pointer flex items-center' onClick={(e) => { e.preventDefault(); setHidden(!hidden) }}>
+                                    {!hidden ? <VisibilityOffRounded /> : <VisibilityRounded />}
+                                </div>
+                            }
                         />
                     </FormControl>
                     <div className='w-full text-right font-light text-blue-600 hover:cursor-pointer' onClick={() => router.push('/reset')}>ลืมรหัสใช่ไหม?</div>
@@ -109,3 +114,14 @@ const Login: NextPage = () => {
 }
 
 export default Login
+
+const errorText = (err: number) => {
+    switch (err) {
+        case 1:
+            return 'รหัสต้องมีมากกว่า 8 ตัวอักษร'//'Password must be more than 8 characters.'
+        case 2:
+            return 'โปรดตรวจสอบอีเมลหรือรหัวผ่านให้ถูกต้อง'
+        default:
+            return '';
+    }
+}

@@ -21,6 +21,12 @@
     "paths": {
       "@firebase/*": [
         "firebase/*"
+      ],
+      "@libs/*": [
+        "libs/*"
+      ],
+      "@models/*": [
+        "models/*"
       ]
     },
     "baseUrl": "."
