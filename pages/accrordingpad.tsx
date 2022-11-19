@@ -11,6 +11,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import Image from 'next/image'
 import styles2 from '../styles/box.module.css'
 import pic from '../styles/pic.module.css'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import {
     Autocomplete,
     Box,
@@ -21,7 +25,9 @@ import {
     Typography,
     Container
 } from "@mui/material";
-
+function showtext(text: string | null) {
+    return (text != null ? text : 'NULL');
+}
 
 
 export default function SwipeableTemporaryDrawer() {
@@ -49,20 +55,20 @@ export default function SwipeableTemporaryDrawer() {
     };
 
     const list = (anchor) => (
-    <Container>
-        <Box
-            sx= {{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 , m: 4}}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <div className={styles2.center}>
-                <Image src={'/fuang.jpg'} className={pic.round} width={150} height={150} alt='image' />
-                <h1 className={styles2.cutspace}>{showtext('Kong')}</h1>
-            </div>
-            <div>
-                    ประเภทอาหาร:
+        <Container>
+            <Box
+                sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+                role="presentation"
+                onClick={toggleDrawer(anchor, false)}
+                onKeyDown={toggleDrawer(anchor, false)}
+            >
+                <div className={styles2.center}>
+                    <Image src={'/fuang.jpg'} className={pic.round} width={150} height={150} alt='image' />
+                    <h1 className={styles2.cutspace}>{showtext('Kong')}</h1>
                 </div>
+                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                    ประเภทอาหาร:
+                </Stack>
                 <Autocomplete
                     multiple
                     id="tags-readOnly"
@@ -74,27 +80,49 @@ export default function SwipeableTemporaryDrawer() {
                     )}
                     disabled={true}
                     className={styles2.box3}
+                    sx={{ width: "100%", marginBottom: 1 }}
                 />
-            <Stack spacing={5}>
-                รูปแบบการกิน:
-            </Stack>
-            <Autocomplete
-                multiple
-                id="tags-readOnly"
-                options={[UserFood.typeOfFood.map((foodType) => foodType)]}
-                defaultValue={[UserFood.typeOfFood.map((foodType) => foodType)]}
-                readOnly
-                renderInput={(params) => (
-                    <TextField {...params} />
-                )}
-                disabled={true}
-                className={styles2.box3}
-            />
-            <Stack sx={{ width: "100%" }} justifyContent="outlined" >
-        <Button variant="contained" color="success"> เพิ่มเมนูอาหาร </Button>
-    </Stack>
-        </Box>
-    </Container>
+                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                    รูปแบบการกิน:
+                </Stack>
+                <Autocomplete
+                    multiple
+                    id="tags-readOnly"
+                    options={[UserFood.typeOfFood.map((foodType) => foodType)]}
+                    defaultValue={[UserFood.typeOfFood.map((foodType) => foodType)]}
+                    readOnly
+                    renderInput={(params) => (
+                        <TextField {...params} />
+                    )}
+                    disabled={true}
+                    className={styles2.box3}
+                    sx={{ width: "100%", marginBottom: 1 }}
+                />
+                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                    พลังงาน:
+                </Stack>
+                <TextField sx={{ width: "100%" }}
+                    className={styles2.box3}
+                    value={showtext("100")}
+                ></TextField>
+                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                    เวลาที่รับประทาน:
+                </Stack>
+                <TextField
+                    id="datetime-local"
+                    type="datetime-local"
+                    defaultValue="2017-05-24T10:30"
+                    sx={{ width: "100%", marginBottom: 1 }}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    className={styles2.box3}
+                />
+                <Stack sx={{ width: "100%", marginTop: 2, marginBottom:2 }} justifyContent="outlined" >
+                    <Button variant="contained" color="success"> เพิ่มเมนูอาหาร </Button>
+                </Stack>
+            </Box>
+        </Container>
     );
 
     return (
@@ -107,6 +135,7 @@ export default function SwipeableTemporaryDrawer() {
                         open={state[anchor]}
                         onClose={toggleDrawer(anchor, false)}
                         onOpen={toggleDrawer(anchor, true)}
+                        PaperProps={{ elevation: 0, style: { borderTopLeftRadius: "15px", borderTopRightRadius: "15px" } }}
                     >
                         {list(anchor)}
                     </SwipeableDrawer>
