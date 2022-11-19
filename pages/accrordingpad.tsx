@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -13,8 +11,16 @@ import MailIcon from '@mui/icons-material/Mail';
 import Image from 'next/image'
 import styles2 from '../styles/box.module.css'
 import pic from '../styles/pic.module.css'
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+import {
+    Autocomplete,
+    Box,
+    Button,
+    ImageListItem,
+    Stack,
+    TextField,
+    Typography,
+    Container
+} from "@mui/material";
 
 
 
@@ -43,8 +49,9 @@ export default function SwipeableTemporaryDrawer() {
     };
 
     const list = (anchor) => (
+    <Container>
         <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            sx= {{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 , m: 4}}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
@@ -68,9 +75,9 @@ export default function SwipeableTemporaryDrawer() {
                     disabled={true}
                     className={styles2.box3}
                 />
-            <div>
+            <Stack spacing={5}>
                 รูปแบบการกิน:
-            </div>
+            </Stack>
             <Autocomplete
                 multiple
                 id="tags-readOnly"
@@ -83,7 +90,11 @@ export default function SwipeableTemporaryDrawer() {
                 disabled={true}
                 className={styles2.box3}
             />
+            <Stack sx={{ width: "100%" }} justifyContent="outlined" >
+        <Button variant="contained" color="success"> เพิ่มเมนูอาหาร </Button>
+    </Stack>
         </Box>
+    </Container>
     );
 
     return (
