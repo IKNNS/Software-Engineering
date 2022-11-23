@@ -11,6 +11,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import Image from 'next/image'
 import styles2 from '../styles/box.module.css'
 import pic from '../styles/pic.module.css'
+import { ChangeEventHandler, useState } from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
@@ -25,11 +26,10 @@ import {
     Typography,
     Container
 } from "@mui/material";
+import { stat } from 'fs';
 function showtext(text: string | null) {
     return (text != null ? text : 'NULL');
 }
-
-
 export default function SwipeableTemporaryDrawer() {
     const [state, setState] = React.useState({
         top: false,
@@ -37,11 +37,10 @@ export default function SwipeableTemporaryDrawer() {
         bottom: false,
         right: false,
     });
+    const [editstate, setEditstate] = React.useState<boolean>(true);
     function showtext(text: string | null) {
         return (text != null ? text : 'NULL');
     }
-
-
     const toggleDrawer = (anchor, open) => (event) => {
         if (
             event &&
@@ -53,20 +52,25 @@ export default function SwipeableTemporaryDrawer() {
 
         setState({ ...state, [anchor]: open });
     };
-
+    const toggleClick=()=>{
+        setEditstate(!editstate);
+    }
+    function SaveEdit(){
+        return(editstate? 'แก้ไข':'บันทึก');
+    }
     const list = (anchor) => (
         <Container>
             <Box
                 sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
                 role="presentation"
-                onClick={toggleDrawer(anchor, false)}
-                onKeyDown={toggleDrawer(anchor, false)}
+                /*onClick={toggleDrawer(anchor, false)}
+                onKeyDown={toggleDrawer(anchor, false)}*/
             >
                 <div className={styles2.center}>
                     <Image src={'/fuang.jpg'} className={pic.round} width={150} height={150} alt='image' />
                     <h1 className={styles2.cutspace}>{showtext('Kong')}</h1>
                 </div>
-                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                <Stack sx={{ marginTop: 1, marginBottom: 1 }} fontSize={20}>
                     ประเภทอาหาร:
                 </Stack>
                 <Autocomplete
@@ -74,14 +78,15 @@ export default function SwipeableTemporaryDrawer() {
                     id="tags-readOnly"
                     options={UserFood.typeOfFood}
                     defaultValue={[UserFood.typeOfFood[0]]}
-                    readOnly
+                    filterSelectedOptions={!editstate}
+                    readOnly={editstate}
                     renderInput={(params) => (
                         <TextField {...params} />
                     )}
                     className={styles2.box3}
                     sx={{ width: "100%", marginBottom: 1 }}
                 />
-                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                <Stack sx={{ marginTop: 1, marginBottom: 1 }} fontSize={20}>
                     รูปแบบการกิน:
                 </Stack>
                 <Autocomplete
@@ -89,21 +94,26 @@ export default function SwipeableTemporaryDrawer() {
                     id="tags-readOnly"
                     options={UserFood.typeOfFood}
                     defaultValue={[UserFood.typeOfFood[0]]}
-                    readOnly
+                    filterSelectedOptions={!editstate}
+                    readOnly={editstate}
                     renderInput={(params) => (
                         <TextField {...params} />
                     )}
                     className={styles2.box3}
                     sx={{ width: "100%", marginBottom: 1 }}
                 />
-                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                <Stack sx={{ marginTop: 1, marginBottom: 1 }} fontSize={20}>
                     พลังงาน:
                 </Stack>
-                <TextField sx={{ width: "100%" }}
+                <TextField
+                    sx={{ width: "100%" }}
                     className={styles2.box3}
-                    value={showtext("100")}
+                    defaultValue={100}
+                    InputProps={{
+                        readOnly: editstate,
+                      }}
                 ></TextField>
-                <Stack sx={{ marginTop: 1,marginBottom: 1}} fontSize={20}>
+                <Stack sx={{ marginTop: 1, marginBottom: 1 }} fontSize={20}>
                     เวลาที่รับประทาน:
                 </Stack>
                 <TextField
@@ -112,12 +122,12 @@ export default function SwipeableTemporaryDrawer() {
                     defaultValue="2017-05-24T10:30"
                     sx={{ width: "100%", marginBottom: 1 }}
                     InputProps={{
-                        readOnly: true,
+                        readOnly: editstate,
                       }}
                     className={styles2.box3}
                 />
-                <Stack sx={{ width: "100%", marginTop: 2, marginBottom:2 }} justifyContent="outlined" >
-                    <Button variant="contained" color="success"> เพิ่มเมนูอาหาร </Button>
+                <Stack sx={{ width: "100%", marginTop: 2, marginBottom: 2 }} justifyContent="outlined" >
+                    <Button onClick={toggleClick}variant="contained" color="success"> {SaveEdit()} </Button>
                 </Stack>
             </Box>
         </Container>
@@ -145,7 +155,7 @@ export default function SwipeableTemporaryDrawer() {
 const UserFood =
 {
     ID: "No One",
-    typeOfFood: ['อาหารทั่วไป',],
+    typeOfFood: ['อาหารทั่วไป','มังสวิรัติ',],
     disease: ["โรคไต", "โรคเบาหวาน",],
     allergy: ["กุ้ง", "ปู",],
     avoid: ["ไข่", "นม",],
