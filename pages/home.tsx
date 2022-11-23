@@ -10,7 +10,14 @@ import styles from '../styles/Home.module.css'
 import Typography from '@mui/material/Typography';
 import Image from 'next/image'
 import Button from '@mui/material/Button';
-
+import { useEffect } from 'react';
+import { getAuth } from 'firebase/auth';
+import { useAuth } from '@libs/firebase/useAuth';
+import { useRouter } from 'next/router';
+import { GetUserAccount } from '@libs/firebase/userData';
+import { useState } from 'react';
+import Loading from 'components/common/loading';
+import Registerfood from 'components/registerfood';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -20,9 +27,53 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+const auth = getAuth();
+
 export default function BasicStack() {
+
+    const router = useRouter();
+    const [user, loading] = useAuth(auth);
+
+    const [regis, setRegis] = useState(0);
+    const [openLoad, setOpenLoad] = useState(false);
+
+    const loadData = async () => {
+        if (!user) return;
+        const data = await GetUserAccount(user.uid);
+        if (!data.get("info")) {
+            setRegis(1);
+            setTimeout(() => setRegis(2), 300);
+        } else {
+            setRegis(regis == 2 ? 1 : 0);
+            setTimeout(() => setRegis(0), 400);
+        }
+    }
+
+    const onRegis = (isSubmit: boolean) => {
+        if (isSubmit) {
+            setOpenLoad(true);
+        } else {
+            setOpenLoad(false);
+            loadData();
+        }
+    }
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.push('/login')
+            return;
+        }
+        loadData();
+
+    }, [user, loading])
+
     return (
         <div className={styles.container}>
+            {(loading || openLoad) && <Loading screen />}
+            <div hidden={regis == 0} className={`fixed z-20 transition-all delay-300 md:left-[calc(50%-225px)] left-0 ${regis == 2 ? 'md:bottom-[20%] bottom-0' : '-bottom-[100%]'}`}>
+                <div className='fixed w-screen h-screen top-0 left-0 bg-black opacity-10 -z-10'></div>
+                <Registerfood uid={user?.uid ?? ""} onSubmit={onRegis} />
+            </div>
             <div>
                 <h1 className={styles.title}>
                     Suggestion
@@ -38,7 +89,7 @@ export default function BasicStack() {
                         <Item key={food.name} sx={{ width: '100%' }}>
                             <div className={styles.listContainer} >
                                 <div className={styles.Left}>
-                                    <Image src={food.src} width={100} height={100} />
+                                    <Image src={food.src} width={100} height={100} alt={food.name} />
                                 </div>
                                 <div className={styles.Center}>
                                     <Typography className={styles.foodName}
