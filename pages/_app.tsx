@@ -39,10 +39,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (pathname.includes(router.pathname)) {
     return (
       <ThemeProvider theme={theme}>
-        <div>
           <Component {...pageProps} />
           <LabelBottomNavigation />
-        </div>
       </ThemeProvider>
     )
   }

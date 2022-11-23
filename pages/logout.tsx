@@ -18,6 +18,7 @@ const Logout: NextPage = () => {
 
     return (
         <div className={styles.container}>
+            Logout...
         </div>
     )
 }

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 const useAuth = (auth: Auth): [User | null, boolean, Error | null] => {
 
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {

@@ -15,6 +15,12 @@ import Image from 'next/image';
 
 const auth = getAuth();
 
+const errorText = [
+    '',
+    'รหัสต้องมีมากกว่า 8 ตัวอักษร',
+    'โปรดตรวจสอบอีเมลหรือรหัวผ่านให้ถูกต้อง',
+]
+
 const Login: NextPage = () => {
 
     const provider = new GoogleAuthProvider();
@@ -27,26 +33,24 @@ const Login: NextPage = () => {
     const [err, setError] = useState(0);
 
     useEffect(() => {
-        if (user) {
+        if (!loading && user) {
             router.push('/home')
         }
-    }, [user, router])
+    }, [user, loading])
 
     const signInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const { uid, displayName, email } = result.user
             const data = await GetUserAccount(uid);
-            if (data.size == 0) {
+            if (!data.data()) {
                 const [firstname, lastname] = displayName?.split(' ') ?? ['', ''];
                 await CreateUserAccount({ uid, email: email ?? '', firstname, lastname })
             }
-            router.push('/home')
         } catch (e) { console.log(e) }
     }
 
     const signInWithAccount = async () => {
-
         setError(0);
         if (password.length < 8)
             return setError(1)
@@ -56,30 +60,20 @@ const Login: NextPage = () => {
         })
     }
 
-    const handleEmailInput: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const value = event.target.value;
-        setEmail(value);
-    }
-
-    const handlePasswordInput: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const value = event.target.value;
-        setPassword(value);
-    }
-
     return (
         <div className={` w-sceen h-screen flex flex-col bg-bg justify-center items-center`}>
             {(loading) && <Loading screen />}
-            <form className=' md:w-[350px] md:h-auto h-full w-full
-            flex flex-col md:justify-center justify-between items-center
-            md:bg-white bg-transparent py-5 px-5 rounded-md shadow-md text-base'
+            <form className=' md:w-[450px] md:h-auto h-full w-full
+            flex flex-col justify-center items-center
+            bg-white py-5 px-5 rounded-md shadow-md text-base'
                 onSubmit={(e) => { e.preventDefault(); signInWithAccount() }}
             >
                 <div className='text-black font-medium text-2xl w-full text-center mb-10'>ลงชื่อเข้าใช้</div>
                 <div className='w-full flex flex-col gap-3'>
-                    {err != 0 && <Alert severity="error">{errorText(err)}</Alert>}
+                    {err != 0 && <Alert severity="error">{errorText[err]}</Alert>}
                     <TextField
                         required error={err == 2} value={email}
-                        onChange={handleEmailInput} type="email" className=' bg-white'
+                        onChange={(e) => setEmail(e.target.value)} type="email" className=' bg-white'
                         fullWidth label={<div className='font-kanit inline-block'>อีเมล</div>} variant='outlined'
                     />
                     <FormControl variant='outlined' required fullWidth>
@@ -87,7 +81,7 @@ const Login: NextPage = () => {
                         <OutlinedInput
                             id='password-input'
                             required error={err != 0} value={password}
-                            onChange={handlePasswordInput} className='bg-white'
+                            onChange={(e) => setPassword(e.target.value)} className='bg-white'
                             fullWidth type={!hidden ? 'text' : 'password'}
                             label="รหัสผ่าน"
                             endAdornment={
@@ -114,14 +108,3 @@ const Login: NextPage = () => {
 }
 
 export default Login
-
-const errorText = (err: number) => {
-    switch (err) {
-        case 1:
-            return 'รหัสต้องมีมากกว่า 8 ตัวอักษร'//'Password must be more than 8 characters.'
-        case 2:
-            return 'โปรดตรวจสอบอีเมลหรือรหัวผ่านให้ถูกต้อง'
-        default:
-            return '';
-    }
-}
