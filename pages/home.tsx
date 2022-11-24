@@ -34,18 +34,18 @@ export default function BasicStack() {
     const router = useRouter();
     const [user, loading] = useAuth(auth);
 
-    const [regis, setRegis] = useState(0);
+    const [step, setStep] = useState(0);
     const [openLoad, setOpenLoad] = useState(false);
 
     const loadData = async () => {
         if (!user) return;
         const data = await GetUserAccount(user.uid);
         if (!data.get("info")) {
-            setRegis(1);
-            setTimeout(() => setRegis(2), 300);
+            setStep(1);
+            setTimeout(() => setStep(2), 300);
         } else {
-            setRegis(regis == 2 ? 1 : 0);
-            setTimeout(() => setRegis(0), 400);
+            setStep(step == 2 ? 1 : 0);
+            setTimeout(() => setStep(0), 400);
         }
     }
 
@@ -70,10 +70,7 @@ export default function BasicStack() {
     return (
         <div className={styles.container}>
             {(loading || openLoad) && <Loading screen />}
-            <div hidden={regis == 0} className={`fixed z-20 transition-all delay-300 md:left-[calc(50%-225px)] left-0 ${regis == 2 ? 'md:bottom-[20%] bottom-0' : '-bottom-[100%]'}`}>
-                <div className='fixed w-screen h-screen top-0 left-0 bg-black opacity-10 -z-10'></div>
-                <Registerfood uid={user?.uid ?? ""} onSubmit={onRegis} />
-            </div>
+            {(step > 0) && <Registerfood step={step} uid={user?.uid ?? ""} onSubmit={onRegis} />}
             <div>
                 <h1 className={styles.title}>
                     Suggestion

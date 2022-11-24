@@ -14,44 +14,44 @@ export default function FixedBottomNavigation() {
   const ref = React.useRef<HTMLDivElement>(null);
   const router = useRouter()
   const [value, setValue] = React.useState(router.pathname);
-  
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
   return (
-    <Box sx={{ pb: 7 }} ref={ref}>
+    <React.Fragment>
       <CssBaseline />
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <Paper sx={{ position: 'fixed', bottom: 0 }} elevation={3} className='w-screen'>
         <BottomNavigation
           showLabels
           value={value}
           onChange={handleChange}
         >
           <BottomNavigationAction
-          label="Home" 
-          value="/home"
-          icon={<HomeIcon />} 
-          href = "/home"
+            label="Home"
+            value="/home"
+            icon={<HomeIcon />}
+            href="/home"
           />
           <BottomNavigationAction
-          label="Notification"
-          value="/notification"
-          icon={<NotificationsNoneIcon />} 
-          href = "/notification"
+            label="Notification"
+            value="/notification"
+            icon={<NotificationsNoneIcon />}
+            href="/notification"
           />
-          <BottomNavigationAction 
-          label="History"
-          value="/history"
-          icon={<HistoryIcon />} 
-          href = "/history"
+          <BottomNavigationAction
+            label="History"
+            value="/history"
+            icon={<HistoryIcon />}
+            href="/history"
           />
-          <BottomNavigationAction 
-          label="Account" 
-          value="/userinfo"
-          icon={<AccountCircleIcon />} 
-          href = "/userinfo"/>
+          <BottomNavigationAction
+            label="Account"
+            value="/userinfo"
+            icon={<AccountCircleIcon />}
+            href="/userinfo" />
         </BottomNavigation>
       </Paper>
-    </Box>
+    </React.Fragment>
   );
 }

@@ -33,7 +33,9 @@ const UpdateUserInfo = async (uid: string, data: UserInfo) => {
 
 const UpdateUserFood = async (uid: string, data: UserFood) => {
     try {
-        await setDoc(doc(db, "userFood", uid), data)
+        await updateDoc(doc(db, "userAccount", uid), {
+            "food": data
+        })
     } catch (e) {
         throw e;
     }

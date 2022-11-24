@@ -17,6 +17,6 @@ export interface UserAccount {
     email: string,
     firstname: string,
     lastname: string,
-    userFood?: UserFood,
-    userInfo?: UserInfo
+    food?: UserFood,
+    info?: UserInfo
 }
