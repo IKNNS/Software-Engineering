@@ -10,8 +10,7 @@ import {
 } from "@mui/material";
 import { PageStart } from "components/common/Page";
 
-import { NextPage } from "next";
-
+import { NextPage } from "next";  
 const HomePage: NextPage = () => {
   return (
     <PageStart className="p-4 gap-5">
@@ -27,7 +26,6 @@ const HomePage: NextPage = () => {
                 alt="green iguana"
                 height="140"
                 image="/static/images/cards/contemplative-reptile.jpg"
-                id="1"
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
