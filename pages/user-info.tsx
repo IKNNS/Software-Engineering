@@ -88,6 +88,9 @@ const UserInfo: NextPage = () => {
                 }
                 setTypes([...new Set(types)]);
                 setIngredient([...new Set(ingredient)]);
+                const n = [...new Set(ingredient)]
+                const j = n.map((v) => [v, ""])
+                console.log(j)
             })
             .catch(e => console.log(e))
     }, [])
