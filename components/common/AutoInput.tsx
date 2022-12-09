@@ -10,7 +10,7 @@ interface Props {
     color?: Map<string, string>
 }
 
-const AutoInput: React.FC<Props> = ({ list, icon, value, onChange, label }) => {
+const AutoInput: React.FC<Props> = ({ list, icon, value, onChange, label, color }) => {
 
     return (
         <div className="flex flex-row items-start justify-center gap-3 w-full">
@@ -23,7 +23,7 @@ const AutoInput: React.FC<Props> = ({ list, icon, value, onChange, label }) => {
                 value={value ?? []}
                 onChange={(e, v) => onChange?.(v)}
                 getOptionLabel={(option) => option}
-                renderTags={(value, props) => <RenderTags value={value} props={props} />}
+                renderTags={(value, props) => <RenderTags value={value} props={props} color={color} />}
                 renderInput={(params) => (
                     <TextField {...params} placeholder={label} variant="standard" />
                 )}
