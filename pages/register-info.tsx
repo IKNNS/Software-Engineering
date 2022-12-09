@@ -21,7 +21,7 @@ const RegisterInfoPage: NextPage = () => {
     const [user] = useAuth()
     const router = useRouter()
 
-    const [activeStep, setActiveStep] = useState(1);
+    const [activeStep, setActiveStep] = useState(0);
     const [data, setData] = useState<UserInfo & UserFood>({ gender: "female" })
     const [foodList, setFoodList] = useState<Food[]>([]);
     const [isError, setIsError] = useState({
