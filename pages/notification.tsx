@@ -1,17 +1,17 @@
-import React from 'react';
-import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
-import Button from '@mui/material/Button';
+import { PageStart } from "components/common/Page"
 
-const Noti: NextPage = () => {
+import { NextPage } from "next"
+
+const HomePage: NextPage = () => {
+
     return (
-        <div className={styles.container}>
-            <div>
-                Notification
+        <PageStart className="p-4 gap-5">
+            <div className="text-center">
+                <h2>Notification</h2>
             </div>
-            <Button variant="contained">Contained</Button>
-        </div>
+            
+        </PageStart>
     )
 }
 
-export default Noti
+export default HomePage

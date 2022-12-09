@@ -3,12 +3,12 @@ export interface UserInfo {
     age?: number,
     weight?: number,
     height?: number,
+    disease?: string[];
 }
 
 export interface UserFood {
     allergy?: string[];
     avoid?: string[];
-    disease?: string[];
     eatingType?: string[];
 }
 
@@ -17,6 +17,6 @@ export interface UserAccount {
     email: string,
     firstname: string,
     lastname: string,
-    userFood?: UserFood,
-    userInfo?: UserInfo
+    food?: UserFood,
+    info?: UserInfo
 }
