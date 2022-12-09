@@ -1,7 +1,7 @@
-import { Auth, onAuthStateChanged, User } from 'firebase/auth'
+import { Auth, getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import { useEffect, useMemo, useState } from 'react';
 
-const useAuth = (auth: Auth): [User | null, boolean, Error | null] => {
+const useAuth = (): [User | null, boolean, Error | null] => {
 
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -10,10 +10,9 @@ const useAuth = (auth: Auth): [User | null, boolean, Error | null] => {
     useEffect(() => {
 
         setError(null)
-        setUser(null)
         setLoading(true);
 
-        const listener = onAuthStateChanged(auth, async (user) => {
+        const listener = onAuthStateChanged(getAuth(), async (user) => {
             setUser(user)
             setLoading(false)
         }, async (err: Error) => {
@@ -25,7 +24,7 @@ const useAuth = (auth: Auth): [User | null, boolean, Error | null] => {
             listener();
         });
 
-    }, [auth])
+    }, [])
 
     return useMemo(() => [user, loading, error], [user, loading, error]);
 

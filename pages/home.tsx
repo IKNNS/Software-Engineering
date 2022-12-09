@@ -1,172 +1,192 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { styled } from '@mui/material/styles';
-import styles from '../styles/Home.module.css'
-import Typography from '@mui/material/Typography';
-import Image from 'next/image'
-import Button from '@mui/material/Button';
-import { useEffect } from 'react';
-import { getAuth } from 'firebase/auth';
-import { useAuth } from '@libs/firebase/useAuth';
-import { useRouter } from 'next/router';
-import { GetUserAccount } from '@libs/firebase/userData';
-import { useState } from 'react';
-import Loading from 'components/common/loading';
-import Registerfood from 'components/registerfood';
+import { addHistory, getAll } from "@libs/database/food"
+import { useAuth } from "@libs/firebase/useAuth"
+import { Food, FoodHistory } from "@models/Food_Module"
+import { UserAccount, UserFood } from "@models/User_Model"
+import { PageStart } from "components/common/Page"
+import FoodItem from "components/home/FoodItem"
+import Account from "@libs/database/user"
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+import {
+    Autocomplete,
+    Paper,
+    TextField,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    Button,
+    Drawer
+} from "@mui/material"
 
-const auth = getAuth();
+import { NextPage } from "next"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
+import AddMenu from "components/home/AddMenu"
 
-export default function BasicStack() {
+interface Warning {
+    allergy: string[];
+    avoid: string[];
+}
 
-    const router = useRouter();
-    const [user, loading] = useAuth(auth);
+const HomePage: NextPage = () => {
 
-    const [step, setStep] = useState(0);
-    const [openLoad, setOpenLoad] = useState(false);
+    const [userData, setUserData] = useState<UserAccount>()
 
-    const loadData = async () => {
-        if (!user) return;
-        const data = await GetUserAccount(user.uid);
-        if (!data.get("info")) {
-            setStep(1);
-            setTimeout(() => setStep(2), 300);
-        } else {
-            setStep(step == 2 ? 1 : 0);
-            setTimeout(() => setStep(0), 400);
-        }
-    }
+    const [foodList, setFoodList] = useState<Food[]>([])
+    const [openDialog, setOpenDialog] = useState(false);
 
-    const onRegis = (isSubmit: boolean) => {
-        if (isSubmit) {
-            setOpenLoad(true);
-        } else {
-            setOpenLoad(false);
-            loadData();
-        }
-    }
+    const [foodSelect, setFoodSelect] = useState<Food>();
+    const [openMenu, setOpenMenu] = useState(false);
+
+    const [warning, setWarning] = useState<Warning>({ allergy: [], avoid: [] });
+    const [openWarning, setOpenWarning] = useState(false);
+
+    const [user] = useAuth()
+    const router = useRouter()
 
     useEffect(() => {
-        if (!loading && !user) {
-            router.push('/login')
-            return;
-        }
-        loadData();
+        getAll()
+            .then(value => setFoodList(value))
+            .catch(e => console.log(e))
+    }, [])
 
-    }, [user, loading])
+    useEffect(() => {
+        if (!user) return () => { }
+
+        Account.get(user.uid)
+            .then(res => res)
+            .then(data => (!data.info) ? setOpenDialog(true) : setUserData(data))
+            .catch(e => setOpenDialog(true))
+    }, [user])
+
+    const handelSelect = (index: number) => {
+        setFoodSelect(foodList[index]);
+        setOpenMenu(true);
+    }
+
+    const handelEat = () => {
+        if (!foodSelect) return;
+
+        const allergy: string[] = [];
+        const avoid: string[] = [];
+
+        foodSelect.foodIngredient.forEach(v => {
+            (userData?.food?.avoid?.includes(v)) && avoid.push(v);
+            (userData?.food?.allergy?.includes(v)) && allergy.push(v);
+        });
+
+        setWarning({ allergy, avoid })
+
+        if (allergy.length > 0 || avoid.length > 0)
+            setOpenWarning(true);
+        else
+            handelSubmit();
+    }
+
+    const handelSubmit = async () => {
+        if (!foodSelect || !user?.uid) return;
+
+        const data = new Date();
+        const foodHistory: FoodHistory = { ...foodSelect, datetime: data.toISOString() };
+        await addHistory(user.uid, foodHistory)
+
+        setOpenWarning(false);
+        setOpenMenu(false);
+    }
+
 
     return (
-        <div className={styles.container}>
-            {(loading || openLoad) && <Loading screen />}
-            {(step > 0) && <Registerfood step={step} uid={user?.uid ?? ""} onSubmit={onRegis} />}
-            <div>
-                <h1 className={styles.title}>
-                    Suggestion
-                </h1>
+        <PageStart className="p-4 gap-3">
+            <div className="text-center">
+                <h2>Suggestion</h2>
             </div>
-            <Box sx={{ width: 'auto' }}>
-                <Stack spacing={2}
-                    alignItems="center"
-                    direction="column"
-                    justifyContent="flex-end"
-                >
-                    {foodData.map((food) => (
-                        <Item key={food.name} sx={{ width: '100%' }}>
-                            <div className={styles.listContainer} >
-                                <div className={styles.Left}>
-                                    <Image src={food.src} width={100} height={100} alt={food.name} />
-                                </div>
-                                <div className={styles.Center}>
-                                    <Typography className={styles.foodName}
-                                        textAlign="start"
-                                        variant="body1"
-                                        component="p"
-                                        alignItems={'left'}
-                                        gutterBottom>{food.name}
-                                    </Typography>
-                                    <Typography className={styles.foodEnergy}
-                                        textAlign="start"
-                                        variant="body2"
-                                        component="p"
-                                        alignItems={'left'}
-                                        gutterBottom>{"energy : " + food.energy + " kcal"}
-                                    </Typography>
-                                </div>
-                                <div className={styles.Right}>
-                                    <Button variant="contained">แดกแล้ว</Button>
-                                </div>
-                            </div>
-                        </Item>
-                    ))}
-                </Stack>
-            </Box>
-            <Box sx={{ pb: 7 }}>
-                <CssBaseline />
-                <Paper sx={{ position: 'fixed', bottom: 70, left: 8, right: 8 }} elevation={3}>
-                    <Autocomplete
-                        freeSolo
-                        options={foodData.map((option) => option.name)}
-                        renderInput={(params) => <TextField {...params} label="กินอะไรดี? : แตะเพื่อค้นหาเมนูกว่า 200 เมนู" />}
-                    />
-                </Paper>
-            </Box>
-        </div>
-    );
-}
-const foodData = [
-    {
-        src: '/Salad_platter.jpg',
-        name: "Salad",
-        energy: "80",
-        type: ["appetizer", "vegetarian", "vegan"],
-        ingredient: ["lettuce", "tomato", "cucumber", "onion", "carrot", "chicken", "egg", "cheese", "dressing"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Spaghetti Carbonara",
-        energy: "680",
-        type: ["main course", "chese", "pasta"],
-        ingredient: ["pasta", "bacon", "egg", "cheese", "cream"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Banana",
-        energy: "100",
-        type: ["dessert", "fruit"],
-        ingredient: ["banana"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Pancake",
-        energy: "300",
-        type: ["dessert", "breakfast"],
-        ingredient: ["flour", "egg", "milk", "butter", "sugar"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Meat Steak",
-        energy: "500",
-        type: ["main course", "meat"],
-        ingredient: ["beef", "salt", "pepper", "oil"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Chicken Steak",
-        energy: "400",
-        type: ["main course", "meat"],
-        ingredient: ["chicken", "salt", "pepper", "oil"],
-    },
+            <div className="flex w-full flex-col gap-3">
+                {
+                    foodList?.map((v, i) => <FoodItem food={v} key={i} like={false} onClick={() => handelSelect(i)} />)
+                }
+            </div>
+            <Paper sx={{ position: 'fixed', bottom: 70, left: 8, right: 8 }} elevation={3}>
+                <Autocomplete
+                    freeSolo
+                    options={foodList?.map((option) => `${option.thaiName} - ${option.englishName.replaceAll("_", " ")}`)}
+                    renderInput={(params) => <TextField {...params} label="กินอะไรดี? : แตะเพื่อค้นหาเมนูกว่า 200 เมนู" />}
+                />
+            </Paper>
+            {
+                openDialog && <UserDialog onClick={() => router.push('/register-info')} />
+            }
+            <WarningDialog setOpen={() => { setOpenWarning(false); }}
+                open={openWarning}
+                warning={warning}
+                onSubmit={handelSubmit}
+            />
 
-]
+            <Drawer
+                anchor={'bottom'}
+                open={openMenu}
+                className="relative"
+            >
+                <AddMenu food={foodSelect} onClose={() => setOpenMenu(false)} onSelect={handelEat} />
+            </Drawer>
+        </PageStart>
+    )
+}
+
+export default HomePage
+
+interface WarningProps {
+    open: boolean;
+    setOpen: (v: boolean) => void;
+    warning: Warning;
+    onSubmit: () => void
+}
+
+const WarningDialog: React.FC<WarningProps> = ({ open, warning, setOpen, onSubmit }) => {
+    return (
+        <Dialog open={open}>
+            <DialogTitle className="text-center" color={"error"}>คำเตือน!</DialogTitle>
+            <DialogContent className="text-left flex flex-col gap-3">
+                <p className="text-main">อาหารชนิดนี้ประกอบด้วยวัตถุดิบที่คุณ</p>
+                {
+                    warning.allergy.length > 0 &&
+                    <div className="w-full flex flex-wrap gap-3">
+                        <h4>แพ้</h4>
+                        {warning.allergy.map(v => <p key={v} className="text-main">{v}</p>)}
+                    </div>
+                }
+                {
+                    warning.avoid.length > 0 &&
+                    <div className="w-full flex flex-wrap gap-3">
+                        <h4>หลักเลี่ยง</h4>
+                        {warning.avoid.map(v => <p key={v} className="text-main">{v}</p>)}
+                    </div>
+                }
+                <div className="mt-5 w-full flex justify-between items-center flex-row gap-3">
+                    <Button sx={{ px: 3 }} color="error" variant="outlined" onClick={() => setOpen(false)}>
+                        ยกเลิก
+                    </Button>
+                    <Button sx={{ px: 3 }} color="info" variant="contained" onClick={() => onSubmit()}>
+                        รับทราบ
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+interface UserDialogProps {
+    onClick: () => void
+}
+
+const UserDialog: React.FC<UserDialogProps> = ({ onClick }) => {
+    return (
+        <Dialog open={true} >
+            <DialogTitle className="text-center">โอ๊! คุณยังไม่ได้ใส่ข้อมูลส่วนตัว</DialogTitle>
+            <DialogContent className="text-center flex flex-col items-center gap-3">
+                <p>เพื่อที่เราจะสามารถแนะนำอาหารให้คุณได้ โปรดบันทึกข้อมูลส่วนตัว</p>
+                <Button color="info" variant="contained" onClick={onClick}>
+                    รับทราบ
+                </Button>
+            </DialogContent>
+        </Dialog >
+    )
+}

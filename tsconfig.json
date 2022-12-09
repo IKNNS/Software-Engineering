@@ -27,6 +27,15 @@
       ],
       "@models/*": [
         "models/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@stores/*": [
+        "stores/*"
+      ],
+      "@assets/*": [
+        "assets/*"
       ]
     },
     "baseUrl": "."
