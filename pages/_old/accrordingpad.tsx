@@ -1,20 +1,9 @@
 import * as React from 'react';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Image from 'next/image'
 import styles2 from '../styles/box.module.css'
 import pic from '../styles/pic.module.css'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { purple, red } from '@mui/material/colors';
 import {
     Autocomplete,
     Box,
