@@ -27,24 +27,18 @@ export default function Registerfood() {
   };
 
   const handleNext = () => {
-    if (weight === "" || (height === "" && activeStep === 0)) {
-      if (weight === "") {
-        setIsError((err) => ({ ...err, weight: true }));
-      } else {
-        setIsError((err) => ({ ...err, weight: false }));
-      }
-      if (height === "") {
-        setIsError((err) => ({ ...err, height: true }));
-      } else {
-        setIsError((err) => ({ ...err, height: false }));
-      }
+
+    // always set isError status
+    setIsError({weight: (weight === ""), height: (height === "")})
+  
+    // if error, don't go next page
+    if ((weight === "" || height === "") && activeStep === 0){
       return;
     }
-
+  
+    // go next page
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
-    // setSkipped(newSkipped);
-  };
+  }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -88,11 +82,11 @@ export default function Registerfood() {
         </Stepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>กรอกครบแล้ว เย่!!</Typography>
+            <Typography sx={{ mt: 2, mb: 1 }}>กรอกข้อมูลครบแล้ว!!</Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
               {/* <Button onClick={handleReset}>Reset</Button> */}
-              <Button variant="contained">เพิ่มข้อมูล</Button>
+              <Button variant="contained">เริ่มต้นใช้งาน</Button>
             </Box>
           </React.Fragment>
         ) : (
