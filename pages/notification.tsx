@@ -59,7 +59,7 @@ const Notification: NextPage = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small" href={value.URL}>เพิ่มเติม</Button>
+                                <Button size="small" href={value.URL} target="_blank">เพิ่มเติม</Button>
                             </CardActions>
                         </Card>
                     </ListItem>
