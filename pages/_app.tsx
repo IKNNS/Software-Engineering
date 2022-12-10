@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
-        {/* <Controller /> */}
+        <Controller />
       </ThemeProvider>
   )
 

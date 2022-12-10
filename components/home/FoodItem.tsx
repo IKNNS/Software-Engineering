@@ -8,7 +8,7 @@ import FullHeartIcon from '@mui/icons-material/FavoriteRounded';
 
 interface Props {
     food: Food;
-    like: boolean;
+    like?: boolean;
     onClick?: () => void;
     onLike?: (value: boolean) => void;
 }
@@ -31,7 +31,7 @@ const FoodItem: React.FC<Props> = ({ food, onClick, like, onLike }) => {
             <div className="ml-auto">
                 <IconButton
                     sx={{ color: '#FF7878' }}
-                    onClick={(e) => { e.preventDefault(); onLike?.(false) }}
+                    onClick={(e) => { e.preventDefault(); onLike?.(!like) }}
                 >
                     {like ? <FullHeartIcon /> : <HeartIcon />}
                 </IconButton>

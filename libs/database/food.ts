@@ -1,6 +1,6 @@
 import { Food, FoodHistory } from '@models/Food_Module';
 import { UserAccount, UserInfo } from '@models/User_Model';
-import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc } from 'firebase/firestore'
+import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from 'firebase/firestore'
 
 const db = getFirestore();
 
@@ -38,4 +38,20 @@ const addHistory = async (uid: string, food: FoodHistory) => {
     await addDoc(collection(getFirestore(), "userAccount", uid, "history"), food).catch((e) => { throw e })
 }
 
-export { getAll, addHistory, getHistory }
+const updateHisotry = async (uid: string, food: FoodHistory) => {
+    historyUpdate = true;
+    let data = food;
+    const hid = data._id;
+    if (data._id) delete data._id;
+    await setDoc(doc(getFirestore(), "userAccount", uid, "history", hid!!), food).catch((e) => { throw e })
+}
+
+const deleteHisotry = async (uid: string, food: FoodHistory) => {
+    historyUpdate = true;
+    let data = food;
+    const hid = data._id;
+    if (data._id) delete data._id;
+    await deleteDoc(doc(getFirestore(), "userAccount", uid, "history", hid!!)).catch((e) => { throw e })
+}
+
+export { getAll, addHistory, getHistory, updateHisotry, deleteHisotry }

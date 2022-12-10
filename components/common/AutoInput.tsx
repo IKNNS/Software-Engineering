@@ -50,7 +50,9 @@ const RenderTags: React.FC<RenderTagsProps> = ({ value, props, color }) => {
                     <React.Fragment key={index}>
                         <Chip {...props({ index })}
                             label={value}
-                            sx={{ background: color?.get(value) }}
+                            sx={{
+                                background: color?.get(value)
+                            }}
                         />
                     </React.Fragment>
                 )
