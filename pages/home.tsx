@@ -3,8 +3,12 @@ import { useAuth } from "@libs/firebase/useAuth"
 import { Food, FoodHistory } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
-import FoodItem from "components/Home/FoodItem"
+import FoodItem from "components/home/FoodItem"
 import Account from "@libs/database/user"
+import { NextPage } from "next"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
+import AddMenu from "components/home/AddMenu"
 
 import {
     Autocomplete,
@@ -16,11 +20,6 @@ import {
     Button,
     Drawer
 } from "@mui/material"
-
-import { NextPage } from "next"
-import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
-import AddMenu from "components/Home/AddMenu"
 
 const HomePage: NextPage = () => {
 
