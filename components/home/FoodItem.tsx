@@ -1,7 +1,7 @@
 import { Button, IconButton, Typography } from "@mui/material";
 import Image from "next/image"
 import styles from "@styles/Home.module.css"
-import { Food } from "@models/Food_Module";
+import { Food } from "@models/Food_Model";
 import EnergyIcon from '@mui/icons-material/LocalFireDepartmentRounded';
 import HeartIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FullHeartIcon from '@mui/icons-material/FavoriteRounded';

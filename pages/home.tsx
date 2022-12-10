@@ -1,6 +1,6 @@
 import { addHistory, getAll } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
-import { Food, FoodHistory } from "@models/Food_Module"
+import { Food, FoodHistory } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
 import FoodItem from "components/Home/FoodItem"
@@ -103,7 +103,7 @@ const HomePage: NextPage = () => {
                 <AddMenu food={foodSelect}
                     uid={user?.uid}
                     onClose={() => setOpenMenu(false)}
-                    userFood={userData?.food}
+                    userData={userData}
                 />
             </Drawer>
         </PageStart>

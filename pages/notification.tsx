@@ -14,7 +14,7 @@ import { NextPage } from "next"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "@libs/firebase/useAuth";
-import { INotification } from "@models/Noti_Module";
+import { INotification } from "@models/Noti_Model";
 
 const Notification: NextPage = () => {
 

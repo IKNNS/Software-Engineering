@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useState } from "react";
-import { Food } from "@models/Food_Module";
+import { Food } from "@models/Food_Model";
 import { useEffect } from "react";
 import Image from "next/image";
 
@@ -42,8 +42,6 @@ export default function LikeForm({ list, onChange }: Props) {
 
         const images: IImage[] = list?.map(v => { return { name: v.thaiName, img: v.imgURL } })
         setImages(images);
-
-        console.log(images);
 
     }, [list])
 

@@ -15,7 +15,7 @@ import { Opacity } from '@mui/icons-material';
 import { useAuth } from '@libs/firebase/useAuth';
 import { useEffect, useState } from 'react';
 import { getHistory } from '@libs/database/food';
-import { FoodHistory } from '@models/Food_Module';
+import { FoodHistory } from '@models/Food_Model';
 import moment from 'moment';
 import { map } from '@firebase/util';
 import HistoryItem from 'components/History/HistoryItem';
@@ -179,7 +179,7 @@ export default function BasicStack() {
                 <EditHisotryForm food={foodSelect}
                     uid={user?.uid}
                     onClose={() => setOpenMenu(false)}
-                    userFood={userData?.food}
+                    userData={userData}
                     onChange={() => loadData()}
                 />
             </Drawer>

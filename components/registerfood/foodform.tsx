@@ -1,4 +1,4 @@
-import { Food } from "@models/Food_Module";
+import { Food } from "@models/Food_Model";
 import { UserFood, UserInfo } from "@models/User_Model";
 import AutoInput from "components/common/AutoInput";
 
@@ -9,40 +9,40 @@ import FoodIcon from '@mui/icons-material/RestaurantRounded';
 import DiseaseIcon from '@mui/icons-material/LocalHospitalRounded';
 import AllergyIcon from '@mui/icons-material/NoMealsRounded';
 import FastfoodIcon from '@mui/icons-material/FastfoodRounded';
+import { getAllDisease } from "@libs/database/disease";
+import { getIngredient, getTypes } from "@libs/database/food";
 
 interface IProps {
     value?: UserInfo & UserFood;
     onChange?: (data: UserInfo & UserFood | undefined) => void;
-    list: Food[];
 }
 
-const diseaseList = ["โรคเบาหวาน", "โรคไต", "โรคเก๊า"];
-
-export default function FoodForm({ list, value, onChange }: IProps) {
+export default function FoodForm({ value, onChange }: IProps) {
 
     const [types, setTypes] = useState<string[]>([]);
     const [ingredient, setIngredient] = useState<string[]>([]);
+    const [disease, setDisease] = useState<string[]>([])
 
     useEffect(() => {
-        const types: string[] = [];
-        const ingredient: string[] = [];
+        getTypes()
+            .then(v => setTypes(v))
+            .catch(e => console.log(e))
 
-        for (let i = 0; i < list.length; i++) {
-            types.push(...list[i].foodType);
-            ingredient.push(...list[i].foodIngredient);
-        }
+        getIngredient()
+            .then(v => setIngredient(v))
+            .catch(e => console.log(e))
 
-        setTypes([...new Set(types)])
-        setIngredient([...new Set(ingredient)])
-
-    }, [list])
+        getAllDisease()
+            .then(v => setDisease(v.map(d => d.name)))
+            .catch(e => console.log(e));
+    }, [])
 
     return (
         <Container>
             <Stack direction={'column'} sx={{ width: "100%" }} spacing={2}>
                 <Typography variant="h6"> โรคประจำตัว</Typography>
                 <AutoInput label="โรคประจำตัว"
-                    list={diseaseList}
+                    list={disease}
                     value={value?.disease ?? []}
                     onChange={v => onChange?.({ disease: v })}
                     icon={<DiseaseIcon color="secondary" sx={{ mt: "5px" }} />}

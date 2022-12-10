@@ -1,5 +1,5 @@
 import { getAll } from "@libs/database/food";
-import { Food } from "@models/Food_Module";
+import { Food } from "@models/Food_Model";
 import { UserInfo, UserFood } from "@models/User_Model";
 import { PageStart } from "components/common/Page";
 import FormFood from "components/registerfood/foodform";
@@ -56,16 +56,16 @@ const RegisterInfoPage: NextPage = () => {
 
     const onSubmit = () => {
         const food: UserFood = {
-            eatingType: data.eatingType,
-            avoid: data.avoid,
-            allergy: data.avoid
+            eatingType: data.eatingType ?? [],
+            avoid: data.avoid ?? [],
+            allergy: data.avoid ?? [],
         };
         const info: UserInfo = {
             gender: data.gender,
             age: data.age,
             weight: data.weight,
             height: data.height,
-            disease: data.disease,
+            disease: data.disease ?? [],
         };
 
         Account.updateAll(user?.uid!, food, info, like)
@@ -97,7 +97,7 @@ const RegisterInfoPage: NextPage = () => {
             <PageStart className="p-4 gap-5 bg-action">
                 <div className="w-full h-auto pt-4 pb-10 mt-24 bg-white rounded-xl shadow">
                     {activeStep == 0 && <FormInfo value={data} isError={isError} onChange={(v) => setData({ ...data, ...v })} />}
-                    {activeStep == 1 && <FormFood list={foodList} value={data} onChange={(v) => setData({ ...data, ...v })} />}
+                    {activeStep == 1 && <FormFood value={data} onChange={(v) => setData({ ...data, ...v })} />}
                     {activeStep == 2 && <LikeForm list={foodList} onChange={(v) => setLike(v)} />}
                     {activeStep == 3 && (
                         <div className="w-full flex flex-col justify-center items-center">

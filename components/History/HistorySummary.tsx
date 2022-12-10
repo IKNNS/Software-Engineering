@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import Image from "next/image"
-import { FoodHistory } from "@models/Food_Module";
+import { FoodHistory } from "@models/Food_Model";
 import EnergyIcon from '@mui/icons-material/LocalFireDepartmentRounded';
 import { useEffect, useState } from "react";
 
