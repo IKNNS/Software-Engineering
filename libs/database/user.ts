@@ -31,10 +31,11 @@ const updateFood = async (uid: string, data: UserFood) => {
     }).catch((e) => { throw e })
 }
 
-const updateAll = async (uid: string, food: UserFood, info: UserInfo) => {
+const updateAll = async (uid: string, food: UserFood, info: UserInfo, like: string[]) => {
     await updateDoc(doc(getFirestore(), "userAccount", uid), {
         "food": food,
-        "info": info
+        "info": info,
+        "like": like,
     }).catch((e) => { throw e })
 }
 

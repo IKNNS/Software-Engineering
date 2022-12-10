@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import Image from "next/image"
 import styles from "@styles/Home.module.css"
 import { Food } from "@models/Food_Module";
@@ -29,17 +29,12 @@ const FoodItem: React.FC<Props> = ({ food, onClick, like, onLike }) => {
                 </div>
             </div>
             <div className="ml-auto">
-                {
-                    like ?
-                        <FullHeartIcon fontSize="medium"
-                            sx={{ color: "#FF7878" }}
-                            onClick={(e) => { e.preventDefault(); onLike?.(false) }}
-                        /> :
-                        <HeartIcon fontSize="medium"
-                            sx={{ color: "#FF7878" }}
-                            onClick={(e) => { e.preventDefault(); onLike?.(true) }}
-                        />
-                }
+                <IconButton
+                    sx={{ color: '#FF7878' }}
+                    onClick={(e) => { e.preventDefault(); onLike?.(false) }}
+                >
+                    {like ? <FullHeartIcon /> : <HeartIcon />}
+                </IconButton>
             </div>
         </div>
     )

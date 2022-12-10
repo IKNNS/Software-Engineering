@@ -9,8 +9,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Image from 'next/image'
-import styles2 from '../styles/box.module.css'
-import pic from '../styles/pic.module.css'
+import styles2 from '@styles/box.module.css'
+import pic from '@styles/pic.module.css'
 import { ChangeEventHandler, useState } from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';

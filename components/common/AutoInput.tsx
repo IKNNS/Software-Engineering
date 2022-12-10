@@ -1,3 +1,4 @@
+import { color } from "@libs/color-map";
 import { Autocomplete, AutocompleteRenderGetTagProps, Chip, TextField } from "@mui/material"
 import React, { ReactNode } from "react";
 
@@ -7,10 +8,9 @@ interface Props {
     label?: string;
     icon?: ReactNode
     list?: string[]
-    color?: Map<string, string>
 }
 
-const AutoInput: React.FC<Props> = ({ list, icon, value, onChange, label, color }) => {
+const AutoInput: React.FC<Props> = ({ list, icon, value, onChange, label }) => {
 
     return (
         <div className="flex flex-row items-start justify-center gap-3 w-full">
