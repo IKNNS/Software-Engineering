@@ -13,6 +13,7 @@ import { NextPage } from "next";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import LikeForm from "components/registerfood/likeform";
 
 const steps = ["ข้อมูลส่วนตัว", "อาหารและสุขภาพ", "อาหารที่ชอบ"];
 
@@ -23,6 +24,8 @@ const RegisterInfoPage: NextPage = () => {
 
     const [activeStep, setActiveStep] = useState(0);
     const [data, setData] = useState<UserInfo & UserFood>({ gender: "female" })
+    const [like, setLike] = useState<string[]>([]);
+
     const [foodList, setFoodList] = useState<Food[]>([]);
     const [isError, setIsError] = useState({
         age: false,
@@ -65,7 +68,7 @@ const RegisterInfoPage: NextPage = () => {
             disease: data.disease,
         };
 
-        Account.updateAll(user?.uid!, food, info)
+        Account.updateAll(user?.uid!, food, info, like)
             .then(() => router.push('/home'))
             .catch((e) => console.log(e));
     }
@@ -95,6 +98,7 @@ const RegisterInfoPage: NextPage = () => {
                 <div className="w-full h-auto pt-4 pb-10 mt-24 bg-white rounded-xl shadow">
                     {activeStep == 0 && <FormInfo value={data} isError={isError} onChange={(v) => setData({ ...data, ...v })} />}
                     {activeStep == 1 && <FormFood list={foodList} value={data} onChange={(v) => setData({ ...data, ...v })} />}
+                    {activeStep == 2 && <LikeForm list={foodList} onChange={(v) => setLike(v)} />}
                     {activeStep == 3 && (
                         <div className="w-full flex flex-col justify-center items-center">
                             <FinishIcon sx={{ fontSize: "50px" }} color="success" />

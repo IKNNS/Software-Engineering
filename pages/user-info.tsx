@@ -90,19 +90,19 @@ const UserInfo: NextPage = () => {
                 setIngredient([...new Set(ingredient)]);
                 const n = [...new Set(ingredient)]
                 const j = n.map((v) => [v, ""])
-                console.log(j)
             })
             .catch(e => console.log(e))
     }, [])
 
-    const handleSave = (value: string[]) => {
-        if (!user) return;
+    const handleSave = async (value: string[]) => {
+        if (!user || !data) return;
 
         if (listName == "โรคประจำตัว") {
             const info = data?.info;
             if (!info) return;
             info.disease = value;
-            Account.updateInfo(user.uid, info);
+            await Account.updateInfo(user.uid, info);
+            setData({ ...data, info: info })
         } else {
             const food = data?.food;
             if (!food) return;
@@ -119,19 +119,10 @@ const UserInfo: NextPage = () => {
                 default:
                     break;
             }
-            Account.updateFood(user.uid, food);
+            await Account.updateFood(user.uid, food);
+            setData({ ...data, food: food })
         }
 
-        Account.get(user.uid, true)
-            .then(res => res)
-            .then(data => {
-                if (data) {
-                    setData(data)
-                    setGender(genders[data?.info?.gender ?? "other"])
-                }
-                setOpenDrawer(false);
-            })
-            .catch(e => console.log(e))
     }
 
     return (

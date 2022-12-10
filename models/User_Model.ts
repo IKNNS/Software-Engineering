@@ -18,5 +18,6 @@ export interface UserAccount {
     firstname: string,
     lastname: string,
     food?: UserFood,
-    info?: UserInfo
+    info?: UserInfo,
+    like?: string[]
 }
