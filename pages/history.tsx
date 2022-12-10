@@ -23,6 +23,15 @@ import { PageStart } from 'components/common/Page';
 import EditHisotryForm from 'components/History/EditMenu';
 import Account from '@libs/database/user';
 import { UserAccount } from '@models/User_Model';
+import PieChart, {
+    Legend,
+    Series,
+    Tooltip,
+    Format,
+    Label,
+    Connector,
+    Export,
+} from 'devextreme-react/pie-chart';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -125,25 +134,23 @@ export default function BasicStack() {
                         <Accordion>
                             <AccordionSummary>
                                 <div className={styles.listContainer} >
-                                    <div className={styles.Left}>
-                                        {/* <Image src={food.src} width={100} height={100} /> */}
-                                    </div>
-                                    <div className={styles.Center}>
-                                        <Typography className={styles.foodName}
-                                            textAlign="start"
-                                            variant="body1"
-                                            component="p"
-                                            alignItems={'left'}
-                                            gutterBottom>{"พลังงานที่ได้รับ"}
-                                        </Typography>
-                                        <Typography className={styles.foodEnergy}
-                                            textAlign="start"
-                                            variant="body2"
-                                            component="p"
-                                            alignItems={'left'}
-                                            gutterBottom>{data.total + "kcal"}
-                                        </Typography>
-                                    </div>
+                                        <PieChart
+                                            id="pie"
+                                            type="doughnut"
+                                            palette="Soft Blue"
+                                            dataSource={[...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData.info.weight, userData.info.height, userData.info.age, userData.info.gender) - data.total }]}
+                                        >
+                                            <Series argumentField="region"
+                                                valueField="val">
+                                                <Label
+                                                    visible={true}
+                                                    format="fixedPoint"
+                                                    customizeText={customizeLabel([...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData.info.weight, userData.info.height, userData.info.age, userData.info.gender) - data.total }])}
+                                                ></Label>
+
+                                            </Series>
+                                            <Legend horizontalAlignment="center" verticalAlignment="bottom" />
+                                        </PieChart>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
@@ -161,16 +168,6 @@ export default function BasicStack() {
                     </div>
                 ))}
             </div>
-            <Box sx={{ pb: 7 }}>
-                <CssBaseline />
-                <Paper sx={{ position: 'fixed', bottom: 70, left: 8, right: 8 }} elevation={3}>
-                    <Autocomplete
-                        freeSolo
-                        options={foodData.map((option) => option.name)}
-                        renderInput={(params) => <TextField {...params} label="กินอะไรดี? : แตะเพื่อค้นหาเมนูกว่า 200 เมนู" />}
-                    />
-                </Paper>
-            </Box>
             <Drawer
                 anchor={'bottom'}
                 open={openMenu}
@@ -186,48 +183,17 @@ export default function BasicStack() {
         </PageStart>
     );
 }
-const foodData = [
-    {
-        src: '/Salad_platter.jpg',
-        name: "Salad",
-        energy: "80",
-        type: ["appetizer", "vegetarian", "vegan"],
-        ingredient: ["lettuce", "tomato", "cucumber", "onion", "carrot", "chicken", "egg", "cheese", "dressing"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Spaghetti Carbonara",
-        energy: "680",
-        type: ["main course", "chese", "pasta"],
-        ingredient: ["pasta", "bacon", "egg", "cheese", "cream"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Banana",
-        energy: "100",
-        type: ["dessert", "fruit"],
-        ingredient: ["banana"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Pancake",
-        energy: "300",
-        type: ["dessert", "breakfast"],
-        ingredient: ["flour", "egg", "milk", "butter", "sugar"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Meat Steak",
-        energy: "500",
-        type: ["main course", "meat"],
-        ingredient: ["beef", "salt", "pepper", "oil"],
-    },
-    {
-        src: '/Salad_platter.jpg',
-        name: "Chicken Steak",
-        energy: "400",
-        type: ["main course", "meat"],
-        ingredient: ["chicken", "salt", "pepper", "oil"],
-    },
-
-]
+function calcBMR(weight: number | undefined, height: number | undefined, age: number | undefined, gender: string | undefined) {
+    if (gender === 'male') {
+        return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
+    }
+    else if (gender === 'female') {
+        return -161 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
+    }
+    else {
+        return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
+    }
+}
+function customizeLabel(listofdata: any) {
+    return `${listofdata.region}: ${listofdata.val}kcals`;
+  }
