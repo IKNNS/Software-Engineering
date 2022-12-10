@@ -26,8 +26,7 @@ const Notification: NextPage = () => {
                                 component="img"
                                 alt={value.head}
                                 height="140"
-                                image= {value.imgUrl}
-                            />
+                                image= {value.imgUrl}/>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     {value.head}
@@ -37,7 +36,9 @@ const Notification: NextPage = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small" href = {value.URL}>เพิ่มเติม</Button>
+                                <Button size="small"
+                                target="_blank"
+                                href = {value.URL}>เพิ่มเติม</Button>
                             </CardActions>
                         </Card>
                     </ListItem>
