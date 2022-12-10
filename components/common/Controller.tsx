@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { useAuth } from '@libs/firebase/useAuth'
 import { useRouter } from "next/router";
 
-import Loading from './Loading'
+import Loading from './loading'
 import LabelBottomNavigation from './navbar'
 
 const MENU_PATH = ["/home", "/_error", "/user-info","/history","/notification", "/404"]
