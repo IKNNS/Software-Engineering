@@ -23,7 +23,7 @@ import ArrowIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import FemaleRoundedIcon from '@mui/icons-material/FemaleRounded';
 import MaleRoundedIcon from '@mui/icons-material/MaleRounded';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
-import { Drawer } from "@mui/material"
+import { Button, Drawer } from "@mui/material"
 import EditForm from "components/user-info/edit-form"
 import { getAllDisease } from "@libs/database/disease"
 
@@ -62,6 +62,7 @@ const UserInfo: NextPage = () => {
     const [dataList, setDataList] = useState<string[]>([])
 
     const [user] = useAuth()
+    const router = useRouter()
 
     useEffect(() => {
         if (!user) return () => { }
@@ -197,6 +198,9 @@ const UserInfo: NextPage = () => {
                         setDataList(ingredient)
                     }}
                 />
+                <Button variant="outlined" color="error" sx={{ px: 3 }} onClick={() => router.push("logout")}>
+                    ออกจากระบบ
+                </Button>
                 <Drawer
                     anchor={'bottom'}
                     open={openDrawer}

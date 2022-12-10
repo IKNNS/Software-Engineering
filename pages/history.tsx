@@ -134,23 +134,23 @@ export default function BasicStack() {
                         <Accordion>
                             <AccordionSummary>
                                 <div className={styles.listContainer} >
-                                        <PieChart
-                                            id="pie"
-                                            type="doughnut"
-                                            palette="Soft Blue"
-                                            dataSource={[...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData.info.weight, userData.info.height, userData.info.age, userData.info.gender) - data.total }]}
-                                        >
-                                            <Series argumentField="region"
-                                                valueField="val">
-                                                <Label
-                                                    visible={true}
-                                                    format="fixedPoint"
-                                                    customizeText={customizeLabel([...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData.info.weight, userData.info.height, userData.info.age, userData.info.gender) - data.total }])}
-                                                ></Label>
+                                    <PieChart
+                                        id="pie"
+                                        type="doughnut"
+                                        palette="Soft Blue"
+                                        dataSource={[...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData?.info?.weight ?? 0, userData?.info?.height ?? 0, userData?.info?.age ?? 0, userData?.info?.gender ?? "") - data.total }]}
+                                    >
+                                        <Series argumentField="region"
+                                            valueField="val">
+                                            <Label
+                                                visible={true}
+                                                format="fixedPoint"
+                                                customizeText={customizeLabel([...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData?.info?.weight ?? 0, userData?.info?.height ?? 0, userData?.info?.age ?? 0, userData?.info?.gender ?? "") - data.total }])}
+                                            ></Label>
 
-                                            </Series>
-                                            <Legend horizontalAlignment="center" verticalAlignment="bottom" />
-                                        </PieChart>
+                                        </Series>
+                                        <Legend horizontalAlignment="center" verticalAlignment="bottom" />
+                                    </PieChart>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
@@ -183,7 +183,7 @@ export default function BasicStack() {
         </PageStart>
     );
 }
-function calcBMR(weight: number | undefined, height: number | undefined, age: number | undefined, gender: string | undefined) {
+function calcBMR(weight: number, height: number, age: number, gender: string) {
     if (gender === 'male') {
         return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
     }
@@ -196,4 +196,4 @@ function calcBMR(weight: number | undefined, height: number | undefined, age: nu
 }
 function customizeLabel(listofdata: any) {
     return `${listofdata.region}: ${listofdata.val}kcals`;
-  }
+}
