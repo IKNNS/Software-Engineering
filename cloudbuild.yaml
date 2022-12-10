@@ -27,3 +27,4 @@ steps:
       ]
 images:
   - gcr.io/$PROJECT_ID/nextjs-cloud-run
+timeout: 1200s
