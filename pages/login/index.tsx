@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { Alert, Button, Snackbar } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
-import EmailIcon from '@mui/icons-material/AlternateEmailOutlined';
-import PasswordIcon from '@mui/icons-material/VpnKeyOutlined'
+import EmailIcon from "@mui/icons-material/AlternateEmailOutlined";
+import PasswordIcon from "@mui/icons-material/VpnKeyOutlined"
 
 import { login, loginGoogle } from "@libs/database/login";
-import Google from 'assets/images/google.svg'
+import Google from "assets/images/google.svg"
 import InputText from "components/common/TextInput";
-import Cover from 'assets/images/Cover.svg'
+import Cover from "assets/images/Cover.svg"
 
 const LoginPage: NextPage = () => {
     const router = useRouter();
@@ -58,19 +58,19 @@ const LoginPage: NextPage = () => {
                     onChange={(v) => setPassword(v)}
                 />
                 <div className="text-right text-sm">
-                    <span className=' text-link hover:cursor-pointer'>ลืมรหัสใช่ไหม</span>
+                    <span className=" text-link hover:cursor-pointer">ลืมรหัสใช่ไหม</span>
                 </div>
-                <Button type="submit" variant="contained" color='info' fullWidth>เข้าสู่ระบบ</Button>
+                <Button type="submit" variant="contained" color="info" fullWidth>เข้าสู่ระบบ</Button>
                 <p>or</p>
                 <div className="flex flex-row justify-center items-center gap-3 p-2 bg-action rounded-lg"
                     onClick={handleGoogle}
                 >
-                    <Image src={Google} width={20} height={20} alt='google-logo' />
-                    <span className=' hover:cursor-pointer'> เข้าสู่ระบบด้วย Google</span>
+                    <Image src={Google} width={20} height={20} alt="google-logo" />
+                    <span className=" hover:cursor-pointer"> เข้าสู่ระบบด้วย Google</span>
                 </div>
                 <p className=" text-sm my-2">
                     ไม่มีบัญชีใช่ไหม?
-                    <span className=' text-link hover:cursor-pointer' onClick={() => router.push('/register')}> ลงทะเบียนที่นี่</span>
+                    <span className=" text-link hover:cursor-pointer" onClick={() => router.push("/register")}> ลงทะเบียนที่นี่</span>
                 </p>
             </form>
             <Snackbar open={errMessage != ""} autoHideDuration={6000} onClose={() => setErrorMessage("")}>

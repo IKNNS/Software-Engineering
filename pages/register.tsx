@@ -1,7 +1,7 @@
 import { PageCenter } from "components/common/Page";
 import { UserAccount } from "@models/User_Model";
 import { checkAccount, register } from "@libs/database/login";
-import Cover from 'assets/images/Cover.svg'
+import Cover from "assets/images/Cover.svg"
 import InputText from "components/common/TextInput";
 
 import { NextPage } from "next";
@@ -10,9 +10,9 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 import { Alert, Button, Snackbar } from "@mui/material";
-import EmailIcon from '@mui/icons-material/AlternateEmailOutlined';
-import PasswordIcon from '@mui/icons-material/VpnKeyOutlined'
-import UserIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import EmailIcon from "@mui/icons-material/AlternateEmailOutlined";
+import PasswordIcon from "@mui/icons-material/VpnKeyOutlined"
+import UserIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 
 
 
@@ -112,7 +112,7 @@ const RegisterPage: NextPage = () => {
                 <Button type="submit" variant="contained" color="info" fullWidth>เข้าสู่ระบบ</Button>
                 <p className=" text-sm my-2">
                     มีบัญชีอยู่แล้วใช่ไหม?
-                    <span className=' text-link hover:cursor-pointer' onClick={() => router.push('/login')}> เข้าสู่ระบบเลย</span>
+                    <span className=" text-link hover:cursor-pointer" onClick={() => router.push("/login")}> เข้าสู่ระบบเลย</span>
                 </p>
             </form>
             <Snackbar open={errMessage != ""} autoHideDuration={6000} onClose={() => setErrorMessage("")}>

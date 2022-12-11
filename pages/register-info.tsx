@@ -7,7 +7,7 @@ import FormInfo from "components/registerfood/infoform";
 import Account from "@libs/database/user";
 import { useAuth } from "@libs/firebase/useAuth";
 
-import FinishIcon from '@mui/icons-material/CheckCircleOutlineRounded';
+import FinishIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import { Button, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
@@ -69,7 +69,7 @@ const RegisterInfoPage: NextPage = () => {
         };
 
         Account.updateAll(user?.uid!, food, info, like)
-            .then(() => router.push('/home'))
+            .then(() => router.push("/home"))
             .catch((e) => console.log(e));
     }
 
@@ -112,7 +112,7 @@ const RegisterInfoPage: NextPage = () => {
                     กลับ
                 </Button>
                 <Button onClick={handleNext}>
-                    {activeStep == 3 ? 'ตกลง' : 'ต่อไป'}
+                    {activeStep == 3 ? "ตกลง" : "ต่อไป"}
                 </Button>
             </div>
         </React.Fragment>

@@ -1,5 +1,5 @@
-import { UserAccount, UserFood, UserInfo } from '@models/User_Model';
-import { getFirestore, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
+import { UserAccount, UserFood, UserInfo } from "@models/User_Model";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "firebase/firestore"
 
 let _uid = "";
 let UserData: UserAccount | undefined = undefined

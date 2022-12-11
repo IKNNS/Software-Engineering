@@ -2,9 +2,9 @@ import { Food, FoodHistory } from "@models/Food_Model"
 import { Button, Chip, Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material"
 import AutoInput from "components/common/AutoInput"
 import { useCallback, useEffect, useState } from "react"
-import EnergyIcon from '@mui/icons-material/LocalFireDepartmentRounded';
-import Image from 'next/image'
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import EnergyIcon from "@mui/icons-material/LocalFireDepartmentRounded";
+import Image from "next/image"
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DateInput from "components/common/DateInput";
 import { UserAccount, UserFood } from "@models/User_Model";
 import { addHistory, deleteHisotry, updateHisotry } from "@libs/database/food";

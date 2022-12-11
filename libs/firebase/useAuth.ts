@@ -1,5 +1,5 @@
-import { Auth, getAuth, onAuthStateChanged, User } from 'firebase/auth'
-import { useEffect, useMemo, useState } from 'react';
+import { Auth, getAuth, onAuthStateChanged, User } from "firebase/auth"
+import { useEffect, useMemo, useState } from "react";
 
 const useAuth = (): [User | null, boolean, Error | null] => {
 

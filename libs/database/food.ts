@@ -1,6 +1,6 @@
-import { Food, FoodHistory } from '@models/Food_Model';
-import { UserAccount, UserInfo } from '@models/User_Model';
-import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from 'firebase/firestore'
+import { Food, FoodHistory } from "@models/Food_Model";
+import { UserAccount, UserInfo } from "@models/User_Model";
+import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from "firebase/firestore"
 
 const db = getFirestore();
 

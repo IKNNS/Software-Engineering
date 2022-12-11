@@ -83,7 +83,7 @@ const HomePage: NextPage = () => {
                     />)
                 }
             </div>
-            <Paper sx={{ position: 'fixed', bottom: 70, left: 8, right: 8 }} elevation={3}>
+            <Paper sx={{ position: "fixed", bottom: 70, left: 8, right: 8 }} elevation={3}>
                 <Autocomplete
                     freeSolo
                     options={foodList?.map((option) => `${option.thaiName} - ${option.englishName.replaceAll("_", " ")}`)}
@@ -91,11 +91,11 @@ const HomePage: NextPage = () => {
                 />
             </Paper>
             {
-                openDialog && <UserDialog onClick={() => router.push('/register-info')} />
+                openDialog && <UserDialog onClick={() => router.push("/register-info")} />
             }
 
             <Drawer
-                anchor={'bottom'}
+                anchor={"bottom"}
                 open={openMenu}
                 className="relative"
             >

@@ -1,13 +1,13 @@
-import * as React from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import HomeIcon from '@mui/icons-material/Home';
-import HistoryIcon from '@mui/icons-material/History';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useRouter } from 'next/router'
+import * as React from "react";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import CssBaseline from "@mui/material/CssBaseline";
+import Paper from "@mui/material/Paper";
+import HomeIcon from "@mui/icons-material/Home";
+import HistoryIcon from "@mui/icons-material/History";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useRouter } from "next/router"
 
 export default function FixedBottomNavigation() {
   
@@ -22,7 +22,7 @@ export default function FixedBottomNavigation() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper sx={{ position: 'fixed', bottom: 0,width:'100vw' }} elevation={6}>
+      <Paper sx={{ position: "fixed", bottom: 0,width:"100vw" }} elevation={6}>
         <BottomNavigation
           showLabels
           value={value}

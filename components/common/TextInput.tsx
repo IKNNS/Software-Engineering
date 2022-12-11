@@ -1,8 +1,8 @@
 import { FormControl, Input, InputLabel } from "@mui/material"
 import React, { ReactNode, useState } from "react";
 
-import ShowIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import HiddenIcon from '@mui/icons-material/VisibilityOffOutlined';
+import ShowIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import HiddenIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 interface Props {
     value?: string | number;
@@ -25,7 +25,7 @@ const InputText: React.FC<Props> = ({ param, onlyText, err, required, icon, valu
     const HiddenButton = isPassword && (
         <div className=" cursor-pointer" onClick={() => setHidden(!hidden)}>
             {
-                hidden ? <ShowIcon color='secondary' /> : <HiddenIcon color='secondary' />
+                hidden ? <ShowIcon color="secondary" /> : <HiddenIcon color="secondary" />
             }
         </div>
     )
@@ -40,7 +40,7 @@ const InputText: React.FC<Props> = ({ param, onlyText, err, required, icon, valu
             {icon}
             <FormControl fullWidth variant="standard">
                 <InputLabel>{label}</InputLabel>
-                < Input type={hidden ? type : 'text'}
+                < Input type={hidden ? type : "text"}
                     value={value}
                     onChange={(e) => handleInput(e.target.value)}
                     endAdornment={HiddenButton}

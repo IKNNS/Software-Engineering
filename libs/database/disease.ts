@@ -1,5 +1,5 @@
-import { IDisease } from '@models/Disease_Model';
-import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from 'firebase/firestore'
+import { IDisease } from "@models/Disease_Model";
+import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from "firebase/firestore"
 
 const db = getFirestore();
 

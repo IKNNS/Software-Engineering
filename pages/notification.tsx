@@ -24,7 +24,7 @@ const Notification: NextPage = () => {
     useEffect(() => {
         if (!user?.uid) return;
 
-        axios.get('http://139.59.105.124/noti/' + user.uid)
+        axios.get("http://139.59.105.124/noti/" + user.uid)
             .then(res => res.data as INotification[])
             .then(data => {
                 console.log(data);

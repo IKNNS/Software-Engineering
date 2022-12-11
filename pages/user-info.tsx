@@ -9,20 +9,20 @@ import User from "@assets/images/user.svg"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { ReactNode, useEffect, useMemo, useState } from "react"
-import Image from 'next/image'
+import Image from "next/image"
 
-import EmailIcon from '@mui/icons-material/EmailOutlined';
-import CakeRoundedIcon from '@mui/icons-material/CakeRounded';
-import FoodIcon from '@mui/icons-material/RestaurantRounded';
-import DiseaseIcon from '@mui/icons-material/LocalHospitalRounded';
-import AllergyIcon from '@mui/icons-material/NoMealsRounded';
-import FastfoodIcon from '@mui/icons-material/FastfoodRounded';
-import ProfileIcon from '@mui/icons-material/PersonRounded';
-import ArrowIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import EmailIcon from "@mui/icons-material/EmailOutlined";
+import CakeRoundedIcon from "@mui/icons-material/CakeRounded";
+import FoodIcon from "@mui/icons-material/RestaurantRounded";
+import DiseaseIcon from "@mui/icons-material/LocalHospitalRounded";
+import AllergyIcon from "@mui/icons-material/NoMealsRounded";
+import FastfoodIcon from "@mui/icons-material/FastfoodRounded";
+import ProfileIcon from "@mui/icons-material/PersonRounded";
+import ArrowIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 
-import FemaleRoundedIcon from '@mui/icons-material/FemaleRounded';
-import MaleRoundedIcon from '@mui/icons-material/MaleRounded';
-import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
+import FemaleRoundedIcon from "@mui/icons-material/FemaleRounded";
+import MaleRoundedIcon from "@mui/icons-material/MaleRounded";
+import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { Button, Drawer } from "@mui/material"
 import EditForm from "components/user-info/edit-form"
 import { getAllDisease } from "@libs/database/disease"
@@ -202,7 +202,7 @@ const UserInfo: NextPage = () => {
                     ออกจากระบบ
                 </Button>
                 <Drawer
-                    anchor={'bottom'}
+                    anchor={"bottom"}
                     open={openDrawer}
                     onClose={() => setOpenDrawer(false)}
                     className="relative"

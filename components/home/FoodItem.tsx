@@ -2,9 +2,9 @@ import { Button, IconButton, Typography } from "@mui/material";
 import Image from "next/image"
 import styles from "@styles/Home.module.css"
 import { Food } from "@models/Food_Model";
-import EnergyIcon from '@mui/icons-material/LocalFireDepartmentRounded';
-import HeartIcon from '@mui/icons-material/FavoriteBorderRounded';
-import FullHeartIcon from '@mui/icons-material/FavoriteRounded';
+import EnergyIcon from "@mui/icons-material/LocalFireDepartmentRounded";
+import HeartIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FullHeartIcon from "@mui/icons-material/FavoriteRounded";
 
 interface Props {
     food: Food;
@@ -30,7 +30,7 @@ const FoodItem: React.FC<Props> = ({ food, onClick, like, onLike }) => {
             </div>
             <div className="ml-auto">
                 <IconButton
-                    sx={{ color: '#FF7878' }}
+                    sx={{ color: "#FF7878" }}
                     onClick={(e) => { e.preventDefault(); onLike?.(!like) }}
                 >
                     {like ? <FullHeartIcon /> : <HeartIcon />}

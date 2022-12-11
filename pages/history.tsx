@@ -1,28 +1,28 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { styled } from '@mui/material/styles';
-import styles from '../styles/Home.module.css'
-import Typography from '@mui/material/Typography';
-import Image from 'next/image'
-import Button from '@mui/material/Button';
-import { Accordion, AccordionDetails, AccordionSummary, Drawer } from '@mui/material';
-import { Opacity } from '@mui/icons-material';
-import { useAuth } from '@libs/firebase/useAuth';
-import { useEffect, useState } from 'react';
-import { getHistory } from '@libs/database/food';
-import { FoodHistory } from '@models/Food_Model';
-import moment from 'moment';
-import { map } from '@firebase/util';
-import { PageStart } from 'components/common/Page';
-import EditHisotryForm from 'components/history/EditMenu';
-import Account from '@libs/database/user';
-import { UserAccount } from '@models/User_Model';
-import HistoryItem from 'components/history/HistoryItem';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import { styled } from "@mui/material/styles";
+import styles from "../styles/Home.module.css"
+import Typography from "@mui/material/Typography";
+import Image from "next/image"
+import Button from "@mui/material/Button";
+import { Accordion, AccordionDetails, AccordionSummary, Drawer } from "@mui/material";
+import { Opacity } from "@mui/icons-material";
+import { useAuth } from "@libs/firebase/useAuth";
+import { useEffect, useState } from "react";
+import { getHistory } from "@libs/database/food";
+import { FoodHistory } from "@models/Food_Model";
+import moment from "moment";
+import { map } from "@firebase/util";
+import { PageStart } from "components/common/Page";
+import EditHisotryForm from "components/history/EditMenu";
+import Account from "@libs/database/user";
+import { UserAccount } from "@models/User_Model";
+import HistoryItem from "components/history/HistoryItem";
 import PieChart, {
     Legend,
     Series,
@@ -31,14 +31,14 @@ import PieChart, {
     Label,
     Connector,
     Export,
-} from 'devextreme-react/pie-chart';
-import { NextPage } from 'next';
+} from "devextreme-react/pie-chart";
+import { NextPage } from "next";
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
 }));
 
@@ -126,10 +126,10 @@ const HistoryPage: NextPage = () => {
             <div className="text-center">
                 <h2>History</h2>
             </div>
-            <div className='w-full flex flex-col gap-5 pb-10'>
+            <div className="w-full flex flex-col gap-5 pb-10">
                 {history.sort((a, b) => compareDate(a.date, b.date)).map((data, index) => (
                     <div key={index} className={`w-full`}>
-                        <h4 className='text-left mb-2'>
+                        <h4 className="text-left mb-2">
                             วันที่ {data.date.format("DD/MM/YYYY")}
                         </h4>
                         <Accordion>
@@ -170,7 +170,7 @@ const HistoryPage: NextPage = () => {
                 ))}
             </div>
             <Drawer
-                anchor={'bottom'}
+                anchor={"bottom"}
                 open={openMenu}
                 className="relative"
             >
@@ -188,10 +188,10 @@ const HistoryPage: NextPage = () => {
 export default HistoryPage;
 
 function calcBMR(weight: number, height: number, age: number, gender: string) {
-    if (gender === 'male') {
+    if (gender === "male") {
         return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
     }
-    else if (gender === 'female') {
+    else if (gender === "female") {
         return -161 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
     }
     else {

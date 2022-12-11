@@ -5,10 +5,10 @@ import AutoInput from "components/common/AutoInput";
 import { Stack, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import FoodIcon from '@mui/icons-material/RestaurantRounded';
-import DiseaseIcon from '@mui/icons-material/LocalHospitalRounded';
-import AllergyIcon from '@mui/icons-material/NoMealsRounded';
-import FastfoodIcon from '@mui/icons-material/FastfoodRounded';
+import FoodIcon from "@mui/icons-material/RestaurantRounded";
+import DiseaseIcon from "@mui/icons-material/LocalHospitalRounded";
+import AllergyIcon from "@mui/icons-material/NoMealsRounded";
+import FastfoodIcon from "@mui/icons-material/FastfoodRounded";
 import { getAllDisease } from "@libs/database/disease";
 import { getIngredient, getTypes } from "@libs/database/food";
 
@@ -39,7 +39,7 @@ export default function FoodForm({ value, onChange }: IProps) {
 
     return (
         <Container>
-            <Stack direction={'column'} sx={{ width: "100%" }} spacing={2}>
+            <Stack direction={"column"} sx={{ width: "100%" }} spacing={2}>
                 <Typography variant="h6"> โรคประจำตัว</Typography>
                 <AutoInput label="โรคประจำตัว"
                     list={disease}

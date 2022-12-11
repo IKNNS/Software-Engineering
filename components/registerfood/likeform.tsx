@@ -11,8 +11,8 @@ import { Food } from "@models/Food_Model";
 import { useEffect } from "react";
 import Image from "next/image";
 
-import HeartIcon from '@mui/icons-material/FavoriteBorderRounded';
-import FullHeartIcon from '@mui/icons-material/FavoriteRounded';
+import HeartIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FullHeartIcon from "@mui/icons-material/FavoriteRounded";
 
 interface IImage {
     name: string
@@ -47,7 +47,7 @@ export default function LikeForm({ list, onChange }: Props) {
 
     return (
         <Container>
-            <Stack direction={'column'} sx={{ width: "100%" }}>
+            <Stack direction={"column"} sx={{ width: "100%" }}>
                 <ImageList cols={3} gap={10}>
                     {
                         images.map((item, i) => item.img !== "" &&
@@ -77,13 +77,13 @@ const ImageBlock: React.FC<ImageProps> = ({ url, like, onClick }) => (
             <ImageListItemBar
                 sx={{
                     background:
-                        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                        "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+                        "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
                 }}
                 position="top"
                 actionIcon={
                     <IconButton
-                        sx={{ color: '#DD5353' }}
+                        sx={{ color: "#DD5353" }}
                     >
                         {like ? <FullHeartIcon fontSize="small" /> : <HeartIcon fontSize="small" />}
                     </IconButton>

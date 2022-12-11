@@ -1,10 +1,10 @@
 import { getAuth } from "firebase/auth";
 import React, { useContext, useEffect } from "react";
-import { useAuth } from '@libs/firebase/useAuth'
+import { useAuth } from "@libs/firebase/useAuth"
 import { useRouter } from "next/router";
 
-import Loading from './loading'
-import LabelBottomNavigation from './navbar'
+import Loading from "./loading"
+import LabelBottomNavigation from "./navbar"
 
 const MENU_PATH = ["/home", "/_error", "/user-info","/history","/notification", "/404"]
 const USER_PATH = ["/home", "/register-info", "/user-info","/history","/notification", "/logout", "/_error","/404"]
