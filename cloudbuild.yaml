@@ -19,8 +19,4 @@ steps:
         '--quiet']
 images:
   - gcr.io/$PROJECT_ID/$TRIGGER_NAME
-<<<<<<< HEAD
 timeout: 1200s
-=======
-timeout: 1200s
->>>>>>> 05ccf85e70375123904ad510d716034e06191602
