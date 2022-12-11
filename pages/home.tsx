@@ -1,10 +1,14 @@
 import { addHistory, getAll } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
-import { Food, FoodHistory } from "@models/Food_Module"
+import { Food, FoodHistory } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
 import FoodItem from "components/home/FoodItem"
 import Account from "@libs/database/user"
+import { NextPage } from "next"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
+import AddMenu from "components/home/AddMenu"
 
 import {
     Autocomplete,
@@ -17,16 +21,6 @@ import {
     Drawer
 } from "@mui/material"
 
-import { NextPage } from "next"
-import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
-import AddMenu from "components/home/AddMenu"
-
-interface Warning {
-    allergy: string[];
-    avoid: string[];
-}
-
 const HomePage: NextPage = () => {
 
     const [userData, setUserData] = useState<UserAccount>()
@@ -36,9 +30,6 @@ const HomePage: NextPage = () => {
 
     const [foodSelect, setFoodSelect] = useState<Food>();
     const [openMenu, setOpenMenu] = useState(false);
-
-    const [warning, setWarning] = useState<Warning>({ allergy: [], avoid: [] });
-    const [openWarning, setOpenWarning] = useState(false);
 
     const [user] = useAuth()
     const router = useRouter()
@@ -63,36 +54,20 @@ const HomePage: NextPage = () => {
         setOpenMenu(true);
     }
 
-    const handelEat = () => {
-        if (!foodSelect) return;
+    const handelLike = async (value: boolean, name: string) => {
+        if (!user || !userData) return;
 
-        const allergy: string[] = [];
-        const avoid: string[] = [];
+        let old = userData?.like ?? []
 
-        foodSelect.foodIngredient.forEach(v => {
-            (userData?.food?.avoid?.includes(v)) && avoid.push(v);
-            (userData?.food?.allergy?.includes(v)) && allergy.push(v);
-        });
+        if (value) {
+            if (!old.includes(name)) old.push(name)
+        } else {
+            if (old.includes(name)) old = old.filter(v => v != name)
+        }
 
-        setWarning({ allergy, avoid })
-
-        if (allergy.length > 0 || avoid.length > 0)
-            setOpenWarning(true);
-        else
-            handelSubmit();
+        await Account.updateLike(user.uid, old)
+        setUserData({ ...userData, like: old })
     }
-
-    const handelSubmit = async () => {
-        if (!foodSelect || !user?.uid) return;
-
-        const data = new Date();
-        const foodHistory: FoodHistory = { ...foodSelect, datetime: data.toISOString() };
-        await addHistory(user.uid, foodHistory)
-
-        setOpenWarning(false);
-        setOpenMenu(false);
-    }
-
 
     return (
         <PageStart className="p-4 gap-3">
@@ -101,7 +76,11 @@ const HomePage: NextPage = () => {
             </div>
             <div className="flex w-full flex-col gap-3">
                 {
-                    foodList?.map((v, i) => <FoodItem food={v} key={i} like={false} onClick={() => handelSelect(i)} />)
+                    foodList?.map((v, i) => <FoodItem food={v} key={i}
+                        like={userData?.like?.includes(v.thaiName)}
+                        onClick={() => handelSelect(i)}
+                        onLike={(value) => handelLike(value, v.thaiName)}
+                    />)
                 }
             </div>
             <Paper sx={{ position: 'fixed', bottom: 70, left: 8, right: 8 }} elevation={3}>
@@ -114,18 +93,17 @@ const HomePage: NextPage = () => {
             {
                 openDialog && <UserDialog onClick={() => router.push('/register-info')} />
             }
-            <WarningDialog setOpen={() => { setOpenWarning(false); }}
-                open={openWarning}
-                warning={warning}
-                onSubmit={handelSubmit}
-            />
 
             <Drawer
                 anchor={'bottom'}
                 open={openMenu}
                 className="relative"
             >
-                <AddMenu food={foodSelect} onClose={() => setOpenMenu(false)} onSelect={handelEat} />
+                <AddMenu food={foodSelect}
+                    uid={user?.uid}
+                    onClose={() => setOpenMenu(false)}
+                    userData={userData}
+                />
             </Drawer>
         </PageStart>
     )
@@ -133,45 +111,6 @@ const HomePage: NextPage = () => {
 
 export default HomePage
 
-interface WarningProps {
-    open: boolean;
-    setOpen: (v: boolean) => void;
-    warning: Warning;
-    onSubmit: () => void
-}
-
-const WarningDialog: React.FC<WarningProps> = ({ open, warning, setOpen, onSubmit }) => {
-    return (
-        <Dialog open={open}>
-            <DialogTitle className="text-center" color={"error"}>คำเตือน!</DialogTitle>
-            <DialogContent className="text-left flex flex-col gap-3">
-                <p className="text-main">อาหารชนิดนี้ประกอบด้วยวัตถุดิบที่คุณ</p>
-                {
-                    warning.allergy.length > 0 &&
-                    <div className="w-full flex flex-wrap gap-3">
-                        <h4>แพ้</h4>
-                        {warning.allergy.map(v => <p key={v} className="text-main">{v}</p>)}
-                    </div>
-                }
-                {
-                    warning.avoid.length > 0 &&
-                    <div className="w-full flex flex-wrap gap-3">
-                        <h4>หลักเลี่ยง</h4>
-                        {warning.avoid.map(v => <p key={v} className="text-main">{v}</p>)}
-                    </div>
-                }
-                <div className="mt-5 w-full flex justify-between items-center flex-row gap-3">
-                    <Button sx={{ px: 3 }} color="error" variant="outlined" onClick={() => setOpen(false)}>
-                        ยกเลิก
-                    </Button>
-                    <Button sx={{ px: 3 }} color="info" variant="contained" onClick={() => onSubmit()}>
-                        รับทราบ
-                    </Button>
-                </div>
-            </DialogContent>
-        </Dialog>
-    )
-}
 
 interface UserDialogProps {
     onClick: () => void

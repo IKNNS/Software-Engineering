@@ -1,3 +1,4 @@
+# build environment
 FROM node:16-alpine
 
 RUN mkdir -p /usr/src/app

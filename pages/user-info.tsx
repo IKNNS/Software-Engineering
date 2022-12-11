@@ -1,6 +1,6 @@
-import { getAll } from "@libs/database/food"
+import { getAll, getIngredient, getTypes } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
-import { Food } from "@models/Food_Module"
+import { Food } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
 import Account from "@libs/database/user"
@@ -23,8 +23,9 @@ import ArrowIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import FemaleRoundedIcon from '@mui/icons-material/FemaleRounded';
 import MaleRoundedIcon from '@mui/icons-material/MaleRounded';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
-import { Drawer } from "@mui/material"
+import { Button, Drawer } from "@mui/material"
 import EditForm from "components/user-info/edit-form"
+import { getAllDisease } from "@libs/database/disease"
 
 interface IGender {
     name: string,
@@ -52,14 +53,16 @@ const UserInfo: NextPage = () => {
     const [gender, setGender] = useState<IGender>()
     const [openDrawer, setOpenDrawer] = useState(false)
 
-    const [types, setTypes] = useState<string[]>([])
-    const [ingredient, setIngredient] = useState<string[]>([])
+    const [types, setTypes] = useState<string[]>([]);
+    const [ingredient, setIngredient] = useState<string[]>([]);
+    const [disease, setDisease] = useState<string[]>([])
 
-    const [listName, setListName] = useState("")
+    const [listHead, setListHead] = useState("")
     const [defaultValue, setDefaultValue] = useState<string[]>([])
     const [dataList, setDataList] = useState<string[]>([])
 
     const [user] = useAuth()
+    const router = useRouter()
 
     useEffect(() => {
         if (!user) return () => { }
@@ -78,35 +81,32 @@ const UserInfo: NextPage = () => {
     }, [user])
 
     useEffect(() => {
-        getAll()
-            .then(value => {
-                const types: string[] = [];
-                const ingredient: string[] = [];
-                for (let i = 0; i < value.length; i++) {
-                    types.push(...value[i].foodType);
-                    ingredient.push(...value[i].foodIngredient);
-                }
-                setTypes([...new Set(types)]);
-                setIngredient([...new Set(ingredient)]);
-                const n = [...new Set(ingredient)]
-                const j = n.map((v) => [v, ""])
-                console.log(j)
-            })
+        getTypes()
+            .then(v => setTypes(v))
             .catch(e => console.log(e))
+
+        getIngredient()
+            .then(v => setIngredient(v))
+            .catch(e => console.log(e))
+
+        getAllDisease()
+            .then(v => setDisease(v.map(d => d.name)))
+            .catch(e => console.log(e));
     }, [])
 
-    const handleSave = (value: string[]) => {
-        if (!user) return;
+    const handleSave = async (value: string[]) => {
+        if (!user || !data) return;
 
-        if (listName == "โรคประจำตัว") {
+        if (listHead == "โรคประจำตัว") {
             const info = data?.info;
             if (!info) return;
             info.disease = value;
-            Account.updateInfo(user.uid, info);
+            await Account.updateInfo(user.uid, info);
+            setData({ ...data, info: info })
         } else {
             const food = data?.food;
             if (!food) return;
-            switch (listName) {
+            switch (listHead) {
                 case "ประเภทอาหารที่รับประทาน":
                     food.eatingType = value;
                     break;
@@ -119,19 +119,10 @@ const UserInfo: NextPage = () => {
                 default:
                     break;
             }
-            Account.updateFood(user.uid, food);
+            await Account.updateFood(user.uid, food);
+            setData({ ...data, food: food })
         }
-
-        Account.get(user.uid, true)
-            .then(res => res)
-            .then(data => {
-                if (data) {
-                    setData(data)
-                    setGender(genders[data?.info?.gender ?? "other"])
-                }
-                setOpenDrawer(false);
-            })
-            .catch(e => console.log(e))
+        setOpenDrawer(false)
     }
 
     return (
@@ -166,9 +157,10 @@ const UserInfo: NextPage = () => {
                     label=""
                     value={"โรคประจำตัว"}
                     onClick={() => {
-                        setListName("โรคประจำตัว")
+                        setListHead("โรคประจำตัว")
                         setDefaultValue(data?.info?.disease ?? [])
                         setOpenDrawer(true)
+                        setDataList(disease);
                     }}
                 />
                 <div className="text-center flex flex-row w-full justify-center items-center gap-2 my-3">
@@ -180,7 +172,7 @@ const UserInfo: NextPage = () => {
                     label=""
                     value={"ประเภทอาหารที่รับประทาน"}
                     onClick={() => {
-                        setListName("ประเภทอาหารที่รับประทาน")
+                        setListHead("ประเภทอาหารที่รับประทาน")
                         setDefaultValue(data?.food?.eatingType ?? [])
                         setOpenDrawer(true)
                         setDataList(types)
@@ -190,7 +182,7 @@ const UserInfo: NextPage = () => {
                     label=""
                     value={"วัตถุดิบที่แพ้"}
                     onClick={() => {
-                        setListName("วัตถุดิบที่แพ้")
+                        setListHead("วัตถุดิบที่แพ้")
                         setDefaultValue(data?.food?.allergy ?? [])
                         setOpenDrawer(true)
                         setDataList(ingredient)
@@ -200,19 +192,22 @@ const UserInfo: NextPage = () => {
                     label=""
                     value={"วัตถุดิบที่หลีกเลี่ยง"}
                     onClick={() => {
-                        setListName("วัตถุดิบที่หลีกเลี่ยง")
+                        setListHead("วัตถุดิบที่หลีกเลี่ยง")
                         setDefaultValue(data?.food?.avoid ?? [])
                         setOpenDrawer(true)
                         setDataList(ingredient)
                     }}
                 />
+                <Button variant="outlined" color="error" sx={{ px: 3 }} onClick={() => router.push("logout")}>
+                    ออกจากระบบ
+                </Button>
                 <Drawer
                     anchor={'bottom'}
                     open={openDrawer}
                     onClose={() => setOpenDrawer(false)}
                     className="relative"
                 >
-                    <EditForm label={listName}
+                    <EditForm label={listHead}
                         value={defaultValue}
                         data={dataList}
                         onCancel={() => setOpenDrawer(false)}

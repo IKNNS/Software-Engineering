@@ -11,23 +11,45 @@ import {
 } from "@mui/material";
 
 import { NextPage } from "next"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useAuth } from "@libs/firebase/useAuth";
+import { INotification } from "@models/Noti_Model";
 
 const Notification: NextPage = () => {
+
+    const [noti, setNoti] = useState<INotification[]>([])
+    const [user] = useAuth()
+
+    useEffect(() => {
+        if (!user?.uid) return;
+
+        axios.get('http://139.59.105.124/noti/' + user.uid)
+            .then(res => res.data as INotification[])
+            .then(data => {
+                console.log(data);
+                setNoti(data)
+            })
+            .catch(e => setNoti([]))
+
+        console.log(noti);
+    }, [user])
+
     return (
         <PageStart className="p-4 gap-5">
             <div className="text-center">
                 <h2>Notification</h2>
             </div>
             <List className="flex w-full flex-col gap-3">
-                {notiFromServer.map((value) => (
-                    <ListItem>
+                {noti.map((value, i) => (
+                    <ListItem key={i}>
                         <Card sx={{ maxWidth: 345 }}>
                             <CardMedia
                                 component="img"
                                 alt={value.head}
                                 height="140"
                                 image= {value.imgUrl}
-                            />
+                                />
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     {value.head}
@@ -47,6 +69,7 @@ const Notification: NextPage = () => {
     );
 };
 
+<<<<<<< HEAD
 export default Notification
 
 const notiFromServer = [
@@ -106,3 +129,6 @@ const notiFromServer = [
         URL : ""
     }
 ]
+=======
+export default Notification
+>>>>>>> 21b9baafa275930a7faaf3fa155c44a3304c3317

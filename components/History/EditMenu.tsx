@@ -7,10 +7,10 @@ import Image from 'next/image'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import DateInput from "components/common/DateInput";
 import { UserAccount, UserFood } from "@models/User_Model";
-import { addHistory } from "@libs/database/food";
+import { addHistory, deleteHisotry, updateHisotry } from "@libs/database/food";
 import { color } from "@libs/color-map";
-import { getAllDisease } from "@libs/database/disease";
 import { IDisease } from "@models/Disease_Model";
+import { getAllDisease } from "@libs/database/disease";
 
 interface Warning {
     allergy: string[];
@@ -20,17 +20,18 @@ interface Warning {
 
 interface ListProps {
     uid?: string
-    food?: Food;
+    food?: FoodHistory;
     userData?: UserAccount;
     onClose?: () => void;
+    onChange?: () => void;
 }
 
-const AddHistoryForm: React.FC<ListProps> = (props) => {
+const EditHisotryForm: React.FC<ListProps> = (props) => {
 
     const [warning, setWarning] = useState<Warning>({ allergy: [], avoid: [], disease: [] });
     const [openWarning, setOpenWarning] = useState(false);
 
-    const [food, setFood] = useState<Food | undefined>(props.food)
+    const [food, setFood] = useState<FoodHistory | undefined>(props.food)
     const [date, setDate] = useState<string>("")
 
     const handelEat = async () => {
@@ -54,16 +55,26 @@ const AddHistoryForm: React.FC<ListProps> = (props) => {
         if (allergy.length > 0 || avoid.length > 0)
             setOpenWarning(true);
         else
-            handelSubmit();
+            handleSubmit();
     }
 
-    const handelSubmit = async () => {
+    const handleSubmit = async () => {
         if (!food || !props.uid) return;
 
         const foodHistory: FoodHistory = { ...food, datetime: date };
-        await addHistory(props.uid, foodHistory)
+        await updateHisotry(props.uid, foodHistory)
 
         setOpenWarning(false);
+        props.onChange?.();
+        props.onClose?.();
+    }
+
+    const handleDelete = async () => {
+        if (!food || !props.uid) return;
+
+        await deleteHisotry(props.uid, food)
+        setOpenWarning(false);
+        props.onChange?.();
         props.onClose?.();
     }
 
@@ -106,24 +117,27 @@ const AddHistoryForm: React.FC<ListProps> = (props) => {
                 }
             </div>
             <div className="mt-auto w-full">
-                <DateInput onChange={(v) => setDate(v)} />
+                <DateInput onChange={(v) => setDate(v)} defaultValue={food?.datetime} />
             </div>
-            <div className="mb-5 mt-3">
+            <div className="mb-5 mt-3 flex gap-3">
+                <Button color="error" variant="outlined" sx={{ px: 3 }} onClick={handleDelete}>
+                    ลบ
+                </Button>
                 <Button color="info" variant="contained" sx={{ px: 3 }} onClick={handelEat}>
-                    เพิ่มเมนูอาหาร
+                    บันทึกเมนูอาหาร
                 </Button>
             </div>
 
             <WarningDialog setOpen={() => { setOpenWarning(false); }}
                 open={openWarning}
                 warning={warning}
-                onSubmit={handelSubmit}
+                onSubmit={handleSubmit}
             />
         </div>
     )
 }
 
-export default AddHistoryForm;
+export default EditHisotryForm;
 
 
 interface WarningProps {

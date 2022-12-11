@@ -1,4 +1,3 @@
-import { color } from "@libs/color-map"
 import { Button } from "@mui/material"
 import AutoInput from "components/common/AutoInput"
 import { useEffect, useState } from "react"
@@ -32,7 +31,6 @@ const EditForm: React.FC<ListProps> = (props) => {
                 value={select}
                 onChange={(v) => setSelect(v)}
                 list={data}
-                color={color}
             />
             <div className="bg-white flex flex-row justify-between w-full p-4 mt-auto absolute bottom-0 shadow-out">
                 <Button color="inherit" onClick={() => props.onCancel?.()}>
