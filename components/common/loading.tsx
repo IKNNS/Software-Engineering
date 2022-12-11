@@ -10,7 +10,7 @@ const Loading: React.FC<Props> = (props) => {
     if (props.screen) {
         return (
             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={true}
             >
                 <CircularProgress color="info" size={30} />

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,7 +21,22 @@
     "paths": {
       "@firebase/*": [
         "firebase/*"
-      ]
+      ],
+      "@libs/*": [
+        "libs/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@stores/*": [
+        "stores/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
     },
     "baseUrl": "."
   },

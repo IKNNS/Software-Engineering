@@ -1,9 +1,9 @@
-import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
-import Button from '@mui/material/Button';
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { getAuth } from 'firebase/auth';
+import type { NextPage } from "next"
+import styles from "../styles/Home.module.css"
+import Button from "@mui/material/Button";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
 
@@ -13,11 +13,12 @@ const Logout: NextPage = () => {
 
     useEffect(()=>{
         auth.signOut();
-        router.push('/login')
+        router.push("/login")
     },[])
 
     return (
         <div className={styles.container}>
+            Logout...
         </div>
     )
 }
