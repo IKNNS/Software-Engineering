@@ -19,10 +19,10 @@ import { FoodHistory } from "@models/Food_Model";
 import moment from "moment";
 import { map } from "@firebase/util";
 import { PageStart } from "components/common/Page";
-import EditHisotryForm from "components/history/EditMenu";
+import EditHisotryForm from "components/history-page/EditMenu";
 import Account from "@libs/database/user";
 import { UserAccount } from "@models/User_Model";
-import HistoryItem from "components/history/HistoryItem";
+import HistoryItem from "components/history-page/HistoryItem";
 import PieChart, {
     Legend,
     Series,
