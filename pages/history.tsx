@@ -111,7 +111,7 @@ const HistoryPage: NextPage = () => {
                 <h2>History</h2>
             </div>
             <div className="w-full flex flex-col gap-5 pb-14">
-                {!history || history.length == 0 && (<div><p className="mx-5 text-center">ยังไม่มีข้อมูล</p><p className="text-center">ลองเพิ่มอาหารที่คุณทานที่หน้า home ดูสิ</p></div>)}
+                {!history || history.length == 0 && (<div><p className="mx-5 text-center">ยังไม่มีข้อมูล</p><p className="text-center">ลองเพิ่มอาหารที่คุณทานที่หน้า Home ดูสิ</p></div>)}
                 {history.sort((a, b) => compareDate(a.date, b.date)).map((data, index) => (
                     <div key={index} className={`w-full`}>
                         <h4 className="text-left mb-2">
@@ -181,7 +181,7 @@ export default HistoryPage;
 const dataSource = (userData: UserAccount | undefined, total: number, list: FoodHistory[]): { region: string, val: number }[] => {
 
     const info = {
-        weight: userData?.info?.height ?? 0,
+        weight: userData?.info?.weight ?? 0,
         height: userData?.info?.height ?? 0,
         age: userData?.info?.age ?? 0,
         gender: userData?.info?.gender ?? "other"
