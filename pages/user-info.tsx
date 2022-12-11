@@ -126,7 +126,7 @@ const UserInfo: NextPage = () => {
     }
 
     return (
-        <PageStart className="p-4">
+        <PageStart className="p-4 pt-10">
             <div className="w-full pb-14 flex flex-col justify-start items-center gap-3">
                 <div className="text-center">
                     <h2>Profile</h2>
@@ -135,7 +135,7 @@ const UserInfo: NextPage = () => {
                     <Image src={User} width={50} height={50} alt="profile" color="#F1F6F7" />
                 </div>
                 <div className="text-center text-link">
-                    Edit Image
+                    
                 </div>
                 <Block icon={<ProfileIcon color="secondary" />}
                     label="ชื่อ-นามสกุล"

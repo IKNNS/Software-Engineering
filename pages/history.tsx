@@ -7,40 +7,24 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import styles from "../styles/Home.module.css"
-import Typography from "@mui/material/Typography";
-import Image from "next/image"
-import Button from "@mui/material/Button";
 import { Accordion, AccordionDetails, AccordionSummary, Drawer } from "@mui/material";
-import { Opacity } from "@mui/icons-material";
 import { useAuth } from "@libs/firebase/useAuth";
 import { useEffect, useState } from "react";
 import { getHistory } from "@libs/database/food";
 import { FoodHistory } from "@models/Food_Model";
 import moment from "moment";
-import { map } from "@firebase/util";
 import { PageStart } from "components/common/Page";
 import EditHisotryForm from "components/history-page/EditMenu";
 import Account from "@libs/database/user";
 import { UserAccount } from "@models/User_Model";
+import EnergyIcon from "@mui/icons-material/LocalFireDepartmentRounded";
 import HistoryItem from "components/history-page/HistoryItem";
 import PieChart, {
     Legend,
     Series,
-    Tooltip,
-    Format,
     Label,
-    Connector,
-    Export,
 } from "devextreme-react/pie-chart";
 import { NextPage } from "next";
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-}));
 
 interface HistoryGroup {
     total: number;
@@ -122,11 +106,12 @@ const HistoryPage: NextPage = () => {
     }
 
     return (
-        <PageStart className="p-4 gap-3">
+        <PageStart className="p-4 gap-3 pt-10">
             <div className="text-center">
                 <h2>History</h2>
             </div>
-            <div className="w-full flex flex-col gap-5 pb-10">
+            <div className="w-full flex flex-col gap-5 pb-14">
+                {!history || history.length == 0 && (<div><p className="mx-5 text-center">ยังไม่มีข้อมูล</p><p className="text-center">ลองเพิ่มอาหารที่คุณทานที่หน้า home ดูสิ</p></div>)}
                 {history.sort((a, b) => compareDate(a.date, b.date)).map((data, index) => (
                     <div key={index} className={`w-full`}>
                         <h4 className="text-left mb-2">
@@ -134,24 +119,30 @@ const HistoryPage: NextPage = () => {
                         </h4>
                         <Accordion>
                             <AccordionSummary>
-                                <div className={styles.listContainer} >
+
+                                <div className="flex flex-col justify-start items-center gap-3" >
+                                    <div className="flex justify-start items-center gap">
+                                        <EnergyIcon fontSize="small" sx={{ color: "#FF7878" }} />
+                                        <p>{data?.total} Kcal</p>
+                                    </div>
                                     <PieChart
                                         id="pie"
                                         type="doughnut"
                                         palette="Soft Blue"
-                                        dataSource={[...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData?.info?.weight ?? 0, userData?.info?.height ?? 0, userData?.info?.age ?? 0, userData?.info?.gender ?? "") - data.total }]}
+                                        dataSource={dataSource(userData, data.total, data.list)}
+                                        className=""
                                     >
                                         <Series argumentField="region"
-                                            valueField="val">
-                                            <Label
-                                                visible={true}
+                                            valueField="val"
+                                        >
+                                            <Label visible={true}
                                                 format="fixedPoint"
-                                                customizeText={customizeLabel([...data.list.map(v => ({ region: v.thaiName, val: v.foodEnergy })), { region: "พลังงานที่เหลือ", val: calcBMR(userData?.info?.weight ?? 0, userData?.info?.height ?? 0, userData?.info?.age ?? 0, userData?.info?.gender ?? "") - data.total }])}
-                                            ></Label>
-
+                                                customizeText={customizeLabel}
+                                            />
                                         </Series>
                                         <Legend horizontalAlignment="center" verticalAlignment="bottom" />
                                     </PieChart>
+                                    <p className="text-link">รายละเอียด</p>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
@@ -187,6 +178,20 @@ const HistoryPage: NextPage = () => {
 
 export default HistoryPage;
 
+const dataSource = (userData: UserAccount | undefined, total: number, list: FoodHistory[]): { region: string, val: number }[] => {
+
+    const info = {
+        weight: userData?.info?.height ?? 0,
+        height: userData?.info?.height ?? 0,
+        age: userData?.info?.age ?? 0,
+        gender: userData?.info?.gender ?? "other"
+    }
+
+    const bmr = calcBMR(info.weight, info.height, info.age, info.gender) - total
+    const foodData = list.map(v => ({ region: v.thaiName, val: v.foodEnergy }))
+    return [{ region: "พลังงานที่เหลือ", val: bmr > 0 ? bmr : 0 }, ...foodData];
+}
+
 function calcBMR(weight: number, height: number, age: number, gender: string) {
     if (gender === "male") {
         return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
@@ -198,6 +203,7 @@ function calcBMR(weight: number, height: number, age: number, gender: string) {
         return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
     }
 }
-function customizeLabel(listofdata: any) {
-    return `${listofdata.region}: ${listofdata.val}kcals`;
+
+function customizeLabel(data: any) {
+    return `${data.value} kcals`;
 }

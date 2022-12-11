@@ -37,7 +37,7 @@ const LoginPage: NextPage = () => {
     }
 
     return (
-        <PageEnd className="p-4">
+        <PageEnd className="p-4 pt-10">
             <form className=" w-full flex flex-col gap-4 text-center p-2" onSubmit={(e) => { e.preventDefault(); handleForm() }}>
                 <Image src={Cover} width={512} height={512} alt="Cover" />
                 <div className="text-left">
@@ -58,7 +58,7 @@ const LoginPage: NextPage = () => {
                     onChange={(v) => setPassword(v)}
                 />
                 <div className="text-right text-sm">
-                    <span className=" text-link hover:cursor-pointer">ลืมรหัสใช่ไหม</span>
+                    <span className=" text-link hover:cursor-pointer">ลืมรหัสใช่ไหม?</span>
                 </div>
                 <Button type="submit" variant="contained" color="info" fullWidth>เข้าสู่ระบบ</Button>
                 <p>or</p>

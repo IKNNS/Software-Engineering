@@ -83,7 +83,7 @@ const RegisterInfoPage: NextPage = () => {
 
     return (
         <React.Fragment>
-            <div className="w-full shadow top-0 fixed bg-white z-10 pt-4 pb-2">
+            <div className="w-full shadow top-0 fixed bg-white z-10 pt-4 pb-2 ">
                 <Stepper activeStep={activeStep} alternativeLabel sx={{ width: "100%" }}>
                     {
                         steps.map((label, index) => (

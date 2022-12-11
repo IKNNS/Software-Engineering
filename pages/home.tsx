@@ -70,11 +70,11 @@ const HomePage: NextPage = () => {
     }
 
     return (
-        <PageStart className="p-4 gap-3">
+        <PageStart className="p-4 gap-3 pt-10">
             <div className="text-center">
                 <h2>Suggestion</h2>
             </div>
-            <div className="flex w-full flex-col gap-3">
+            <div className="flex w-full flex-col gap-3 pb-36">
                 {
                     foodList?.map((v, i) => <FoodItem food={v} key={i}
                         like={userData?.like?.includes(v.thaiName)}
@@ -93,7 +93,6 @@ const HomePage: NextPage = () => {
             {
                 openDialog && <UserDialog onClick={() => router.push("/register-info")} />
             }
-
             <Drawer
                 anchor={"bottom"}
                 open={openMenu}

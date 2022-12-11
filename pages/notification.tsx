@@ -36,11 +36,11 @@ const Notification: NextPage = () => {
     }, [user])
 
     return (
-        <PageStart className="p-4 gap-5">
+        <PageStart className="p-4 gap-5 pt-10">
             <div className="text-center">
                 <h2>Notification</h2>
             </div>
-            <List className="flex w-full flex-col gap-3">
+            <List className="flex w-full flex-col gap-3 pb-14">
                 {noti.map((value, i) => (
                     <ListItem key={i}>
                         <Card sx={{ maxWidth: 345 }}>
