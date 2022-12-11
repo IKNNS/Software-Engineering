@@ -1,8 +1,8 @@
-import { PageCenter } from "components/common/Page";
+import { PageCenter } from "@components/common/Page";
 import { UserAccount } from "@models/User_Model";
 import { checkAccount, register } from "@libs/database/login";
 import Cover from 'assets/images/Cover.svg'
-import InputText from "components/common/TextInput";
+import InputText from "@components/common/TextInput";
 
 import { NextPage } from "next";
 import { useRouter } from "next/router";

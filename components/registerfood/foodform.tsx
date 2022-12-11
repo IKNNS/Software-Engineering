@@ -1,6 +1,6 @@
 import { Food } from "@models/Food_Model";
 import { UserFood, UserInfo } from "@models/User_Model";
-import AutoInput from "components/common/AutoInput";
+import AutoInput from "@components/common/AutoInput";
 
 import { Stack, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";

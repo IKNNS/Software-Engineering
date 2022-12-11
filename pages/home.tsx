@@ -2,13 +2,13 @@ import { addHistory, getAll } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
 import { Food, FoodHistory } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
-import { PageStart } from "components/common/Page"
-import FoodItem from "components/home/FoodItem"
+import { PageStart } from "@components/common/Page"
+import FoodItem from "@components/home/FoodItem"
 import Account from "@libs/database/user"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
-import AddMenu from "components/home/AddMenu"
+import AddMenu from "@components/home/AddMenu"
 
 import {
     Autocomplete,

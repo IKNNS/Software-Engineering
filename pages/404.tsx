@@ -1,5 +1,5 @@
 
-import { PageCenter } from "components/common/Page"
+import { PageCenter } from "@components/common/Page"
 
 import { NextPage } from "next"
 

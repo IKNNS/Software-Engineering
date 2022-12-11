@@ -17,7 +17,7 @@ import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 
 import { Container } from "@mui/system";
 import { UserInfo } from "@models/User_Model";
-import InputText from "components/common/TextInput";
+import InputText from "@components/common/TextInput";
 
 interface IProps {
   isError?: any;
