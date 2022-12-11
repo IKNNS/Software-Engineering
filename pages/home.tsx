@@ -1,7 +1,7 @@
-import { addHistory, getAll } from "@libs/database/food"
+import { getAll } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
-import { Food, FoodHistory } from "@models/Food_Model"
-import { UserAccount, UserFood } from "@models/User_Model"
+import { Food } from "@models/Food_Model"
+import { UserAccount } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
 import FoodItem from "components/home/FoodItem"
 import Account from "@libs/database/user"
@@ -72,7 +72,7 @@ const HomePage: NextPage = () => {
     return (
         <PageStart className="p-4 gap-3 pt-10">
             <div className="text-center">
-                <h2>Suggestion</h2>
+                <h1>Suggestion</h1>
             </div>
             <div className="flex w-full flex-col gap-3 pb-36">
                 {

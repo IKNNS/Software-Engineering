@@ -1,4 +1,4 @@
-import { getAll, getIngredient, getTypes } from "@libs/database/food"
+import { getIngredient, getTypes } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
 import { UserAccount, UserFood } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
@@ -7,7 +7,7 @@ import User from "@assets/images/user.svg"
 
 import { NextPage } from "next"
 import { useRouter } from "next/router"
-import React, { ReactNode, useEffect, useMemo, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import Image from "next/image"
 
 import EmailIcon from "@mui/icons-material/EmailOutlined";
@@ -137,7 +137,7 @@ const UserInfo: NextPage = () => {
         <PageStart className="p-4 pt-10">
             <div className="w-full pb-14 flex flex-col justify-start items-center gap-3">
                 <div className="text-center">
-                    <h2>Profile</h2>
+                    <h1>Profile</h1>
                 </div>
                 <div className="w-[100px] h-[100px] flex justify-center items-center rounded-full bg-action">
                     <Image src={User} width={50} height={50} alt="profile" color="#F1F6F7" />

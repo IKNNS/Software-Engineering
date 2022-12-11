@@ -1,12 +1,5 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import { styled } from "@mui/material/styles";
-import styles from "../styles/Home.module.css"
 import { Accordion, AccordionDetails, AccordionSummary, Drawer } from "@mui/material";
 import { useAuth } from "@libs/firebase/useAuth";
 import { useEffect, useState } from "react";
@@ -19,11 +12,7 @@ import Account from "@libs/database/user";
 import { UserAccount } from "@models/User_Model";
 import EnergyIcon from "@mui/icons-material/LocalFireDepartmentRounded";
 import HistoryItem from "components/history-page/HistoryItem";
-import PieChart, {
-    Legend,
-    Series,
-    Label,
-} from "devextreme-react/pie-chart";
+import PieChart, {Legend, Series, Label} from "devextreme-react/pie-chart";
 import { NextPage } from "next";
 
 interface HistoryGroup {
@@ -108,7 +97,7 @@ const HistoryPage: NextPage = () => {
     return (
         <PageStart className="p-4 gap-3 pt-10">
             <div className="text-center">
-                <h2>History</h2>
+                <h1>History</h1>
             </div>
             <div className="w-full flex flex-col gap-5 pb-14">
                 {!history || history.length == 0 && (<div><p className="mx-5 text-center">ยังไม่มีข้อมูล</p><p className="text-center">ลองเพิ่มอาหารที่คุณทานที่หน้า Home ดูสิ</p></div>)}
@@ -119,7 +108,6 @@ const HistoryPage: NextPage = () => {
                         </h4>
                         <Accordion>
                             <AccordionSummary>
-
                                 <div className="flex flex-col justify-start items-center gap-3" >
                                     <div className="flex justify-start items-center gap">
                                         <EnergyIcon fontSize="small" sx={{ color: "#FF7878" }} />
@@ -129,6 +117,8 @@ const HistoryPage: NextPage = () => {
                                         id="pie"
                                         type="doughnut"
                                         palette="Soft Blue"
+                                        startAngle={90}
+                                        segmentsDirection="clockwise"
                                         dataSource={dataSource(userData, data.total, data.list)}
                                         className=""
                                     >

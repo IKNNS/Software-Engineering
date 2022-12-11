@@ -1,15 +1,5 @@
 import { PageStart } from "components/common/Page"
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    List,
-    ListItem,
-    Typography,
-} from "@mui/material";
-
+import { Button, Card, CardActions, CardContent, CardMedia, List, ListItem, Typography } from "@mui/material";
 import { NextPage } from "next"
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -38,7 +28,7 @@ const Notification: NextPage = () => {
     return (
         <PageStart className="p-4 gap-5 pt-10">
             <div className="text-center">
-                <h2>Notification</h2>
+                <h1>Notification</h1>
             </div>
             <List className="flex w-full flex-col justify-start items-center gap-3 pb-14">
                 {noti.map((value, i) => (
