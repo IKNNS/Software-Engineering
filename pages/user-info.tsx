@@ -2,7 +2,7 @@ import { getAll, getIngredient, getTypes } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
 import { Food } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
-import { PageStart } from "components/common/Page"
+import { PageStart } from "@components/common/Page"
 import Account from "@libs/database/user"
 import User from "@assets/images/user.svg"
 
@@ -24,7 +24,7 @@ import FemaleRoundedIcon from '@mui/icons-material/FemaleRounded';
 import MaleRoundedIcon from '@mui/icons-material/MaleRounded';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 import { Button, Drawer } from "@mui/material"
-import EditForm from "components/user-info/edit-form"
+import EditForm from "@components/user-info/edit-form"
 import { getAllDisease } from "@libs/database/disease"
 
 interface IGender {

@@ -1,9 +1,9 @@
 import { getAll } from "@libs/database/food";
 import { Food } from "@models/Food_Model";
 import { UserInfo, UserFood } from "@models/User_Model";
-import { PageStart } from "components/common/Page";
-import FormFood from "components/registerfood/foodform";
-import FormInfo from "components/registerfood/infoform";
+import { PageStart } from "@components/common/Page";
+import FormFood from "@components/registerfood/foodform";
+import FormInfo from "@components/registerfood/infoform";
 import Account from "@libs/database/user";
 import { useAuth } from "@libs/firebase/useAuth";
 
@@ -13,7 +13,7 @@ import { NextPage } from "next";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import LikeForm from "components/registerfood/likeform";
+import LikeForm from "@components/registerfood/likeform";
 
 const steps = ["ข้อมูลส่วนตัว", "อาหารและสุขภาพ", "อาหารที่ชอบ"];
 
