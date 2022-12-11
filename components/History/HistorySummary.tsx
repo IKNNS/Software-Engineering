@@ -9,7 +9,7 @@ interface Props {
     onClick?: () => void;
 }
 
-const HistoryItem: React.FC<Props> = ({ food, onClick }) => {
+const HistorySummary: React.FC<Props> = ({ food, onClick }) => {
 
     const [date, setDate] = useState("")
 
@@ -42,4 +42,4 @@ const HistoryItem: React.FC<Props> = ({ food, onClick }) => {
     )
 }
 
-export default HistoryItem;
+export default HistorySummary;
