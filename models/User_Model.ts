@@ -10,6 +10,7 @@ export interface UserFood {
     allergy?: string[];
     avoid?: string[];
     eatingType?: string[];
+    foodType?: string[];
 }
 
 export interface UserAccount {

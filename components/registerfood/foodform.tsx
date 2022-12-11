@@ -11,6 +11,7 @@ import AllergyIcon from "@mui/icons-material/NoMealsRounded";
 import FastfoodIcon from "@mui/icons-material/FastfoodRounded";
 import { getAllDisease } from "@libs/database/disease";
 import { getIngredient, getTypes } from "@libs/database/food";
+import { getAllStyle } from "@libs/database/foodStyle";
 
 interface IProps {
     value?: UserInfo & UserFood;
@@ -22,6 +23,7 @@ export default function FoodForm({ value, onChange }: IProps) {
     const [types, setTypes] = useState<string[]>([]);
     const [ingredient, setIngredient] = useState<string[]>([]);
     const [disease, setDisease] = useState<string[]>([])
+    const [foodType, setFoodType] = useState<string[]>([])
 
     useEffect(() => {
         getTypes()
@@ -35,6 +37,10 @@ export default function FoodForm({ value, onChange }: IProps) {
         getAllDisease()
             .then(v => setDisease(v.map(d => d.name)))
             .catch(e => console.log(e));
+
+        getAllStyle()
+            .then(v => setFoodType(v.map(d => d.name)))
+            .catch(e => console.log(e));
     }, [])
 
     return (
@@ -45,6 +51,13 @@ export default function FoodForm({ value, onChange }: IProps) {
                     list={disease}
                     value={value?.disease ?? []}
                     onChange={v => onChange?.({ disease: v })}
+                    icon={<DiseaseIcon color="secondary" sx={{ mt: "5px" }} />}
+                />
+                <Typography variant="h6">รูปแบบอาหารที่ทาน</Typography>
+                <AutoInput label="รูปแบบอาหารที่ทาน"
+                    list={foodType}
+                    value={value?.foodType ?? []}
+                    onChange={v => onChange?.({ foodType: v })}
                     icon={<DiseaseIcon color="secondary" sx={{ mt: "5px" }} />}
                 />
                 <Typography variant="h6">ประเภทอาหารที่ทาน</Typography>

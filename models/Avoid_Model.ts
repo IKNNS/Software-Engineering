@@ -1,4 +1,4 @@
-export interface IDisease {
+export interface IAvoid {
     name: string;
     avoidList: string[];
 }

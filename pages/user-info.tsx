@@ -1,6 +1,5 @@
 import { getAll, getIngredient, getTypes } from "@libs/database/food"
 import { useAuth } from "@libs/firebase/useAuth"
-import { Food } from "@models/Food_Model"
 import { UserAccount, UserFood } from "@models/User_Model"
 import { PageStart } from "components/common/Page"
 import Account from "@libs/database/user"
@@ -26,6 +25,7 @@ import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { Button, Drawer } from "@mui/material"
 import EditForm from "components/user-info/edit-form"
 import { getAllDisease } from "@libs/database/disease"
+import { getAllStyle } from "@libs/database/foodStyle"
 
 interface IGender {
     name: string,
@@ -56,6 +56,7 @@ const UserInfo: NextPage = () => {
     const [types, setTypes] = useState<string[]>([]);
     const [ingredient, setIngredient] = useState<string[]>([]);
     const [disease, setDisease] = useState<string[]>([])
+    const [foodType, setFoodType] = useState<string[]>([])
 
     const [listHead, setListHead] = useState("")
     const [defaultValue, setDefaultValue] = useState<string[]>([])
@@ -92,6 +93,10 @@ const UserInfo: NextPage = () => {
         getAllDisease()
             .then(v => setDisease(v.map(d => d.name)))
             .catch(e => console.log(e));
+
+        getAllStyle()
+            .then(v => setFoodType(v.map(d => d.name)))
+            .catch(e => console.log(e));
     }, [])
 
     const handleSave = async (value: string[]) => {
@@ -104,9 +109,12 @@ const UserInfo: NextPage = () => {
             await Account.updateInfo(user.uid, info);
             setData({ ...data, info: info })
         } else {
-            const food = data?.food;
+            const food: UserFood = data?.food ?? {};
             if (!food) return;
             switch (listHead) {
+                case "รูปแบบอาหารที่รับประทาน":
+                    food.foodType = value;
+                    break;
                 case "ประเภทอาหารที่รับประทาน":
                     food.eatingType = value;
                     break;
@@ -135,7 +143,7 @@ const UserInfo: NextPage = () => {
                     <Image src={User} width={50} height={50} alt="profile" color="#F1F6F7" />
                 </div>
                 <div className="text-center text-link">
-                    
+
                 </div>
                 <Block icon={<ProfileIcon color="secondary" />}
                     label="ชื่อ-นามสกุล"
@@ -168,6 +176,16 @@ const UserInfo: NextPage = () => {
                     <p>ข้อมูลอาหาร</p>
                     <div className="w-[30%] h-[1px] bg-secondary inline-flex" />
                 </div>
+                <Block icon={<FoodIcon color="secondary" />}
+                    label=""
+                    value={"รูปแบบอาหารที่รับประทาน"}
+                    onClick={() => {
+                        setListHead("รูปแบบอาหารที่รับประทาน")
+                        setDefaultValue(data?.food?.foodType ?? [])
+                        setOpenDrawer(true)
+                        setDataList(foodType)
+                    }}
+                />
                 <Block icon={<FoodIcon color="secondary" />}
                     label=""
                     value={"ประเภทอาหารที่รับประทาน"}

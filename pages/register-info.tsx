@@ -59,6 +59,7 @@ const RegisterInfoPage: NextPage = () => {
             eatingType: data.eatingType ?? [],
             avoid: data.avoid ?? [],
             allergy: data.avoid ?? [],
+            foodType: data.foodType ?? []
         };
         const info: UserInfo = {
             gender: data.gender,

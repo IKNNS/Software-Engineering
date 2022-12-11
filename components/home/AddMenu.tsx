@@ -10,12 +10,14 @@ import { UserAccount, UserFood } from "@models/User_Model";
 import { addHistory } from "@libs/database/food";
 import { color } from "@libs/color-map";
 import { getAllDisease } from "@libs/database/disease";
-import { IDisease } from "@models/Disease_Model";
+import { IAvoid } from "@models/Avoid_Model";
+import { getAllStyle } from "@libs/database/foodStyle";
 
 interface Warning {
     allergy: string[];
     avoid: string[];
-    disease: IDisease[];
+    disease: IAvoid[];
+    foodType: IAvoid[];
 }
 
 interface ListProps {
@@ -27,7 +29,7 @@ interface ListProps {
 
 const AddHistoryForm: React.FC<ListProps> = (props) => {
 
-    const [warning, setWarning] = useState<Warning>({ allergy: [], avoid: [], disease: [] });
+    const [warning, setWarning] = useState<Warning>({ allergy: [], avoid: [], disease: [], foodType: [] });
     const [openWarning, setOpenWarning] = useState(false);
 
     const [food, setFood] = useState<Food | undefined>(props.food)
@@ -45,13 +47,17 @@ const AddHistoryForm: React.FC<ListProps> = (props) => {
         });
 
         const userDisease = await filterDisease()
-        const disease: IDisease[] = userDisease.filter(v => {
+        const disease: IAvoid[] = userDisease.filter(v => {
+            return v.avoidList.some(v => food.foodIngredient.includes(v))
+        })
+        const userFoodType = await filterFoodType();
+        const foodType: IAvoid[] = userFoodType.filter(v => {
             return v.avoidList.some(v => food.foodIngredient.includes(v))
         })
 
-        setWarning({ allergy, avoid, disease })
+        setWarning({ allergy, avoid, disease, foodType })
 
-        if (allergy.length > 0 || avoid.length > 0)
+        if (allergy.length > 0 || avoid.length > 0 || disease.length > 0 || foodType.length > 0)
             setOpenWarning(true);
         else
             handelSubmit();
@@ -67,11 +73,19 @@ const AddHistoryForm: React.FC<ListProps> = (props) => {
         props.onClose?.();
     }
 
-    const filterDisease = useCallback(async (): Promise<IDisease[]> => {
+    const filterDisease = useCallback(async (): Promise<IAvoid[]> => {
         if (!props.userData) return []
 
-        const data: IDisease[] = await getAllDisease().catch(e => []);
+        const data: IAvoid[] = await getAllDisease().catch(e => []);
         return data.filter((v) => props.userData?.info?.disease?.includes(v.name))
+
+    }, [props.userData])
+
+    const filterFoodType = useCallback(async (): Promise<IAvoid[]> => {
+        if (!props.userData) return []
+
+        const data: IAvoid[] = await getAllStyle().catch(e => []);
+        return data.filter((v) => props.userData?.food?.foodType?.includes(v.name))
 
     }, [props.userData])
 
@@ -138,11 +152,25 @@ const WarningDialog: React.FC<WarningProps> = ({ open, warning, setOpen, onSubmi
         <Dialog open={open}>
             <DialogTitle className="text-center" color={"error"}>คำเตือน!</DialogTitle>
             <DialogContent className="text-left flex flex-col gap-3">
-                <p className="text-main">อาหารชนิดนี้ประกอบด้วยวัตถุดิบที่คุณ</p>
+                <p className="text-main">อาหารชนิดนี้ประกอบด้วยวัตถุดิบ</p>
+                {
+                    warning.disease.length > 0 &&
+                    <div className="w-full flex flex-wrap gap-3">
+                        <h4>อันตรายต่อโรค</h4>
+                        {warning.disease.map(v => <p key={v.name} className="text-main">{v.name}</p>)}
+                    </div>
+                }
+                {
+                    warning.foodType.length > 0 &&
+                    <div className="w-full flex flex-wrap gap-3">
+                        <h4>ไม่ควรรับประทานในกลุ่ม</h4>
+                        {warning.foodType.map(v => <p key={v.name} className="text-main">{v.name}</p>)}
+                    </div>
+                }
                 {
                     warning.allergy.length > 0 &&
                     <div className="w-full flex flex-wrap gap-3">
-                        <h4>แพ้</h4>
+                        <h4>มีอาการแพ้</h4>
                         {warning.allergy.map(v => <p key={v} className="text-main">{v}</p>)}
                     </div>
                 }
@@ -153,13 +181,7 @@ const WarningDialog: React.FC<WarningProps> = ({ open, warning, setOpen, onSubmi
                         {warning.avoid.map(v => <p key={v} className="text-main">{v}</p>)}
                     </div>
                 }
-                {
-                    warning.disease.length > 0 &&
-                    <div className="w-full flex flex-wrap gap-3">
-                        <h4>อันตรายต่อโรค</h4>
-                        {warning.disease.map(v => <p key={v.name} className="text-main">{v.name}</p>)}
-                    </div>
-                }
+
                 <div className="mt-5 w-full flex justify-between items-center flex-row gap-3">
                     <Button sx={{ px: 3 }} color="error" variant="outlined" onClick={() => setOpen(false)}>
                         ยกเลิก
