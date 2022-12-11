@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "@libs/firebase/useAuth";
 import { INotification } from "@models/Noti_Model";
+import { AlignHorizontalCenter } from "@mui/icons-material";
 
 const Notification: NextPage = () => {
 
@@ -26,14 +27,14 @@ const Notification: NextPage = () => {
     }, [user])
 
     return (
-        <PageStart className="p-4 gap-5 pt-10">
+        <PageStart className="p-4 gap-5 pt-10 pb-10">
             <div className="text-center">
                 <h1>Notification</h1>
             </div>
             <List className="flex w-full flex-col justify-start items-center gap-3 pb-14">
                 {noti.map((value, i) => (
                     <ListItem key={i}>
-                        <Card sx={{ maxWidth: 345 }}>
+                        <Card sx={{ maxWidth: 345, mx: 'auto'}}>
                             <CardMedia
                                 component="img"
                                 alt={value.head}

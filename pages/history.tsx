@@ -95,7 +95,7 @@ const HistoryPage: NextPage = () => {
     }
 
     return (
-        <PageStart className="p-4 gap-3 pt-10">
+        <PageStart className="p-4 gap-3 pt-10 pb-10">
             <div className="text-center">
                 <h1>History</h1>
             </div>
@@ -108,7 +108,7 @@ const HistoryPage: NextPage = () => {
                         </h4>
                         <Accordion>
                             <AccordionSummary>
-                                <div className="flex flex-col justify-start items-center gap-3" >
+                                <div className="flex flex-col justify-start items-center gap-3 mx-auto" >
                                     <div className="flex justify-start items-center gap">
                                         <EnergyIcon fontSize="small" sx={{ color: "#FF7878" }} />
                                         <p>{data?.total} Kcal</p>

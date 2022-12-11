@@ -134,7 +134,7 @@ const UserInfo: NextPage = () => {
     }
 
     return (
-        <PageStart className="p-4 pt-10">
+        <PageStart className="p-4 pt-10 pb-10">
             <div className="w-full pb-14 flex flex-col justify-start items-center gap-3">
                 <div className="text-center">
                     <h1>Profile</h1>
