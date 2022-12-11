@@ -40,7 +40,7 @@ const Notification: NextPage = () => {
             <div className="text-center">
                 <h2>Notification</h2>
             </div>
-            <List className="flex w-full flex-col gap-3 pb-14">
+            <List className="flex w-full flex-col justify-start items-center gap-3 pb-14">
                 {noti.map((value, i) => (
                     <ListItem key={i}>
                         <Card sx={{ maxWidth: 345 }}>
