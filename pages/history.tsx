@@ -32,6 +32,7 @@ import PieChart, {
     Connector,
     Export,
 } from 'devextreme-react/pie-chart';
+import { NextPage } from 'next';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -48,7 +49,7 @@ interface HistoryGroup {
     time: string[];
 }
 
-export default function BasicStack() {
+const HistoryPage: NextPage = () => {
 
     const [userData, setUserData] = useState<UserAccount>()
 
@@ -183,6 +184,9 @@ export default function BasicStack() {
         </PageStart>
     );
 }
+
+export default HistoryPage;
+
 function calcBMR(weight: number, height: number, age: number, gender: string) {
     if (gender === 'male') {
         return 5 + (10 * weight!!) + (6.25 * height!!) - (5 * age!!)
