@@ -14,8 +14,6 @@ import EmailIcon from "@mui/icons-material/AlternateEmailOutlined";
 import PasswordIcon from "@mui/icons-material/VpnKeyOutlined"
 import UserIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 
-
-
 const RegisterPage: NextPage = () => {
 
     const router = useRouter();
