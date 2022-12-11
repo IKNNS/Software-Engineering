@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import AutoInput from "@components/common/AutoInput"
+import AutoInput from "components/common/AutoInput"
 import { useEffect, useState } from "react"
 
 interface ListProps {

@@ -37,9 +37,6 @@
       "@assets/*": [
         "assets/*"
       ],
-      "@components/*": [
-        "components/*"
-      ]
     },
     "baseUrl": "."
   },

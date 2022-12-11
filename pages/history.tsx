@@ -18,9 +18,9 @@ import { getHistory } from '@libs/database/food';
 import { FoodHistory } from '@models/Food_Model';
 import moment from 'moment';
 import { map } from '@firebase/util';
-import HistoryItem from '@components/history/HistoryItem';
-import { PageStart } from '@components/common/Page';
-import EditHisotryForm from '@components/history/EditMenu';
+import HistoryItem from 'components/history/HistoryItem';
+import { PageStart } from 'components/common/Page';
+import EditHisotryForm from 'components/history/EditMenu';
 import Account from '@libs/database/user';
 import { UserAccount } from '@models/User_Model';
 import PieChart, {

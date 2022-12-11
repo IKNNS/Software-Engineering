@@ -1,4 +1,4 @@
-import { PageCenter, PageEnd, PageStart } from "@components/common/Page";
+import { PageCenter, PageEnd, PageStart } from "components/common/Page";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Alert, Button, Snackbar } from "@mui/material";
@@ -9,7 +9,7 @@ import PasswordIcon from '@mui/icons-material/VpnKeyOutlined'
 
 import { login, loginGoogle } from "@libs/database/login";
 import Google from 'assets/images/google.svg'
-import InputText from "@components/common/TextInput";
+import InputText from "components/common/TextInput";
 import Cover from 'assets/images/Cover.svg'
 
 const LoginPage: NextPage = () => {

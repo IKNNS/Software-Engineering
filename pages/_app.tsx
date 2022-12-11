@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import React from 'react'
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 import { initFirebase } from '../firebase/FirebaseApp'
-import Controller from '@components/common/Controller'
+import Controller from 'components/common/Controller'
 const theme = createTheme({
   typography: {
     fontFamily: [

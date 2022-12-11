@@ -1,4 +1,4 @@
-import { PageStart } from "@components/common/Page"
+import { PageStart } from "components/common/Page"
 import {
     Button,
     Card,
