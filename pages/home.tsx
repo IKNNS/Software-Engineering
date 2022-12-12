@@ -64,7 +64,7 @@ const HomePage: NextPage = () => {
             <div className="text-center">
                 <h1>Suggestion</h1>
             </div>
-            <div className="flex w-full flex-col gap-3 pb-36">
+            <div className="flex w-full flex-col gap-3 pb-36 pt-20">
                 {
                     foodList?.map((v, i) => <FoodItem food={v} key={i}
                         like={userData?.like?.includes(v.thaiName)}
