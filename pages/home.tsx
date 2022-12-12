@@ -9,7 +9,7 @@ import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import AddMenu from "components/home/AddMenu"
-import { Autocomplete, Paper, TextField, Dialog, DialogTitle, DialogContent, Button, Drawer } from "@mui/material"
+import { Autocomplete, Paper, TextField, Dialog, DialogTitle, DialogContent, Button, Drawer, Popper } from "@mui/material"
 
 const HomePage: NextPage = () => {
 
@@ -20,6 +20,8 @@ const HomePage: NextPage = () => {
 
     const [foodSelect, setFoodSelect] = useState<Food>();
     const [openMenu, setOpenMenu] = useState(false);
+
+    const [search, setSearch] = useState("")
 
     const [user] = useAuth()
     const router = useRouter()
@@ -66,16 +68,28 @@ const HomePage: NextPage = () => {
             </div>
             <div className="flex w-full flex-col gap-3 pb-36">
                 {
-                    foodList?.map((v, i) => <FoodItem food={v} key={i}
-                        like={userData?.like?.includes(v.thaiName)}
-                        onClick={() => handelSelect(i)}
-                        onLike={(value) => handelLike(value, v.thaiName)}
-                    />)
+                    foodList?.map((v, i) => {
+
+                        if (search == "" || search.includes(v.thaiName) || search.includes(v.englishName) || v.thaiName.includes(search) || v.englishName.includes(search))
+                            return (
+                                <FoodItem food={v} key={i}
+                                    like={userData?.like?.includes(v.thaiName)}
+                                    onClick={() => handelSelect(i)}
+                                    onLike={(value) => handelLike(value, v.thaiName)}
+                                />
+                            )
+                        return undefined
+                    })
                 }
             </div>
             <Paper sx={{ position: "fixed", bottom: 70, left: 8, right: 8 }} elevation={3}>
                 <Autocomplete
                     freeSolo
+                    value={search}
+                    placeholder="top"
+                    onChange={(e, v) => setSearch(v ?? "")}
+                    PopperComponent={(props) => <Popper  {...props} placement="top" />}
+                    PaperComponent={(props) => <Paper  {...props} className="my-3 py-3" />}
                     options={foodList?.map((option) => `${option.thaiName} - ${option.englishName.replaceAll("_", " ")}`)}
                     renderInput={(params) => <TextField {...params} label="กินอะไรดี? : แตะเพื่อค้นหาเมนูกว่า 200 เมนู" />}
                 />

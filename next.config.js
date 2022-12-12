@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   output: "standalone",
   images: {
-    domains: ["firebasestorage.googleapis.com"],
+    domains: ["firebasestorage.googleapis.com", "lh3.googleusercontent.com"],
   },
   async rewrites() {
     return [

@@ -52,6 +52,7 @@ export default function LikeForm({ list, onChange }: Props) {
                     {
                         images.map((item, i) => item.img !== "" &&
                             <ImageBlock key={i}
+                                name={item.name}
                                 url={item.img}
                                 like={select.includes(item.name)}
                                 onClick={() => handleOnClick(item.name)}
@@ -65,28 +66,31 @@ export default function LikeForm({ list, onChange }: Props) {
 }
 
 interface ImageProps {
+    name: string
     url: string,
     like: boolean
     onClick: () => void
 }
 
-const ImageBlock: React.FC<ImageProps> = ({ url, like, onClick }) => (
+const ImageBlock: React.FC<ImageProps> = ({ name, url, like, onClick }) => (
     <React.Fragment>
-        <ImageListItem onClick={(e) => { e.preventDefault(); onClick?.() }}>
+        <ImageListItem sx={{ borderRadius: "10px", overflow: "hidden", boxShadow: "0 0 5px 0 #90969D" }} onClick={(e) => { e.preventDefault(); onClick?.() }}>
             <Image src={url} width={150} height={150} alt={"image"} objectFit="cover" />
             <ImageListItemBar
                 sx={{
                     background:
                         "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-                        "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+                        "rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%)",
                 }}
                 position="top"
                 actionIcon={
-                    <IconButton
-                        sx={{ color: "#DD5353" }}
-                    >
-                        {like ? <FullHeartIcon fontSize="small" /> : <HeartIcon fontSize="small" />}
-                    </IconButton>
+                    <React.Fragment >
+                        <IconButton
+                            sx={{ color: "#d50000" }}
+                        >
+                            {like ? <FullHeartIcon fontSize="small" /> : <HeartIcon fontSize="small" />}
+                        </IconButton>
+                    </React.Fragment>
                 }
                 actionPosition="left"
             />

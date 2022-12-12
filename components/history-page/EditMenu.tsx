@@ -36,6 +36,8 @@ const EditHisotryForm: React.FC<ListProps> = (props) => {
     const [food, setFood] = useState<FoodHistory | undefined>(props.food)
     const [date, setDate] = useState<string>("")
 
+    const [openDelete, setDelete] = useState(false)
+
     const handelEat = async () => {
         if (!food || !props.userData) return;
 
@@ -82,6 +84,7 @@ const EditHisotryForm: React.FC<ListProps> = (props) => {
         setOpenWarning(false);
         props.onChange?.();
         props.onClose?.();
+        setDelete(false)
     }
 
     const filterDisease = useCallback(async (): Promise<IAvoid[]> => {
@@ -133,8 +136,8 @@ const EditHisotryForm: React.FC<ListProps> = (props) => {
             <div className="mt-auto w-full">
                 <DateInput onChange={(v) => setDate(v)} defaultValue={food?.datetime} />
             </div>
-            <div className="mb-5 mt-3 flex gap-3">
-                <Button color="error" variant="outlined" sx={{ px: 3 }} onClick={handleDelete}>
+            <div className="mb-5 mt-3 flex justify-between w-[80%]">
+                <Button color="error" variant="outlined" sx={{ px: 3 }} onClick={() => setDelete(true)}>
                     ลบ
                 </Button>
                 <Button color="info" variant="contained" sx={{ px: 3 }} onClick={handelEat}>
@@ -147,6 +150,20 @@ const EditHisotryForm: React.FC<ListProps> = (props) => {
                 warning={warning}
                 onSubmit={handleSubmit}
             />
+            <Dialog open={openDelete}>
+                <DialogTitle className="text-center" color={"error"}>ยืนยันการลบ</DialogTitle>
+                <DialogContent className="text-left flex flex-col gap-3">
+                    <p className="text-main">คุณต้องการจะลบ {food?.thaiName} ออกจากประวัติของคุณ</p>
+                    <div className="mt-5 w-full flex justify-between items-center flex-row gap-3">
+                        <Button sx={{ px: 3 }} color="inherit" variant="outlined" onClick={() => setDelete(false)}>
+                            ยกเลิก
+                        </Button>
+                        <Button sx={{ px: 3 }} color="error" variant="outlined" onClick={() => handleDelete()}>
+                            ยืนยัน
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }
