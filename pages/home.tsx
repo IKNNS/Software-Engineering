@@ -60,7 +60,7 @@ const HomePage: NextPage = () => {
     }
 
     return (
-        <PageStart className="p-4 gap-3 pt-10">
+        <PageStart className="p-4 gap-3 pt-20">
             <div className="text-center">
                 <h1>Suggestion</h1>
             </div>
