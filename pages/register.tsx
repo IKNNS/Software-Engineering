@@ -48,6 +48,7 @@ const RegisterPage: NextPage = () => {
             setErrorMessage("เกิดข้อผิดพลาด โปรดลองอีกครั้ง")
             return;
         } else if (login.length > 0) {
+            console.log(login)
             setErrorMessage("อีเมลนี้ถูกใช้ไปแล้ว โปรดเปลี่ยนอีเมล")
             setError({ ...err, email: true })
             return;

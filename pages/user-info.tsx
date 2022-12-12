@@ -139,8 +139,8 @@ const UserInfo: NextPage = () => {
                 <div className="text-center">
                     <h1>Profile</h1>
                 </div>
-                <div className="w-[100px] h-[100px] flex justify-center items-center rounded-full bg-action">
-                    <Image src={User} width={50} height={50} alt="profile" color="#F1F6F7" />
+                <div className="w-[100px] h-[100px] flex justify-center items-center rounded-full bg-action overflow-hidden">
+                    <Image src={(user?.photoURL && user?.photoURL != "") ? user?.photoURL : User} width={100} height={100} alt="profile" color="#F1F6F7" />
                 </div>
                 <div className="text-center text-link">
 

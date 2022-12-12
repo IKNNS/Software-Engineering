@@ -16,7 +16,9 @@ interface Props {
 const FoodItem: React.FC<Props> = ({ food, onClick, like, onLike }) => {
     return (
         <div className="w-full p-3 shadow-md text-main rounded-3xl flex justify-start gap-3">
-            <div className=" w-[80px] h-[80px] rounded-full shadow-out2">
+            <div className=" w-[80px] h-[80px] rounded-full shadow-out2"
+                onClick={() => onClick?.()}
+            >
                 <Image src={food.imgURL != "" ? food.imgURL : "/unknow.png"} width={80} height={80} objectFit="cover" alt="img" className=" rounded-full" />
             </div>
             <div className="flex flex-col gap-2"
