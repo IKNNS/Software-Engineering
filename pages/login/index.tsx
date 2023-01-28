@@ -61,7 +61,7 @@ const LoginPage: NextPage = () => {
                     <span className=" text-link hover:cursor-pointer">ลืมรหัสใช่ไหม?</span>
                 </div>
                 <Button type="submit" variant="contained" color="info" fullWidth>เข้าสู่ระบบ</Button>
-                <p>or</p>
+                <p>or</p>+
                 <div className="flex flex-row justify-center items-center gap-3 p-2 bg-action rounded-lg"
                     onClick={handleGoogle}
                 >
